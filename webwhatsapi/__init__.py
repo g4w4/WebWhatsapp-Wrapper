@@ -398,7 +398,7 @@ class WhatsAPIDriver(object):
 
     # get_unread_messages_in_chat()
 
-    def get_all_messages_in_chat(self, chat, include_me=False, include_notifications=False):
+    def get_all_messages_in_chat(self, idChat, include_me=False, include_notifications=False):
         """
         Fetches messages in chat
 
@@ -409,7 +409,7 @@ class WhatsAPIDriver(object):
         :return: List of messages in chat
         :rtype: list[Message]
         """
-        message_objs = self.wapi_functions.getAllMessagesInChat(chat.id, include_me, include_notifications)
+        message_objs = self.wapi_functions.getAllMessagesInChat(idChat, include_me, include_notifications)
 
         messages = []
         for message in message_objs:
@@ -777,3 +777,9 @@ class WhatsAPIDriver(object):
 
     def demote_participant_admin_group(self, idGroup, idParticipant):
         return self.wapi_functions.demoteParticipantAdminGroup(idGroup,idParticipant)
+
+    def get_phone_number(self):
+        return self.wapi_functions.getPhoneNumber()
+
+    def get_chats_whit_messages(self):
+        return self.wapi_functions.getChatsWhitMessages()

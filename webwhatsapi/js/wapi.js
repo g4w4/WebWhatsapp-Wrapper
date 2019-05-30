@@ -1408,3 +1408,56 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
         done(true); return true;
     })
 }
+
+/**
+* Return phone number
+* @param {*} done - function - Callback function
+*/
+window.WAPI.getPhoneNumber = function (done) {
+    if (window.Store.Conn.__x_me.user) {
+        if (done !== undefined) {
+            done(Store.Conn.__x_me.user);
+        }
+        return Store.Conn.__x_me.user;
+    }
+    output = window.Store.Conn.__x_me.user;
+    if (done !== undefined) {
+        done(output);
+    }
+    return output;
+};
+
+/**
+* Return all chats if not is group
+* @param {*} done - function - Callback function
+*/
+window.WAPI.getChatsWhitMessages = function (done) {
+    try {
+     var tmp_chat = []
+     
+     if(window.Store.Chat.models && window.Store.Chat.models.length > 0){
+         for( let x = 0; x < window.Store.Chat.models.length ;x ++){
+             chat = x;
+             if(window.Store.Chat.models[chat] && !window.Store.Chat.models[chat].isGroup){
+                 unread = window.Store.Chat.models[chat].__x_unreadCount;
+                 id = window.Store.Chat.models[chat].id._serialized
+                 tmp_chat.push( {id:id,unread:unread})
+             }
+         }
+     }
+     
+ 
+     if (done !== undefined) {
+         done(tmp_chat);
+     }
+ 
+     return tmp_chat;
+    } catch (error) {
+ 
+     if (done !== undefined) {
+         done([]);
+     }
+     return [error.message]
+        
+    }
+ };
