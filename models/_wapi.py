@@ -14,16 +14,17 @@ from interfaces import interface_messages
 # Last Update : 30-05-19                                        #
 # By : g4w4                                                     #
 #################################################################
-def rememberSession(driver):
+def rememberSession(driver,socket):
     try:
         if driver is None :
             return False
         else :
             driver.wait_for_login(40)
-            return True if driver.is_logged_in() else False
-    except Exception as e:
-        logs.logError('Selenium --> con',traceback.format_exc())
-        return False
+            if driver.is_logged_in():
+                socket.emit('change',getGeneralInfo(driver))
+    except Exception :
+        logs.logError('Selenium --> rememberSession',traceback.format_exc())
+        # Alert #
 
 
 ############################ getQrCode(driver) ##################

@@ -38,14 +38,8 @@ class start():
                 self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
                 self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
                 logs.logError(self.__Keyword,'Check if have cache')
-                rember = _wapi.rememberSession(self.driver)
-
-                if rember :
-                    self.socketIO.emit('change',_wapi.getGeneralInfo(self.driver))
-                else : 
-                    logs.logError(self.__Keyword,'Session down')
-                    # ALERT #
-
+                rember = Thread(target=_wapi.loopStatus,args=(self.driver,self.socketIO))
+                rember.start()
 
         except Exception :
             logs.logError('Master-Error',traceback.format_exc())
@@ -60,6 +54,7 @@ class start():
 
     def on_getQr(self,*args):
         try:
+            logs.logError(self.__Keyword,'on getQr')
             if self.driver == None :
                 self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
             if self.driver.is_logged_in():
