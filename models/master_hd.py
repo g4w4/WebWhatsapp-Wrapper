@@ -15,4 +15,4 @@ class start():
     def on_connect(self,*args):
         print(args)
         logs.logError('Socket-Info','Connection whit server')
-        self.socketIO.emit('Auth',"token")
+        self.socketIO.emit('Auth',config.token)
