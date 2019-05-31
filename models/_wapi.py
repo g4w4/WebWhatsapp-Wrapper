@@ -41,7 +41,7 @@ def getQrCode(driver):
             if driver.is_logged_in() : 
                 return True
             else:
-                name = "{}{}".format(pathFiles,uuid4().hex+'.png') 
+                name = "{}{}".format(services.config.pathFiles,uuid4().hex+'.png') 
                 if os.path.exists(name) : os.remove(name)
                 driver.get_qr(name)
 
