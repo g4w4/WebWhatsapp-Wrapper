@@ -3,7 +3,7 @@ import os, sys, time, json
 import shutil
 import traceback
 from uuid import uuid4
-import services.config
+from services import config
 from interfaces import interface_messages
 
 
@@ -42,7 +42,7 @@ def getQrCode(driver):
             if driver.is_logged_in() : 
                 return True
             else:
-                name = "{}{}".format(services.config.pathFiles,uuid4().hex+'.png') 
+                name = "{}{}".format(config.pathFiles,uuid4().hex+'.png') 
                 if os.path.exists(name) : os.remove(name)
                 driver.get_qr(name)
 
