@@ -52,6 +52,24 @@ def getQrCode(driver):
         return False
 
 
+############################ waitLogin(driver) ##################
+# Desc : wait init session                                      #
+# Params : driver obj                                           #       
+# Return :  Boolean                                             #
+# Last Update : 30-05-19                                        #
+# By : g4w4                                                     #
+#################################################################
+def waitLogin(driver,socketId):
+    try:
+        driver.wait_for_login()
+        driver.save_firefox_profile()
+        return True
+    except Exception :
+        logs.logError("_wapi --> waitLogin",traceback.format_exc())
+        return False
+
+
+
 ####################### getGeneralInfo(driver) #######################
 # Desc : Get general info of account connected                       #
 # Params : driver obj                                                #       
@@ -94,7 +112,18 @@ def getOldMessages(driver):
 
         return chats
     except Exception :
-        logs.logError('_messages --> getMessage',traceback.format_exc())
+        logs.logError('_messages --> getOldMessages',traceback.format_exc())
         return False
+
+
+def loopStatus(driver,socketIO):
+    try:
+        while driver != None:
+            time.sleep(60)
+            logs.logError('_messages --> loopStatus','Send account info')
+            socketIO.emit('change',getGeneralInfo(driver))
+    except Exception :
+        logs.logError('_messages --> loopStatus',traceback.format_exc())
+        # Alert #
             
    
