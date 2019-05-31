@@ -2,7 +2,7 @@
 import os, sys, time, json
 from socketIO_client_nexus import SocketIO, LoggingNamespace
 # config files #
-from services import config
+import config
 
 # master path #
 sys.path.insert(0,config.masterPath)
