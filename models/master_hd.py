@@ -38,9 +38,8 @@ class start():
                 self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
                 self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
                 logs.logError(self.__Keyword,'Check if have cache')
-                rember = Thread(target=_wapi.loopStatus,args=(self.driver,self.socketIO))
+                rember = Thread(target=_wapi.rememberSession,args=(self.driver,self.socketIO))
                 rember.start()
-
         except Exception :
             logs.logError('Master-Error',traceback.format_exc())
             # ALERTA #
@@ -66,7 +65,7 @@ class start():
                 name = _wapi.getQrCode(self.driver)
                 logs.logError(self.__Keyword,'send qr')
                 self.socketIO.emit('sendQr',{'socketId':args[0],'file':str(name)})
-                session = _wapi.waitLogin()
+                session = _wapi.waitLogin(self.driver,self.socketIO)
 
                 if session :
                     # Start theads #
