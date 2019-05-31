@@ -3,7 +3,7 @@ import os, sys, time, json
 import shutil
 import traceback
 from uuid import uuid4
-from configPath import pathFiles
+from config import pathFiles
 from interfaces import interface_messages
 
 
