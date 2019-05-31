@@ -47,7 +47,7 @@ def getQrCode(driver):
                 if os.path.exists(name) : os.remove(name)
                 driver.get_qr(name)
 
-                return idName
+                return "{}.png".format(idName)
             
     except Exception :
         logs.logError('_wapi --> getQrCode',traceback.format_exc())
