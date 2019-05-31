@@ -81,6 +81,10 @@ class start():
             self.socketIO.emit('sendQr', {'socketId':args[0],'error':traceback.format_exc()} )
             logs.logError(self.__Keyword,traceback.format_exc())
 
+    def on_giveScreen(self,*args):
+        screen = Thread(target=_wapi.getScreen,args=(self.driver,self.socketIO,args[0]))
+        screen.start()
+        
     def startThreads(self):
         try:
             logs.logError(self.__Keyword,'Init event loop')

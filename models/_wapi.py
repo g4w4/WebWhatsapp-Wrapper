@@ -117,7 +117,13 @@ def getOldMessages(driver):
         logs.logError('_messages --> getOldMessages',traceback.format_exc())
         return False
 
-
+####################### loopStatus(driver) ###########################
+# Desc : Send info account to serverSocket                           #
+# Params : driver obj , socketIO obj                                 #       
+# Return :  loop                                                     #
+# Last Update : 30-05-19                                             #
+# By : g4w4                                                          #
+######################################################################
 def loopStatus(driver,socketIO):
     try:
         while driver != None:
@@ -127,5 +133,28 @@ def loopStatus(driver,socketIO):
     except Exception :
         logs.logError('_messages --> loopStatus',traceback.format_exc())
         # Alert #
-            
+
+
+####################### getScreen(driver) ###########################
+# Desc : Send picture of status in account                           #
+# Params : driver obj , socketIO obj                                 #       
+# Return :  emition                                                  #
+# Last Update : 30-05-19                                             #
+# By : g4w4                                                          #
+######################################################################        
+def getScreen(driver,socketIO,id):
+    try:
+        if driver != None:
+            logs.logError('_wapi --> getScreen','saving screen')
+            idName = uuid4().hex
+            name = "{}{}".format(config.pathFiles,idName+'.png') 
+            driver.screenshot(name)
+            if os.path.exists(name) : os.remove(name)
+            socketIO.emit('sendScreen',{'socketId':id,'file':"{}.png".format(idName)})
+        else:
+            socketIO.emit('sendScreen', {'socketId':id,'error':'Browser not connected'} )
+    except Exception:
+        logs.logError('_wapi --> getScreen',traceback.format_exc())
+        socketIO.emit('sendScreen', {'socketId':id,'error':traceback.format_exc()} )
+        # Alert # 
    
