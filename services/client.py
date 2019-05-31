@@ -17,7 +17,7 @@ masterClass = master_hd.start(socketIO)
 
 ##### SOCKET LISSENER #####
 socketIO.on('connect', masterClass.on_connect)
-    # socketIO.on('welcome', on_welcome)
+socketIO.on('welcome', masterClass.on_welcome)
     # socketIO.on('reconnect', on_reconnect)
     # socketIO.on('getQr',on_getQr)
     # socketIO.on('matchUpdate',on_matchUpdate)
