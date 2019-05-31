@@ -42,13 +42,14 @@ def getQrCode(driver):
             if driver.is_logged_in() : 
                 return True
             else:
-                name = "{}{}".format(config.pathFiles,uuid4().hex+'.png') 
+                idName = uuid4().hex
+                name = "{}{}".format(config.pathFiles,idName+'.png') 
                 if os.path.exists(name) : os.remove(name)
                 driver.get_qr(name)
 
-                return name
+                return idName
             
-    except Exception as e:
+    except Exception :
         logs.logError('_wapi --> getQrCode',traceback.format_exc())
         return False
 

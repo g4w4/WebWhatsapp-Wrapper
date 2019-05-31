@@ -2,7 +2,7 @@ from Utils import logs
 import shutil
 import traceback
 import os
-import services.config
+from services import config
 
 __DOCUMENT_TYPE = {
     'document' : 'document',
@@ -25,7 +25,7 @@ def getFormat(message,driver):
         body = {
             'chat': message._js_obj.get('chat').get('id').get('_serialized'),
             'sendBy': True if driver.get_phone_number() == message.sender.id else False,
-            'message' : str(message.save_media(services.config.pathFiles,True)) if message.type != "chat" else message.content,
+            'message' : str(message.save_media(config.pathFiles,True)) if message.type != "chat" else message.content,
             'type' : message.type if message.type != 'document' else False,
             'caption' : message.caption if message.type != "chat" else False
         }
@@ -33,7 +33,7 @@ def getFormat(message,driver):
         if message.type == 'document':
             body['type'] = 'file'
         elif message.type == 'audio' or message.type == 'ptt':
-            content =  str(message.save_media(services.config.pathFiles,True))
+            content =  str(message.save_media(config.pathFiles,True))
             os.rename(content, content+'.ogg')
             body['message'] = content
             body['type'] = 'ogg'
