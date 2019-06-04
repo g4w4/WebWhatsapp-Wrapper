@@ -18,5 +18,5 @@ class NewMessageObserver():
                 exitGroup = Thread(target=driver.remove_participant_group,args=(group,me))
                 exitGroup.start()
             else : 
-            _message = interface_messages.getFormat(message,self.driver)
-            self.socket.emit('newMessage',_message)
+                _message = interface_messages.getFormat(message,self.driver)
+                self.socket.emit('newMessage',_message)
