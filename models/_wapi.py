@@ -17,16 +17,17 @@ from interfaces import interface_messages
 def rememberSession(driver,socket):
     try:
         if driver is None :
-            print("False")
             return False
         else :
-            print("wait")
             driver.wait_for_login(10)
-            print("EndWait")
             if driver.is_logged_in():
                 socket.emit('change',getGeneralInfo(driver))
-            else : 
-                print("Whats ?")
+
+                chats = getOldMessages(driver)
+                socket.emit('oldMessages',chats)
+
+                loop = Thread(target=loopStatus,args=(driver,socket))
+                loop.start()
     except Exception :
         logs.logError('Selenium --> rememberSession',traceback.format_exc())
         # Alert #
