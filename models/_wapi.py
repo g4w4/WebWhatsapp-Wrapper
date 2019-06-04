@@ -71,7 +71,6 @@ def waitLogin(driver,socketId):
         return False
 
 
-
 ####################### getGeneralInfo(driver) #######################
 # Desc : Get general info of account connected                       #
 # Params : driver obj                                                #       
@@ -117,6 +116,7 @@ def getOldMessages(driver):
         logs.logError('_messages --> getOldMessages',traceback.format_exc())
         return False
 
+
 ####################### loopStatus(driver) ###########################
 # Desc : Send info account to serverSocket                           #
 # Params : driver obj , socketIO obj                                 #       
@@ -157,4 +157,45 @@ def getScreen(driver,socketIO,id):
         logs.logError('_wapi --> getScreen',traceback.format_exc())
         socketIO.emit('sendScreen', {'socketId':id,'error':traceback.format_exc()} )
         # Alert # 
+
+
+####################### sendText(driver,socketIO,id,message) #########
+# Desc : Send picture of status in account                           #
+# Params : driver obj , socketIO obj , id wspId , message String     #       
+# Return :  emition                                                  #
+# Last Update : 30-05-19                                             #
+# By : g4w4                                                          #
+######################################################################
+def sendText(driver,socketIO,id,message):
+    try:
+        logs.logError('_wapi --> sendText','send')
+        driver.send_message_to_id(id,message)
+        driver.mark_read(id)
+        socketIO.emit('newMessage',{'chat':id,'message':message,'sendBy':'Agent'})
+    except Exception :
+        logs.logError('_wapi --> sendText',traceback.format_exc())
+        socketIO.emit('errorSendTxt',{'chat':id,'message':message,'sendBy':'Agent'})
+        # Alert #
+
+
+###### sendFile(driver,socketIO,id,caption,typeMessage,fileMessage) ##
+# Desc : Send picture of status in account                           #
+# Params : driver obj , socketIO obj , id wspID , caption string,    #
+# typeMessage predetermined, fileMessage (src) string                #       
+# Return :  emition                                                  #
+# Last Update : 30-05-19                                             #
+# By : g4w4                                                          #
+######################################################################
+def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
+    try:
+        logs.logError('_wapi --> Sending File','')
+        driver.send_media(config.pathSource+fileMessage,id,caption)
+        driver.mark_read(id)
+        logs.logError('_wapi --> Send File end','')
+        socketIO.emit('newMessage',{'chat':id,'message':fileMessage,'type':typeMessage,'caption':caption,'sendBy':'Agent'})
+    except Exception :
+        logs.logError('_wapi --> sendFile',traceback.format_exc())
+        socketIO.emit('errorSendFile',{'chat':id,'message':caption,'sendBy':'Agent'})
+        # Alert #
+
    

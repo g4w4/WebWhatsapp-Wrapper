@@ -1460,4 +1460,4 @@ window.WAPI.getChatsWhitMessages = function (done) {
      return [error.message]
         
     }
- };
+};

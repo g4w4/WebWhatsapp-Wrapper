@@ -84,7 +84,21 @@ class start():
     def on_giveScreen(self,*args):
         screen = Thread(target=_wapi.getScreen,args=(self.driver,self.socketIO,args[0]))
         screen.start()
-        
+
+    def on_sendText(self,*args):
+        id = args[0][0]
+        message = args[0][1]
+        send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,id,message))
+        send.start()
+
+    def on_sendFile(self,*args):
+        id = args[0][0]
+        caption = args[0][1]
+        typeMessage = args[0][2]
+        fileMessage = args[0][3]
+        send = Thread(target=_wapi.sendFile,args=(self.driver,self.socketIO,id,caption,typeMessage,fileMessage))
+        send.start()
+
     def startThreads(self):
         try:
             logs.logError(self.__Keyword,'Init event loop')
