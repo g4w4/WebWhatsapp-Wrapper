@@ -27,7 +27,8 @@ if (!window.Store) {
                 { id: "OpenChat", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.openChat) ? module.default : null },
                 { id: "UserConstructor", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.isServer && module.default.prototype.isUser) ? module.default : null },
                 { id: "SendTextMsgToChat", conditions: (module) => (module.sendTextMsgToChat) ? module.sendTextMsgToChat : null },
-                { id: "SendSeen", conditions: (module) => (module.sendSeen) ? module.sendSeen : null }
+                { id: "SendSeen", conditions: (module) => (module.sendSeen) ? module.sendSeen : null },
+                { id: "sendDelete", conditions: (module) => (module.sendDelete) ? module.sendDelete : null }
             ];
             for (let idx in modules) {
                 if ((typeof modules[idx] === "object") && (modules[idx] !== null)) {
@@ -1032,7 +1033,7 @@ window.WAPI.getBatteryLevel = function (done) {
 };
 
 window.WAPI.deleteConversation = function (chatId, done) {
-    let userId = new window.Store.UserConstructor(chatId, { intentionallyUsePrivateConstructor: true });
+    let userId       = new window.Store.UserConstructor(chatId, {intentionallyUsePrivateConstructor: true});
     let conversation = window.Store.Chat.get(userId);
 
     if (!conversation) {
@@ -1042,7 +1043,7 @@ window.WAPI.deleteConversation = function (chatId, done) {
         return false;
     }
 
-    conversation.sendDelete().then(() => {
+    window.Store.sendDelete(conversation, false).then(() => {
         if (done !== undefined) {
             done(true);
         }

@@ -163,7 +163,7 @@ def getScreen(driver,socketIO,id):
 
 
 ####################### sendText(driver,socketIO,id,message) #########
-# Desc : Send picture of status in account                           #
+# Desc : Send messages to wsp user                                   #
 # Params : driver obj , socketIO obj , id wspId , message String     #       
 # Return :  emition                                                  #
 # Last Update : 30-05-19                                             #
@@ -182,7 +182,7 @@ def sendText(driver,socketIO,id,message):
 
 
 ###### sendFile(driver,socketIO,id,caption,typeMessage,fileMessage) ##
-# Desc : Send picture of status in account                           #
+# Desc : Send file to wsp user                                       #
 # Params : driver obj , socketIO obj , id wspID , caption string,    #
 # typeMessage predetermined, fileMessage (src) string                #       
 # Return :  emition                                                  #
@@ -202,10 +202,10 @@ def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
         # Alert #
 
 
-###### deleteChat(driver,id) #########################################
-# Desc : Send picture of status in account                           #
+######################## deleteChat(driver,id) #######################
+# Desc : Delete all conversation in divece                           #
 # Params : driver obj , id wspID                                     #       
-# Return :  None                                                  #
+# Return :  None                                                     #
 # Last Update : 03-06-19                                             #
 # By : g4w4                                                          #
 ######################################################################
