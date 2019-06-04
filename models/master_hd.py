@@ -38,8 +38,10 @@ class start():
                 self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
                 self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
                 logs.logError(self.__Keyword,'Check if have cache')
-                rember = Thread(target=_wapi.rememberSession,args=(self.driver,self.socketIO))
-                rember.start()
+                rember = _wapi.rememberSession(self.driver,self.socketIO)
+                logs.logError(self.__Keyword,'Cache is {}'.format(rember))
+                if rember :     
+                    self.startThreads()
         except Exception :
             logs.logError('Master-Error',traceback.format_exc())
             # ALERTA #
