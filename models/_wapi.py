@@ -107,7 +107,8 @@ def getOldMessages(driver):
     try:
         chats = {}
         for chat in driver.get_chats_whit_messages():
-            
+            print("000")
+            print("?¿ {}".format(driver.is_chat_group(chat.get('id'))))
             if driver.is_chat_group(chat.get('id')):
                 print("Eliminando grupo")
                 group = chat.get('id')
