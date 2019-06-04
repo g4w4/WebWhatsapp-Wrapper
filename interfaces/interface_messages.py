@@ -22,8 +22,6 @@ __DOCUMENT_TYPE = {
 ######################################################################
 def getFormat(message,driver):
     try:
-        print(driver.get_phone_number())
-        print(message.sender.id)
         body = {
             'chat': message._js_obj.get('chat').get('id').get('_serialized'),
             'sendBy': True if driver.get_phone_number() in message.sender.id else False,
@@ -31,13 +29,12 @@ def getFormat(message,driver):
             'type' : message.type if message.type != 'document' else False,
             'caption' : message.caption if message.type != "chat" else False
         }
-        print(body['sendBy'])
         if message.type == 'document':
             body['type'] = 'file'
         elif message.type == 'audio' or message.type == 'ptt':
             content =  str(message.save_media(config.pathFiles,True))
-            os.rename(content, content+'.ogg')
-            body['message'] = content
+            os.rename(content,"{}.ogg".format(content))
+            body['message'] = "{}.ogg".format(content)
             body['type'] = 'ogg'
         elif message.type not in __DOCUMENT_TYPE :
             body['message'] = 'No soportado'
