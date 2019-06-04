@@ -170,7 +170,7 @@ def sendText(driver,socketIO,id,message):
     try:
         logs.logError('_wapi --> sendText','send')
         driver.send_message_to_id(id,message)
-        driver.mark_read(id)
+        driver.chat_send_seen(id)
         socketIO.emit('newMessage',{'chat':id,'message':message,'sendBy':'Agent'})
     except Exception :
         logs.logError('_wapi --> sendText',traceback.format_exc())
@@ -189,8 +189,8 @@ def sendText(driver,socketIO,id,message):
 def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
     try:
         logs.logError('_wapi --> Sending File','')
-        driver.send_media(config.pathSource+fileMessage,id,caption)
-        driver.mark_read(id)
+        driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
+        driver.chat_send_seen(id)
         logs.logError('_wapi --> Send File end','')
         socketIO.emit('newMessage',{'chat':id,'message':fileMessage,'type':typeMessage,'caption':caption,'sendBy':'Agent'})
     except Exception :
