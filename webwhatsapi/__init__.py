@@ -784,5 +784,5 @@ class WhatsAPIDriver(object):
     def get_chats_whit_messages(self):
         return self.wapi_functions.getChatsWhitMessages()
 
-    def isChatGroup(self,idChat):
+    def is_chat_group(self,idChat):
         return self.wapi_functions.isChatGroup(idChat)

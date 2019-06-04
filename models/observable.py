@@ -13,7 +13,7 @@ class NewMessageObserver():
     def on_message_received(self, new_messages):   
         for message in new_messages:
             group = message._js_obj.get('chat').get('id').get('_serialized')
-            if self.driver.isChatGroup(self.driver,group) :
+            if self.driver.is_chat_group(group) :
                 me = "{}@c.us".format(self.driver.get_phone_number())
                 exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
                 exitGroup.start()
