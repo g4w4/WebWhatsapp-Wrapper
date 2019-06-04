@@ -1335,22 +1335,13 @@ window.WAPI.contactUnblock = function (id, done) {
  * @param {*} done - function - Callback function to be called when a new message arrives.
  */
 window.WAPI.removeParticipantGroup = function (idGroup, idParticipant, done) {
-    const metaDataGroup = window.Store.GroupMetadata.get(idGroup);
-    if (metaDataGroup === undefined) {
-        done(false); return false;
-    }
-
-    const participant = metaDataGroup.participants.get(idParticipant);
-    if (participant === undefined) {
-        done(false); return false;
-    }
-
-    metaDataGroup.participants.removeParticipants([participant]).then((ret) => {
-        const check = metaDataGroup.participants.get(idParticipant);
-        if (check === undefined) { done(true); return true; }
-        done(false); return false;
+    window.Store.WapQuery.removeParticipants(idGroup, [idParticipant]).then(() => {
+        const metaDataGroup = window.Store.GroupMetadata.get(id)
+        checkParticipant = metaDataGroup.participants._index[idParticipant];
+        if (checkParticipant === undefined) {
+            done(true); return true;
+        }
     })
-
 }
 
 

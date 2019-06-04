@@ -107,12 +107,18 @@ def getOldMessages(driver):
     try:
         chats = {}
         for chat in driver.get_chats_whit_messages():
-            idChat = str(chat.get('id'))
-            chats[idChat] = []
-            _messages = driver.get_all_messages_in_chat(idChat,True)
-            for message in _messages:
-                body = interface_messages.getFormat(message,driver)
-                chats[idChat].append(body)
+            if chat.get('isGroup'):
+                group = chat.get('id')
+                me = "{}@c.us".format(driver.get_phone_number())
+                exitGroup = Thread(target=driver.remove_participant_group,args=(group,me))
+                exitGroup.start()
+            else :
+                idChat = str(chat.get('id'))
+                chats[idChat] = []
+                _messages = driver.get_all_messages_in_chat(idChat,True)
+                for message in _messages:
+                    body = interface_messages.getFormat(message,driver)
+                    chats[idChat].append(body)
 
         return chats
     except Exception :
