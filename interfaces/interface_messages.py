@@ -26,7 +26,7 @@ def getFormat(message,driver):
         print(message.sender.id)
         body = {
             'chat': message._js_obj.get('chat').get('id').get('_serialized'),
-            'sendBy': True if driver.get_phone_number() == message.sender.id else False,
+            'sendBy': True if driver.get_phone_number() in message.sender.id else False,
             'message' : str(message.save_media(config.pathFiles,True)) if message.type != "chat" else message.content,
             'type' : message.type if message.type != 'document' else False,
             'caption' : message.caption if message.type != "chat" else False
