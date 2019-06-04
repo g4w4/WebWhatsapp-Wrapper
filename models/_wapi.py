@@ -201,4 +201,17 @@ def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
         socketIO.emit('errorSendFile',{'chat':id,'message':caption,'sendBy':'Agent'})
         # Alert #
 
-   
+
+###### deleteChat(driver,id) #########################################
+# Desc : Send picture of status in account                           #
+# Params : driver obj , id wspID                                     #       
+# Return :  None                                                  #
+# Last Update : 03-06-19                                             #
+# By : g4w4                                                          #
+######################################################################
+def deleteChat(driver,id):
+    try:
+        logs.logError('_wapi -->Delete Chat {}'.format(id))
+        driver.delete_chat(str(id))
+    except Exception :
+        logs.logError('_wapi --> sendFile',traceback.format_exc())

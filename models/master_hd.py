@@ -101,6 +101,10 @@ class start():
         send = Thread(target=_wapi.sendFile,args=(self.driver,self.socketIO,id,caption,typeMessage,fileMessage))
         send.start()
 
+    def on_deleteChat(self,*args):
+        delChat = Thread(target=_wapi.deleteChat,args=(self.driver,args[0],))
+        delChat.start()
+
     def startThreads(self):
         try:
             logs.logError(self.__Keyword,'Init event loop')
