@@ -14,8 +14,8 @@ class NewMessageObserver():
         for message in new_messages:
             if message.get('isGroup') :
                 group = message._js_obj.get('chat').get('id').get('_serialized')
-                me = "{}@c.us".format(driver.get_phone_number())
-                exitGroup = Thread(target=driver.remove_participant_group,args=(group,me))
+                me = "{}@c.us".format(self.driver.get_phone_number())
+                exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
                 exitGroup.start()
             else : 
                 _message = interface_messages.getFormat(message,self.driver)

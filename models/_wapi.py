@@ -108,6 +108,7 @@ def getOldMessages(driver):
         chats = {}
         for chat in driver.get_chats_whit_messages():
             if chat.get('isGroup'):
+                print("Eliminando grupo")
                 group = chat.get('id')
                 me = "{}@c.us".format(driver.get_phone_number())
                 exitGroup = Thread(target=driver.remove_participant_group,args=(group,me))
