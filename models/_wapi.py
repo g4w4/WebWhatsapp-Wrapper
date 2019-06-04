@@ -147,9 +147,9 @@ def getScreen(driver,socketIO,id):
         if driver != None:
             logs.logError('_wapi --> getScreen','saving screen')
             idName = uuid4().hex
-            name = "{}{}".format(config.pathFiles,idName+'.png') 
-            driver.screenshot(name)
+            name = "{}{}".format(config.pathFiles,idName+'.png')
             if os.path.exists(name) : os.remove(name)
+            driver.screenshot(name)
             socketIO.emit('sendScreen',{'socketId':id,'file':"{}.png".format(idName)})
         else:
             socketIO.emit('sendScreen', {'socketId':id,'error':'Browser not connected'} )
