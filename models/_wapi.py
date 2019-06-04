@@ -211,7 +211,7 @@ def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
 ######################################################################
 def deleteChat(driver,id):
     try:
-        logs.logError('_wapi -->Delete Chat {}'.format(id))
+        logs.logError("_wapi -->","Delete Chat {}".format(id),)
         driver.delete_chat(str(id))
     except Exception :
         logs.logError('_wapi --> sendFile',traceback.format_exc())
