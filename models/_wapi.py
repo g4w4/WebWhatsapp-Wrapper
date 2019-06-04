@@ -108,7 +108,7 @@ def getOldMessages(driver):
         chats = {}
         for chat in driver.get_chats_whit_messages():
             
-            if interface_messages.isGroup(driver,chat.get('id')):
+            if driver.isChatGroup(driver,chat.get('id')):
                 print("Eliminando grupo")
                 group = chat.get('id')
                 me = "{}@c.us".format(driver.get_phone_number())

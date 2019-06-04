@@ -45,7 +45,3 @@ def getFormat(message,driver):
     except Exception :
         logs.logError('_messages --> getMessage',traceback.format_exc())
         return False
-
-def isGroup(driver,idChat):
-    chat = driver.get_chat_from_id(idChat)
-    return chat.get('isGroup')

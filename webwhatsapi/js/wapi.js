@@ -1453,3 +1453,23 @@ window.WAPI.getChatsWhitMessages = function (done) {
         
     }
 };
+
+/**
+* Return if chat is group
+* @param {*} idChat '000000000000@c.us'
+* @param {*} done - function - Callback function
+*/
+window.WAPI.isChatGroup = function (idChat,done) {
+    let chat =  window.Store.Chat.get(idChat)
+    if (chat) {
+        if (done !== undefined) {
+            done(chat.isGroup);
+        }
+        return chat.isGroup;
+    }else{
+        if (done !== undefined) {
+            done(false);
+        }
+        return false;
+    }    
+};
