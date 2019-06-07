@@ -215,3 +215,23 @@ def deleteChat(driver,id):
         driver.delete_chat(str(id))
     except Exception :
         logs.logError('_wapi --> sendFile',traceback.format_exc())
+
+
+####################### getSreenApi(driver) ###########################
+# Desc : Send picture of status in account                           #
+# Params : driver obj , socketIO obj                                 #       
+# Return :  emition                                                  #
+# Last Update : 06-06-19                                             #
+# By : g4w4                                                          #
+######################################################################        
+def getScreenApi(driver):
+    try:
+        logs.logError('_wapi --> getScreen','saving screen')
+        idName = uuid4().hex
+        name = "{}{}".format(config.pathFiles,idName+'.png')
+        if os.path.exists(name) : os.remove(name)
+        driver.screenshot(name)
+        return idName
+    except Exception :
+        logs.logError('_wapi --> getScreen',traceback.format_exc())
+        # Alert # 

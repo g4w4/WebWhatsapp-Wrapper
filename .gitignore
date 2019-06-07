@@ -34,4 +34,8 @@ interface_messages/__pycache__/*
 services/__pycache__
 services/__pycache__/*
 services/config.py
+services/configAPI.py
+
+API_session
+API_session/**
 
