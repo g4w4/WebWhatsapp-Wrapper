@@ -2,7 +2,7 @@ import sys
 import os.path
 import datetime
 import requests
-import configUtils
+from Utils import configUtils
 
 
 def write_log(keyword,data):
