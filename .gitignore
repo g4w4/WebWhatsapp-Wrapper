@@ -39,3 +39,5 @@ services/configAPI.py
 API_session
 API_session/**
 
+Utils/configUtils.py
+

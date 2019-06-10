@@ -20,6 +20,15 @@ _Responses = {
     "501" : { "code" : 200, "desc": "Completado", "data": { "desc": "Chat no existe", "status": "error" } }
 }
 
+_MessageError = {
+    "Selenium" : "Selenium no connected is required restart",
+    "QrCode" : "Not found code Qr",
+    "Wait" : "Session not achieved",
+    "Screen" : "Screen failed",
+    "ChatList" : "Not get chat list",
+    "SendMessage" : "Failed send message"
+}
+
 class start():
     driver = None
 
@@ -31,6 +40,7 @@ class start():
             loop.start()
         except Exception:
             logs.logError('Master-API',traceback.format_exc())
+            logs.sendMailError(_MessageError["Selenium"])
 
     def getQr(self):
         try:
@@ -43,6 +53,7 @@ class start():
                 return qr
         except Exception :
             logs.logError('Master-API',traceback.format_exc())
+            logs.sendMailError(_MessageError["QrCode"])
             return _Responses["500"] 
 
     def waitSession(self):
@@ -51,6 +62,7 @@ class start():
             logs.logError('Master-API',"Session Start")
             self.driver.save_firefox_profile()
         except Exception :
+            logs.sendMailError(_MessageError["Wait"])
             logs.logError('Master-API',traceback.format_exc())
 
     def getScreen(self):
@@ -59,6 +71,7 @@ class start():
             return screen
         except Exception :
             logs.logError('Master-API',traceback.format_exc())
+            logs.sendMailError(_MessageError["Screen"])
             return _Responses["500"] 
 
     def loopSession(self):
@@ -70,7 +83,7 @@ class start():
                 time.sleep(60)
             except Exception :
                 logs.logError('Master-API',traceback.format_exc())
-                # Alerta #
+                logs.sendMailError(_MessageError["Selenium"])
 
     def getChatList(self):
         try:
@@ -86,6 +99,7 @@ class start():
                 return _Responses["003"]
         except Exception :
             logs.logError('Master-API',traceback.format_exc())
+            logs.sendMailError(_MessageError["ChatList"])
             return _Responses["500"] 
 
     def sendMessage(self,idChat,message):
@@ -101,6 +115,7 @@ class start():
                 return _Responses["501"]
             else :
                 logs.logError('Master-API',traceback.format_exc())
+                logs.sendMailError(_MessageError["SendMessage"])
                 return _Responses["500"] 
 
     def isValid(self,number):
