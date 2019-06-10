@@ -26,7 +26,8 @@ _MessageError = {
     "Wait" : "Session not achieved",
     "Screen" : "Screen failed",
     "ChatList" : "Not get chat list",
-    "SendMessage" : "Failed send message"
+    "SendMessage" : "Failed send message",
+    "RestartSuccess" : "API restarted"
 }
 
 class start():
@@ -76,11 +77,16 @@ class start():
 
     def loopSession(self):
         time.sleep(30)
+        firts = True
         while(True):
             try:
-                session = self.driver.is_logged_in()
-                logs.logError('Master-API',"Session on {}".format(session))
-                time.sleep(60)
+                if firts :
+                    logs.sendMailError(_MessageError["RestartSuccess"])
+                else : 
+                    firts = False
+                    session = self.driver.is_logged_in()
+                    logs.logError('Master-API',"Session on {}".format(session))
+                    time.sleep(60)
             except Exception :
                 logs.logError('Master-API',traceback.format_exc())
                 logs.sendMailError(_MessageError["Selenium"])
