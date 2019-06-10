@@ -20,7 +20,7 @@ def sendMailError(error):
     mail = """
     <h1> Error in {} </h1>
     <small>{}</small>
-    <a href="{}">Restart App</a>
+    <p><a href="{}">Restart App</a></p>
     """.format(configUtils.appName,error,configUtils.linkRestart)
     
     payload = { "from" : configUtils.mailFrom,
