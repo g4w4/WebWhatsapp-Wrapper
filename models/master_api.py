@@ -65,8 +65,8 @@ class start():
         time.sleep(30)
         while(True):
             try:
-                self.driver.wait_for_login()
-                logs.logError('Master-API',"Session on")
+                session = self.driver.is_logged_in()
+                logs.logError('Master-API',"Session on {}".format(session))
                 time.sleep(60)
             except Exception :
                 logs.logError('Master-API',traceback.format_exc())
