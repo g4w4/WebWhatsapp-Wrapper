@@ -112,7 +112,7 @@ class start():
         try:
             # chat = self.driver.get_chat_from_id(str(idChat))
             # if chat :
-            self.driver.chat_send_message(str(idChat),message)
+            self.driver.send_message_to_id(str(idChat),message)
             return _Responses["202"]
             # else:
             #     return _Responses["501"]
