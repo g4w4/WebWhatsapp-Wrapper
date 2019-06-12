@@ -110,12 +110,12 @@ class start():
 
     def sendMessage(self,idChat,message):
         try:
-            chat = self.driver.get_chat_from_id(str(idChat))
-            if chat :
-                self.driver.chat_send_message(str(idChat),message)
-                return _Responses["202"]
-            else:
-                return _Responses["501"]
+            # chat = self.driver.get_chat_from_id(str(idChat))
+            # if chat :
+            self.driver.chat_send_message(str(idChat),message)
+            return _Responses["202"]
+            # else:
+            #     return _Responses["501"]
         except Exception :
             if "raise ChatNotFoundError" in traceback.format_exc() :
                 return _Responses["501"]
