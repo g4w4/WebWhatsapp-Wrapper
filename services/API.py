@@ -55,7 +55,6 @@ def getChatList():
 @app.route("/sendMessage",methods=["POST"])
 def sendMessage():
     try:
-        print(request.form)
         message = master.sendMessage(request.form["idChat"],request.form["message"])
         return Response(json.dumps(message), mimetype='application/json')
     except Exception:
