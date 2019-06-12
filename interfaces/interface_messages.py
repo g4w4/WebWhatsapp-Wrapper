@@ -16,19 +16,18 @@ __DOCUMENT_TYPE = {
 ####################### getFormat(message,driver) ###################
 # Desc : Give format to message                                      #
 # Params : message objWapi driver obj                                #       
-# Return :  obj {chat,sendBy,messsage,type,caption}                  #                          #
+# Return :  obj {chat,sendBy,messsage,type,caption}                  #                          
 # Last Update : 30-05-19                                             #
 # By : g4w4                                                          #
 ######################################################################
 def getFormat(message,driver):
+    body = {}
     try:
-        body = {
-            'chat': message._js_obj.get('chat').get('id').get('_serialized'),
-            'sendBy': True if driver.get_phone_number() in message.sender.id else False,
-            'message' : str(message.save_media(config.pathFiles,True)) if message.type != "chat" else message.content,
-            'type' : message.type if message.type != 'document' else False,
-            'caption' : message.caption if message.type != "chat" else False
-        }
+        body['chat'] = message._js_obj.get('chat').get('id').get('_serialized'),
+        body['sendBy'] =  True if driver.get_phone_number() in message.sender.id else False
+        body['message'] = str(message.save_media(config.pathFiles,True)) if message.type != "chat" else message.content
+        body['type'] = message.type if message.type != 'document' else False
+        body['caption'] = message.caption if message.type != "chat" else False
         if message.type == 'document':
             body['type'] = 'file'
         elif message.type == 'audio' or message.type == 'ptt':
@@ -39,9 +38,9 @@ def getFormat(message,driver):
         elif message.type not in __DOCUMENT_TYPE :
             body['message'] = 'No soportado'
             logs.logError('_messages --> not suported',message)
-
         return body
 
     except Exception :
         logs.logError('_messages --> getMessage',traceback.format_exc())
-        return False
+        body['message'] = 'No soportado'
+        return body
