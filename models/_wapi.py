@@ -23,9 +23,11 @@ def rememberSession(driver,socket):
             driver.wait_for_login(10)
             if driver.is_logged_in():
                 socket.emit('change',getGeneralInfo(driver))
+                socket.emit('reboot',"Success")
                 return True
     except Exception :
         logs.logError('Selenium --> rememberSession',traceback.format_exc())
+        socket.emit('reboot',"Failed")
         return False
         # Alert #
 

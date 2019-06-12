@@ -16,6 +16,7 @@ class start():
     driver = None
     awaitLogin = None
     __Keyword = "Master-Info"
+    sessionStart = False
 
     def __init__(self,socket): 
         if not os.path.exists(config.pathSession): os.makedirs(config.pathSession)
@@ -62,6 +63,11 @@ class start():
                 logs.logError(self.__Keyword,'session started') 
                 self.socketIO.emit('change',{'whatsAppJoin':True,'accountDown':False})
                 self.socketIO.emit('sendQr', {'socketId':args[0],'error':'The session is started'} )
+
+                # If not detect session #
+                if self.sessionStart == False:
+                    self.startThreads()
+
             else :
                 logs.logError(self.__Keyword,'go to qr')
                 name = _wapi.getQrCode(self.driver)
@@ -107,15 +113,18 @@ class start():
 
     def startThreads(self):
         try:
-            logs.logError(self.__Keyword,'Init event loop')
-        
-            loop = Thread(target=_wapi.loopStatus,args=(self.driver,self.socketIO))
-            loop.start()
 
-            oldMessges = Thread(target=self.sincGetOldMessages)
-            oldMessges.start()
+            if self.sessionStart == False:
+                self.sessionStart = True
+                logs.logError(self.__Keyword,'Init event loop')
+            
+                loop = Thread(target=_wapi.loopStatus,args=(self.driver,self.socketIO))
+                loop.start()
 
-            self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver))
+                oldMessges = Thread(target=self.sincGetOldMessages)
+                oldMessges.start()
+
+                self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver))
         except Exception:
             logs.logError(self.__Keyword,traceback.format_exc())
             # Alert #
