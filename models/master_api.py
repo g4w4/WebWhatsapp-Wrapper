@@ -82,6 +82,7 @@ class start():
             try:
                 if firts :
                     logs.sendMailError(_MessageError["RestartSuccess"])
+                    firts = False
                 else : 
                     firts = False
                     session = self.driver.is_logged_in()
