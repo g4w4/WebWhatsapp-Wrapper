@@ -81,6 +81,7 @@ class start():
         while(True):
             try:
                 if firts :
+                    print("Send account started")
                     logs.sendMailError(_MessageError["RestartSuccess"])
                     firts = False
                 else : 
