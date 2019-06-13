@@ -113,7 +113,7 @@ class start():
 
     def startThreads(self):
         try:
-            
+            print("Send Old")
             oldMessges = Thread(target=self.sincGetOldMessages)
             oldMessges.start()
 
