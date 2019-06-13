@@ -113,6 +113,9 @@ class start():
 
     def startThreads(self):
         try:
+            
+            oldMessges = Thread(target=self.sincGetOldMessages)
+            oldMessges.start()
 
             if self.sessionStart == False:
                 self.sessionStart = True
@@ -120,9 +123,6 @@ class start():
             
                 loop = Thread(target=_wapi.loopStatus,args=(self.driver,self.socketIO))
                 loop.start()
-
-                oldMessges = Thread(target=self.sincGetOldMessages)
-                oldMessges.start()
 
                 self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver))
         except Exception:
