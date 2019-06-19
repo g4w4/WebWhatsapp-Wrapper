@@ -3,7 +3,7 @@ import os.path
 import datetime
 import requests
 from Utils import configUtils
-from Services import config
+from services import config
 
 
 def write_log(keyword,data):
