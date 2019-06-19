@@ -3,17 +3,19 @@ import os.path
 import datetime
 import requests
 from Utils import configUtils
+from Services import config
 
 
 def write_log(keyword,data):
     log = "{} : {} --> {}".format(str(datetime.datetime.today()),keyword,data)
-    with open("./logs.txt", 'a+') as f:
+    with open(config.masterPath+"logs.txt", 'a+') as f:
         f.write(log+'\n')
         f.close()
     print(log); 
 
 def logError(KeyError,data):
     print("{} : {} --> {}".format(str(datetime.datetime.today()),KeyError,data))
+    write_log(KeyError,data)
 
 def sendMailError(error):
 
