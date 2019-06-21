@@ -68,7 +68,7 @@ def getQrCode(driver):
 #################################################################
 def waitLogin(driver,socketId):
     try:
-        driver.wait_for_login()
+        driver.wait_for_login(120)
         driver.save_firefox_profile()
         return True
     except Exception :
@@ -107,8 +107,10 @@ def getGeneralInfo(driver):
 ######################################################################
 def getOldMessages(driver):
     try:
+        logs.logError('_messages --> getOldMessages','Empieza a pedir')
         chats = {}
         for chat in driver.get_chats_whit_messages():
+            logs.logError('_messages --> getOldMessages','Ya salio')
             idChat = str(chat.get('id'))
             chats[idChat] = []
             _messages = driver.get_all_messages_in_chat(idChat,True)
@@ -116,6 +118,7 @@ def getOldMessages(driver):
                 body = interface_messages.getFormat(message,driver)
                 chats[idChat].append(body)
 
+        logs.logError('_messages --> getOldMessages','Termino')
         return chats
     except Exception :
         logs.logError('_messages --> getOldMessages',traceback.format_exc())
