@@ -28,6 +28,7 @@ class NewMessageObserver():
     driver = None
 
     def __init__(self,driver): 
+        logs.logError('Master-bot ','Loop init')
         self.driver = driver
 
     def on_message_received(self, new_messages):   
@@ -69,13 +70,14 @@ class start():
             logs.logError('Master-bot ','Esprando session')
             _wapi.waitLogin(self.driver,None)
             self.loopMessages()
-            logs.logError('Master-bot ','Session completa')
+            logs.logError('Master-bot ','Session completa _1')
         except Exception:
             logs.logError('Master-bot Session fallida',traceback.format_exc())
         
 
 
     def loopMessages(self):
+        print("?¿")
         self.driver.subscribe_new_messages(NewMessageObserver(self.driver))
 
 
