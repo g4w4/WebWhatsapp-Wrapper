@@ -1,0 +1,6 @@
+ip = "http://45.79.18.65:6070/sendMailError"
+mailFrom = "voices.suport@voices.com.mx"
+mailTo = "ogama@voices.com.mx"
+subject = "Error API"
+appName = "VoicesAlert"
+linkRestart = "http://45.79.18.65:3000/rebootApi?appName=wsp2&folder=pyV2"
