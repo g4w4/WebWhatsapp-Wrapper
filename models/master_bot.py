@@ -64,13 +64,17 @@ class NewMessageObserver():
                         self._IdPedido[id] = keyWord
                         return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
             else : 
+                self._Ids.remove[id]
                 if self._IdPedido.get(id) == "1" :
+                    del self._IdPedido[id]
                     print(self._IdPedido)
                     return "Tu Orden es tal"
                 elif  self._IdPedido.get(id) == "2":
+                    del self._IdPedido[id]
                     print(self._IdPedido)
                     return "Tu factura es esta"
                 else :
+                    del self._IdPedido[id]
                     print(self._IdPedido)
                     return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
                  
