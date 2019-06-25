@@ -91,7 +91,7 @@ class NewMessageObserver():
                         if keyWord == "2" :
                             self._Level[id] = "2.1"
 
-                        if keyWord == "2" :
+                        if keyWord == "3" :
                             self._Level[id] = "3.1"
                         else : 
                             self._Level[id] = keyWord
