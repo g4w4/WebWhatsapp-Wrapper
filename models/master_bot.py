@@ -26,13 +26,13 @@ _Responses = {
 _Menu = {
     "000" : "Hola en que podemos ayudarte \n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
     "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
-    "1" : "Ingresa tu orden de compra con despacho ej compra-despacho",
+    "1" : "Profavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
     "2" : "Ingresa tu folio de factura",
     "3" : "Lo sentimos no tenemos asesor disponible"
 }
 
 _Data = {
-    "1" :  "Profavor ingresa tu numero de compra seguido del despacho\n Ej. numCompra-numDespacho",
+    "1" :  "Profavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
     "1.1" : {
         "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
         "113-113" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
@@ -88,9 +88,6 @@ class NewMessageObserver():
                 level = self._Level.get(id,None)
                 if level :
 
-                    if level == "1" :
-                        self._Level[id] = "1.1" if _Data.get(level,None) else level
-                    
                     print(level)
                     # GET DATA #
                     data = _Data.get(level,None)
@@ -108,7 +105,10 @@ class NewMessageObserver():
 
                     # ADD OR UPDATE LEVEL #
                     if _Menu.get(keyWord,False) != False :
-                        self._Level[id] = keyWord
+                        if keyWord == "1" :
+                            self._Level[id] = "1.1"
+                        else : 
+                            self._Level[id] = keyWord
 
                     print("Nivel --> ",self._Level)
 
