@@ -24,8 +24,11 @@ _Responses = {
 }
 
 _MessagesResponses = {
-    "000" : "Hola en que podemos ayudarte \n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor",
-    "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor "
+    "000" : "Hola en que podemos ayudarte \n1. Ver información de orden de compra \n2. Enviar una factura \n3. Hablar con un asesor",
+    "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor ",
+    "1" : "Ingresa tu orden de compra",
+    "2" : "Ingresa tu folio de factura",
+    "3" : "Lo sentimos no tenemos asesor disponible"
 }
 
 
@@ -34,6 +37,7 @@ class NewMessageObserver():
     
     driver = None
     _Ids = []
+    _IdPedido = {}
 
     def __init__(self,driver): 
         logs.logError('Master-bot ','Loop init')
@@ -49,11 +53,27 @@ class NewMessageObserver():
         try:
             print(keyWord)
             print(id)
-            if id not in self._Ids:
-                self._Ids.append(id)
-                return _MessagesResponses.get(keyWord,_MessagesResponses["000"])
+            if self._IdPedido.get(id,False) == False:
+                if id not in self._Ids:
+                    self._Ids.append(id)
+                    return _MessagesResponses.get(keyWord,_MessagesResponses["000"])
+                else : 
+                    if _MessagesResponses.get(keyWord,False) == False:
+                        _MessagesResponses.get(keyWord,_MessagesResponses["001"])
+                    else :
+                        self._IdPedido[id] = keyWord
+                        return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
             else : 
-                return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
+                if self._IdPedido.get(id) == "1" :
+                    print(self._IdPedido)
+                    return "Tu Orden es tal"
+                elif  self._IdPedido.get(id) == "2":
+                    print(self._IdPedido)
+                    return "Tu factura es esta"
+                else :
+                    print(self._IdPedido)
+                    return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
+                 
         except Exception :
             logs.logError('Master-bot initSession',traceback.format_exc())
             return _MessagesResponses["001"]
