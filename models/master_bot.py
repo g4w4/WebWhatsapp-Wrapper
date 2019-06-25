@@ -47,7 +47,7 @@ _Data = {
 }
 
 _Error ={
-    "1" : "Lo sentimos su orden no existe o esta mal escrita, puedes volver a ingresarla o escribre salir para regresar al menú principal" 
+    "1.1" : "Lo sentimos su orden no existe o esta mal escrita, puedes volver a ingresarla o escribre salir para regresar al menú principal" 
 } 
 
 
@@ -94,10 +94,12 @@ class NewMessageObserver():
                     print(level)
                     # GET DATA #
                     data = _Data.get(level,None)
-                    print(data)
-
+                    
                     # SEND RESPONSE #
-                    return data
+                    if isinstance(data, str)
+                        return data
+                    else :
+                        return data.get(keyWord,_Error[level])
 
                 else :
                      
