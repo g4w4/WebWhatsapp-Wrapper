@@ -69,7 +69,7 @@ class start():
             self.listening = True
             logs.logError('Master-bot ','Esprando session')
             _wapi.waitLogin(self.driver,None)
-            self.loopMessages()
+            self.driver.subscribe_new_messages(NewMessageObserver(self.driver))
             logs.logError('Master-bot ','Session completa _1')
         except Exception:
             logs.logError('Master-bot Session fallida',traceback.format_exc())
