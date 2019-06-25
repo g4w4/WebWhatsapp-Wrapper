@@ -46,8 +46,10 @@ class NewMessageObserver():
     def on_message_received(self, new_messages):   
         for message in new_messages:
             getResponse = self.Bot(message.content,message._js_obj.get('chat').get('id').get('_serialized'))
-            print(getResponse)
-            self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),getResponse)
+            if getResponse == None :
+                self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),_MessagesResponses["000"])
+            else :
+                self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),getResponse)
 
 
     def Bot(self,keyWord,id):
