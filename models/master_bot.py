@@ -26,24 +26,19 @@ _Responses = {
 _Menu = {
     "000" : "Hola en que podemos ayudarte \n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
     "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
-    "1" : "Profavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
-    "2" : "Ingresa tu folio de factura",
+    "1" : "Porfavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
+    "2" : "Favor de escoger el CEDIS\n 1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA",
     "3" : "Lo sentimos no tenemos asesor disponible"
 }
 
 _Data = {
-    "1" :  "Profavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
+    "1" :  "Porfavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
     "1.1" : {
         "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
         "113-113" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
         "100-100" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA"
     },
-    "2" : {
-        "0" : "Favor de escoger el CEDIS\n 1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA"
-    },
-    "2.1" : {
-        "0" : ""
-    }
+    "2" : "Favor de escoger el CEDIS\n 1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA"
 }
 
 _Error ={
@@ -113,6 +108,9 @@ class NewMessageObserver():
                     if _Menu.get(keyWord,False) != False :
                         if keyWord == "1" :
                             self._Level[id] = "1.1"
+
+                        if keyWord == "2" :
+                            self._Level[id] = "2.1"
                         else : 
                             self._Level[id] = keyWord
 
