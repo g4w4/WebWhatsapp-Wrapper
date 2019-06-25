@@ -23,6 +23,26 @@ _Responses = {
     "501" : { "code" : 200, "desc": "Completado", "data": { "desc": "Chat no existe", "status": "error" } }
 }
 
+_Ids = []
+
+_MessagesResponses = {
+    "000" : "Hola en que podemos ayudarte \n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor",
+    "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor "
+}
+
+def Bot(keyWord,id):
+    try:
+        print(keyWord)
+        print(id)
+        if id not in _Ids:
+            _Ids.append(id)
+            return _MessagesResponses.get(keyWord,_MessagesResponses["000"])
+        else : 
+            return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
+    except Exception :
+        logs.logError('Master-bot initSession',traceback.format_exc())
+        return _MessagesResponses["001"]
+
 class NewMessageObserver():
     
     driver = None
@@ -33,7 +53,8 @@ class NewMessageObserver():
 
     def on_message_received(self, new_messages):   
         for message in new_messages:
-            print(message._js_obj.get('chat').get('id').get('_serialized'))
+            getResponse = Bot(message.content,message._js_obj.get('chat').get('id').get('_serialized'))
+            print(getResponse)
             print(message.content)
             print(message.type)
             print(message)
