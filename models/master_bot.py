@@ -34,7 +34,17 @@ _Menu = {
 _Data = {
     "1" : {
         "0" : "Profavor ingresa tu numero de compra seguido del despacho\n Ej. numCompra-numDespacho",
-        "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA"
+    },
+    "1.1" : {
+        "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
+        "113-113" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
+        "100-100" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA"
+    },
+    "2" : {
+        "0" : "Favor de escoger el CEDIS\n 1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA"
+    },
+    "2.1" : {
+        "0" : ""
     }
 }
 
@@ -78,13 +88,17 @@ class NewMessageObserver():
 
                 level = self._Level.get(id,None)
                 if level :
+
+                    if level == "1" :
+                        self._Level[id] = "1.1" if _Data.get(level,None) else level
                     
                     print(level)
                     # GET DATA #
                     data = _Data.get(level,None)
                     print(data.get(keyWord,_Error[level]))
 
-                    return "true"
+                    # SEND RESPONSE #
+                    return data.get(keyWord,_Error[level])
 
                 else :
                      
