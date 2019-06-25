@@ -64,7 +64,6 @@ class NewMessageObserver():
                         self._IdPedido[id] = keyWord
                         return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
             else : 
-                del self._Ids[id]
                 if self._IdPedido.get(id) == "1" :
                     del self._IdPedido[id]
                     print(self._IdPedido)
