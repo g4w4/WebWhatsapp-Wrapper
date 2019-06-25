@@ -86,6 +86,8 @@ class NewMessageObserver():
                     print(level)
                     # GET DATA #
                     data = _Data.get(level,None)
+
+                    print("data -->",data)
                     
                     # SEND RESPONSE #
                     if isinstance(data, str) :
