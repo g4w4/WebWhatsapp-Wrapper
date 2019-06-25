@@ -26,7 +26,7 @@ _Responses = {
 _MessagesResponses = {
     "000" : "Hola en que podemos ayudarte \n1. Ver información de orden de compra \n2. Enviar una factura \n3. Hablar con un asesor",
     "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor ",
-    "1" : "Ingresa tu orden de compra",
+    "1" : "Ingresa tu orden de compra con despacho ej compra-despacho",
     "2" : "Ingresa tu folio de factura",
     "3" : "Lo sentimos no tenemos asesor disponible"
 }
@@ -64,7 +64,7 @@ class NewMessageObserver():
                         self._IdPedido[id] = keyWord
                         return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
             else : 
-                self._Ids.remove[id]
+                del self._Ids[id]
                 if self._IdPedido.get(id) == "1" :
                     del self._IdPedido[id]
                     print(self._IdPedido)
