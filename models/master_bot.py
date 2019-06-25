@@ -87,9 +87,9 @@ class NewMessageObserver():
                     if _Menu.get(keyWord,False) != False :
                         if keyWord == "1" :
                             self._Level[id] = "1.1"
-                        else if keyWord == "2" :
+                        elif keyWord == "2" :
                             self._Level[id] = "2.1"
-                        else if keyWord == "3" :
+                        elif keyWord == "3" :
                             self._Level[id] = "3.1"
                         else : 
                             self._Level[id] = keyWord
