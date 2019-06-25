@@ -11,6 +11,7 @@ from models import _wapi,observable
 from interfaces import interface_messages
 from threading import Thread
 from Utils import logs
+from dataBot import _Data,_Error,_Menu
 
 _Responses = {
     "003" : { "code" : "003" , "desc" : "Desconectado" },
@@ -22,37 +23,6 @@ _Responses = {
     "500" : { "code" : 500, "desc" : "Error interno", "data" : "Internal error"},
     "501" : { "code" : 200, "desc": "Completado", "data": { "desc": "Chat no existe", "status": "error" } }
 }
-
-_Menu = {
-    "000" : "Hola en que podemos ayudarte \n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
-    "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
-    "1" : "Porfavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
-    "2" : "Favor de escoger el CEDIS\n1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA",
-    "3" : "Lo sentimos no tenemos asesor disponible"
-}
-
-_Data = {
-    "1" :  "Porfavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
-    "1.1" : {
-        "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
-        "113-113" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
-        "100-100" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA"
-    },
-    "2" : "Favor de escoger el CEDIS\n1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA",
-    "2.1" : {
-        "1" : "1-1",
-        "2" : "2-2",
-        "3" : "3-3",
-        "4" : "4-4"
-    }
-}
-
-_Error ={
-    "1.1" : "Lo sentimos su orden no existe o esta mal escrita, puedes volver a ingresarla o escribre salir para regresar al menú principal",
-    "2.1" : "El CEDIS elegido no existe vuelve a elegir \n1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA"
-} 
-
-
 
 class NewMessageObserver():
     
@@ -120,6 +90,9 @@ class NewMessageObserver():
 
                         if keyWord == "2" :
                             self._Level[id] = "2.1"
+
+                        if keyWord == "2" :
+                            self._Level[id] = "3.1"
                         else : 
                             self._Level[id] = keyWord
 
