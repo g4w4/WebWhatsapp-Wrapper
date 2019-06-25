@@ -96,7 +96,7 @@ class NewMessageObserver():
                     data = _Data.get(level,None)
                     
                     # SEND RESPONSE #
-                    if isinstance(data, str)
+                    if isinstance(data, str) :
                         return data
                     else :
                         return data.get(keyWord,_Error[level])
