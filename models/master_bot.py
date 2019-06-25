@@ -96,6 +96,12 @@ class NewMessageObserver():
                     if isinstance(data, str) :
                         return data
                     else :
+
+                        # EXIT #
+                        if data.get(keyWord,False):
+                            self._Ids.remove(id)
+                            del self._Level[id]
+
                         return data.get(keyWord,_Error[level])
 
                 else :
