@@ -25,16 +25,14 @@ _Responses = {
 
 _Menu = {
     "000" : "Hola en que podemos ayudarte \n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
-    "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor ",
+    "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
     "1" : "Ingresa tu orden de compra con despacho ej compra-despacho",
     "2" : "Ingresa tu folio de factura",
     "3" : "Lo sentimos no tenemos asesor disponible"
 }
 
 _Data = {
-    "1" : {
-        "0" : "Profavor ingresa tu numero de compra seguido del despacho\n Ej. numCompra-numDespacho",
-    },
+    "1" :  "Profavor ingresa tu numero de compra seguido del despacho\n Ej. numCompra-numDespacho",
     "1.1" : {
         "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
         "113-113" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
@@ -97,7 +95,6 @@ class NewMessageObserver():
                     # GET DATA #
                     data = _Data.get(level,None)
                     print(data)
-                    print(level)
                     print(data.get(keyWord,_Error[level]))
 
                     # SEND RESPONSE #
