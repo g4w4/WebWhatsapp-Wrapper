@@ -80,6 +80,7 @@ class NewMessageObserver():
 
             if keyWord == "salir" :
                 self._Ids.remove(id)
+                del self._Level[id]
 
             # FIRST CONTACT #
             if id in self._Ids :
