@@ -23,13 +23,23 @@ _Responses = {
     "501" : { "code" : 200, "desc": "Completado", "data": { "desc": "Chat no existe", "status": "error" } }
 }
 
-_MessagesResponses = {
-    "000" : "Hola en que podemos ayudarte \n1. Ver información de orden de compra \n2. Enviar una factura \n3. Hablar con un asesor",
+_Menu = {
+    "000" : "Hola en que podemos ayudarte \n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
     "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Ver fecha de pedidos \n2. Enviar una factura \n3. Hablar con un asesor ",
     "1" : "Ingresa tu orden de compra con despacho ej compra-despacho",
     "2" : "Ingresa tu folio de factura",
     "3" : "Lo sentimos no tenemos asesor disponible"
 }
+
+_Data = {
+    "1" : {
+
+    }
+}
+
+_Error ={
+    "1" : "" 
+} 
 
 
 
@@ -37,7 +47,7 @@ class NewMessageObserver():
     
     driver = None
     _Ids = []
-    _IdPedido = {}
+    _Level = {}
 
     def __init__(self,driver): 
         logs.logError('Master-bot ','Loop init')
@@ -54,8 +64,39 @@ class NewMessageObserver():
 
     def Bot(self,keyWord,id):
         try:
-            print(keyWord)
-            print(id)
+            print(keyWord+" "+id)
+            response = ""
+
+            # FIRST CONTACT #
+            if id in self._Ids :
+                
+                # HAS LEVEL #
+
+                level = self._Level.get(id,None)
+                if level :
+                    
+                    print("LEVEL {}",format(level))
+                    # GET DATA #
+                    data = _Data.get(level,None)
+
+                    return "true"
+
+                else :
+                     
+                    # SEND MENU #
+                    response = _Menu.get(keyWord,_Menu["001"])
+
+                    # ADD OR UPDATE LEVEL #
+                    if _Menu.get(keyWord,False) == False :
+                        self._Level[id] = keyWord
+
+            else : 
+                self._Ids.append(id)
+                response = _Menu["000"]
+
+            # RETURN #
+            return response
+
             if self._IdPedido.get(id,False) == False:
                 if id not in self._Ids:
                     self._Ids.append(id)
