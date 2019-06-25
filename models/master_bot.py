@@ -69,7 +69,7 @@ class NewMessageObserver():
             response = ""
 
             if keyWord == "salir" :
-                del self._Ids[id]
+                self._Ids.remove(id)
 
             # FIRST CONTACT #
             if id in self._Ids :
@@ -79,11 +79,10 @@ class NewMessageObserver():
                 level = self._Level.get(id,None)
                 if level :
                     
-                    print("LEVEL {}",format(level))
+                    print(level)
                     # GET DATA #
                     data = _Data.get(level,None)
-
-                    print(data)
+                    print(data.get(keyWord,_Error[level]))
 
                     return "true"
 
