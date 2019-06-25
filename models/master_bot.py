@@ -46,6 +46,7 @@ class NewMessageObserver():
     def on_message_received(self, new_messages):   
         for message in new_messages:
             getResponse = self.Bot(message.content,message._js_obj.get('chat').get('id').get('_serialized'))
+            print(getResponse)
             self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),getResponse)
 
 
@@ -66,15 +67,15 @@ class NewMessageObserver():
             else : 
                 if self._IdPedido.get(id) == "1" :
                     del self._IdPedido[id]
-                    print(self._IdPedido)
+                    print(self._IdPedido,"--1")
                     return "Tu Orden es tal"
                 elif  self._IdPedido.get(id) == "2":
                     del self._IdPedido[id]
-                    print(self._IdPedido)
+                    print(self._IdPedido,"--2")
                     return "Tu factura es esta"
                 else :
                     del self._IdPedido[id]
-                    print(self._IdPedido)
+                    print(self._IdPedido,"--3")
                     return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
                  
         except Exception :
