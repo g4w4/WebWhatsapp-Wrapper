@@ -96,34 +96,10 @@ class NewMessageObserver():
 
             # RETURN #
             return response
-
-            if self._IdPedido.get(id,False) == False:
-                if id not in self._Ids:
-                    self._Ids.append(id)
-                    return _MessagesResponses.get(keyWord,_MessagesResponses["000"])
-                else : 
-                    if _MessagesResponses.get(keyWord,False) == False:
-                        _MessagesResponses.get(keyWord,_MessagesResponses["001"])
-                    else :
-                        self._IdPedido[id] = keyWord
-                        return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
-            else : 
-                if self._IdPedido.get(id) == "1" :
-                    del self._IdPedido[id]
-                    print(self._IdPedido,"--1")
-                    return "Tu Orden es tal"
-                elif  self._IdPedido.get(id) == "2":
-                    del self._IdPedido[id]
-                    print(self._IdPedido,"--2")
-                    return "Tu factura es esta"
-                else :
-                    del self._IdPedido[id]
-                    print(self._IdPedido,"--3")
-                    return _MessagesResponses.get(keyWord,_MessagesResponses["001"])
                  
         except Exception :
             logs.logError('Master-bot initSession',traceback.format_exc())
-            return _MessagesResponses["001"]
+            return _Menu["001"]
 
 
 class start():
