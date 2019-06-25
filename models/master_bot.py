@@ -60,7 +60,7 @@ class NewMessageObserver():
                 level = self._Level.get(id,None)
                 if level :
 
-                    print(level)
+                    print("level -->",level)
                     # GET DATA #
                     data = _Data.get(level,None)
 
@@ -87,11 +87,9 @@ class NewMessageObserver():
                     if _Menu.get(keyWord,False) != False :
                         if keyWord == "1" :
                             self._Level[id] = "1.1"
-
-                        if keyWord == "2" :
+                        else if keyWord == "2" :
                             self._Level[id] = "2.1"
-
-                        if keyWord == "3" :
+                        else if keyWord == "3" :
                             self._Level[id] = "3.1"
                         else : 
                             self._Level[id] = keyWord
