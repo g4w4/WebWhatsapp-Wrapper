@@ -95,10 +95,9 @@ class NewMessageObserver():
                     # GET DATA #
                     data = _Data.get(level,None)
                     print(data)
-                    print(data.get(keyWord,_Error[level]))
 
                     # SEND RESPONSE #
-                    return data.get(keyWord,_Error[level])
+                    return data
 
                 else :
                      
@@ -108,6 +107,8 @@ class NewMessageObserver():
                     # ADD OR UPDATE LEVEL #
                     if _Menu.get(keyWord,False) != False :
                         self._Level[id] = keyWord
+
+                    print("Nivel --> ",self._Level)
 
             else : 
                 self._Ids.append(id)
