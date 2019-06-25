@@ -96,6 +96,8 @@ class NewMessageObserver():
                     print(level)
                     # GET DATA #
                     data = _Data.get(level,None)
+                    print(data)
+                    print(level)
                     print(data.get(keyWord,_Error[level]))
 
                     # SEND RESPONSE #
