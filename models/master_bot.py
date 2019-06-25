@@ -27,7 +27,7 @@ _Menu = {
     "000" : "Hola en que podemos ayudarte \n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
     "001" : "Discupa no entendi tu respuesta puedes repetirla\n1. Consulta de Orden de Compra \n2. Consulta de inventarios en mano \n3. Consulta de artículo",
     "1" : "Porfavor ingresa tu numero de compra seguido del despacho\nEj. numCompra-numDespacho",
-    "2" : "Favor de escoger el CEDIS\n 1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA",
+    "2" : "Favor de escoger el CEDIS\n1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA",
     "3" : "Lo sentimos no tenemos asesor disponible"
 }
 
@@ -38,11 +38,18 @@ _Data = {
         "113-113" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA",
         "100-100" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA"
     },
-    "2" : "Favor de escoger el CEDIS\n 1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA"
+    "2" : "Favor de escoger el CEDIS\n1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA",
+    "2.1" : {
+        "1" : "1-1",
+        "2" : "2-2",
+        "3" : "3-3",
+        "4" : "4-4"
+    }
 }
 
 _Error ={
-    "1.1" : "Lo sentimos su orden no existe o esta mal escrita, puedes volver a ingresarla o escribre salir para regresar al menú principal" 
+    "1.1" : "Lo sentimos su orden no existe o esta mal escrita, puedes volver a ingresarla o escribre salir para regresar al menú principal",
+    "2.1" : "El CEDIS elegido no existe vuelve a elegir \n1. MONTERREY \n2. HERMOSILLO\n3. CANCUN\n4. COA"
 } 
 
 
