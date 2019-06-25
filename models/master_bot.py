@@ -33,12 +33,13 @@ _Menu = {
 
 _Data = {
     "1" : {
-
+        "0" : "Profavor ingresa tu numero de compra seguido del despacho\n Ej. numCompra-numDespacho",
+        "123-123" : "PROVEEDOR\nORDEN DE COMPRA Y DESPACHO\nCODIGO Y DESCRIPCION\nCANTIDAD\nCANTIDAD RECIBIDA\nFECHA DE NECESIDAD\nFECHA PACTADA\nCOMPRADOR\nMARCA"
     }
 }
 
 _Error ={
-    "1" : "" 
+    "1" : "Lo sentimos su orden no existe o esta mal escrita, puedes volver a ingresarla o escribre salir para regresar al menú principal" 
 } 
 
 
@@ -67,6 +68,9 @@ class NewMessageObserver():
             print(keyWord+" "+id)
             response = ""
 
+            if keyWord == "salir" :
+                del self._Ids[id]
+
             # FIRST CONTACT #
             if id in self._Ids :
                 
@@ -79,6 +83,8 @@ class NewMessageObserver():
                     # GET DATA #
                     data = _Data.get(level,None)
 
+                    print(data)
+
                     return "true"
 
                 else :
@@ -87,7 +93,7 @@ class NewMessageObserver():
                     response = _Menu.get(keyWord,_Menu["001"])
 
                     # ADD OR UPDATE LEVEL #
-                    if _Menu.get(keyWord,False) == False :
+                    if _Menu.get(keyWord,False) != False :
                         self._Level[id] = keyWord
 
             else : 
