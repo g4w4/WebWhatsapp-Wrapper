@@ -92,7 +92,7 @@ def getFormat(message,driver):
                 "type": contentMessage["type"],
                 "caption": contentMessage["caption"],
                 "akc" : 1,
-                "date" : message["timestamp"]       
+                "date" : message.timestamp       
             }
         }
 
