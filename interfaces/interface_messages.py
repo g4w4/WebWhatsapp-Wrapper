@@ -23,7 +23,7 @@ __DOCUMENT_TYPE = {
 def getFormat(message,driver):
     body = {}
     try:
-        dir(message):
+        dir(message)
         body['chat'] = message._js_obj.get('chat').get('id').get('_serialized'),
         body['sendBy'] =  True if driver.get_phone_number() in message.sender.id else False
         body['message'] = str(message.save_media(config.pathFiles,True)) if message.type != "chat" else message.content
