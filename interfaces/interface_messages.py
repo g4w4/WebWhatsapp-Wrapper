@@ -47,11 +47,11 @@ class ContentMessage():
         self.message = message
 
     def get(self):
-        if self.message.type not in __DOCUMENT_TYPE :
+        if self.message.type not in self.__DOCUMENT_TYPE :
             # MEDIA NOT SUPORTED #
             self.content.content = 'No soportado'
 
-        elif self.message.type != "chat" and self.message.type in __DOCUMENT_TYPE :
+        elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # SAVE MEDIA #
             self.content.content = str( self.message.save_media(config.pathFiles,True) )
 
@@ -59,7 +59,7 @@ class ContentMessage():
             # GET TEXT #
             self.content.content =  self.message.content
         
-        if self.message.type in __DOCUMENT_TYPE and self.message.type != "chat" :
+        if self.message.type in self.__DOCUMENT_TYPE and self.message.type != "chat" :
             # GET TYPE AND CAPTION#
             self.content.type = self.message.type
             self.content.caption = self.message.caption
