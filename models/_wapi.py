@@ -124,6 +124,9 @@ def getOldMessages(driver):
                 for message in _messages:
                     try:
                         body = interface_messages.getFormat(message,driver)
+
+                        print(body)
+                        
                         chats[idChat][body["id"]] = body["message"]
 
                     except Exception :
