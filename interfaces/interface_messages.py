@@ -53,16 +53,16 @@ class ContentMessage():
 
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # SAVE MEDIA #
-            self.content.content = str( self.message.save_media(config.pathFiles,True) )
+            self.content["content"] = str( self.message.save_media(config.pathFiles,True) )
 
         else :
             # GET TEXT #
-            self.content.content =  self.message.content
+            self.content["content"] =  self.message.content
         
         if self.message.type in self.__DOCUMENT_TYPE and self.message.type != "chat" :
             # GET TYPE AND CAPTION#
-            self.content.type = self.message.type
-            self.content.caption = self.message.caption
+            self.content["type"] = self.message.type
+            self.content["caption"] = self.message.caption
 
         return self.content
 
