@@ -13,7 +13,7 @@ class NewMessageObserver():
 
     def on_message_received(self, new_messages):   
         for message in new_messages:
-            logs.write_log('NewMessage FROM',message._js_obj.get('chat').get('id'))
+            logs.write_log('NewMessage FROM -->',message._js_obj.get('chat').get('id'))
             group = message._js_obj.get('chat').get('id').get('_serialized')
             if self.driver.is_chat_group(group) :
                 me = "{}@c.us".format(self.driver.get_phone_number())
