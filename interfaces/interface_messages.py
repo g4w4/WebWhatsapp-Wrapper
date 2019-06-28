@@ -60,8 +60,10 @@ def getFormat(message,driver):
     body = {}
     try:
         _id = getId(message)
+        print(_id)
         chat = message._js_obj.get('chat').get('id').get('_serialized')
         contentMessage = getMessageContent(message)    
+        print(contentMessage)
         
         return {
             "id" : _id.id,
