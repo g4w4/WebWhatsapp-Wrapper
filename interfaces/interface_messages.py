@@ -13,40 +13,49 @@ __DOCUMENT_TYPE = {
     'chat' : 'chat'
 }
 
-def getId(message):
-    _id = message.id
+class IdMessage(): 
+    _idMessage = dict({"id":None,"sendBy":None})
+    message = None
 
-    return {
-        "id" : _id.split("_")[2],
-        "sendBy" : 'Agent' if _id.split("_")[0] == 'false' else 'Client'  
-    }
+    def __init__(self,message):
+        self.message = message
+    
+    def get(self):
+        self._idMessage.id = self.message.id.split("-")[2]
+        self._idMessage.sendBy = "Agent" if self.message.id.split("-")[0] == "false" else "Client"
+        return self._idMessage
 
 
-def getMessageContent(message):
-    content = {
-        "content" : "",
+class ContentMessage():
+    content = dict({
+        "content" : None,
         "type" : "txt",
         "caption" : False
-    }
+    })
+    message = None
 
-    if message.type not in __DOCUMENT_TYPE :
-        # MEDIA NOT SUPORTED #
-        content.content = 'No soportado'
+    def __init__(self,message):
+        self.message = message
 
-    elif message.type != "chat" and message.type in __DOCUMENT_TYPE :
-        # SAVE MEDIA #
-        content.content = str(message.save_media(config.pathFiles,True))
+    def get(self):
+        if self.message.type not in __DOCUMENT_TYPE :
+            # MEDIA NOT SUPORTED #
+            self.content.content = 'No soportado'
 
-    else :
-        # GET TEXT #
-        content.content =  message.content
-    
-    if message.type in __DOCUMENT_TYPE and message.type != "chat" :
-        # GET TYPE AND CAPTION#
-        content.type = message.type
-        content.caption = message.caption
+        elif self.message.type != "chat" and self.message.type in __DOCUMENT_TYPE :
+            # SAVE MEDIA #
+            self.content.content = str( self.message.save_media(config.pathFiles,True) )
 
-    return content
+        else :
+            # GET TEXT #
+            self.content.content =  self.message.content
+        
+        if self.message.type in __DOCUMENT_TYPE and self.message.type != "chat" :
+            # GET TYPE AND CAPTION#
+            self.content.type = self.message.type
+            self.content.caption = self.message.caption
+
+        return self.content
 
 
 ####################### getFormat(message,driver) ###################
@@ -59,10 +68,10 @@ def getMessageContent(message):
 def getFormat(message,driver):
     body = {}
     try:
-        _id = getId(message)
-        print(_id)
+        _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
-        contentMessage = getMessageContent(message)    
+        contentMessage = ContentMessage(message).get()   
+        print(_id)
         print(contentMessage)
         
         return {
