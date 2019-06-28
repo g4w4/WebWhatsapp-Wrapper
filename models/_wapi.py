@@ -101,22 +101,38 @@ def getGeneralInfo(driver):
 ####################### getOldMessages(driver) #######################
 # Desc : Get general info of account connected                       #
 # Params : driver obj                                                #       
-# Return :  obj {whatsAppJoin:Bool,bateryLevel:number,numero:number} #                          #
-# Last Update : 30-05-19                                             #
+# Return :  { ObjChats ... } #                          
+# Last Update : 27-06-19                                             #
 # By : g4w4                                                          #
 ######################################################################
 def getOldMessages(driver):
     try:
-        logs.logError('_messages --> getOldMessages','Empieza a pedir')
+        #Variable return 
         chats = {}
-        for chat in driver.get_chats_whit_messages():
-            logs.logError('_messages --> getOldMessages','Ya salio')
-            idChat = str(chat.get('id'))
-            chats[idChat] = []
-            _messages = driver.get_all_messages_in_chat(idChat,True)
-            for message in _messages:
-                body = interface_messages.getFormat(message,driver)
-                chats[idChat].append(body)
+
+        logs.logError('_messages --> getOldMessages','Get all chats')
+        _allChats = driver.get_chats_whit_messages()
+        
+        for chat in _allChats:
+            try:
+                
+                idChat = str(chat.get('id'))
+                chats[idChat] = []
+
+                logs.logError('_messages --> getOldMessages','Get all messages of chat')
+                _messages = driver.get_all_messages_in_chat(idChat,True)
+
+                for message in _messages:
+                    try:
+
+                        body = interface_messages.getFormat(message,driver)
+                        chats[idChat].append(body)
+                        
+                    except Exception :
+                        logs.logError(' for message in _messages --> getOldMessages',traceback.format_exc())
+
+            except Exception :
+                logs.logError('for driver.get_chats_whit_messages()--> getOldMessages',traceback.format_exc())
 
         logs.logError('_messages --> getOldMessages','Termino')
         return chats
