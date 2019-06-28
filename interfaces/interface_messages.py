@@ -39,7 +39,7 @@ class ContentMessage():
     content = dict({
         "content" : None,
         "type" : "txt",
-        "caption" : False
+        "caption" : "false"
     })
     message = None
 
