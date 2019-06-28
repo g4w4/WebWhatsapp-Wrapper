@@ -13,6 +13,42 @@ __DOCUMENT_TYPE = {
     'chat' : 'chat'
 }
 
+def getId(message):
+    _id = message.id
+
+    return {
+        "id" : _id.split("_")[2],
+        "sendBy" : 'Agent' if _id.split("_")[0] == 'false' else 'Client'  
+    }
+
+
+def getMessageContent(message):
+    content = {
+        "content" : "",
+        "type" : "txt",
+        "caption" : False
+    }
+
+    if message.type not in __DOCUMENT_TYPE :
+        # MEDIA NOT SUPORTED #
+        content.content = 'No soportado'
+
+    elif message.type != "chat" and message.type in __DOCUMENT_TYPE :
+        # SAVE MEDIA #
+        content.content = str(message.save_media(config.pathFiles,True))
+
+    else :
+        # GET TEXT #
+        content.content =  message.content
+    
+    if message.type in __DOCUMENT_TYPE and message.type != "chat" :
+        # GET TYPE AND CAPTION#
+        content.type = message.type
+        content.caption = message.caption
+
+    return content
+
+
 ####################### getFormat(message,driver) ###################
 # Desc : Give format to message                                      #
 # Params : message objWapi driver obj                                #       
@@ -23,23 +59,23 @@ __DOCUMENT_TYPE = {
 def getFormat(message,driver):
     body = {}
     try:
-        print(message.id)
-        body['chat'] = message._js_obj.get('chat').get('id').get('_serialized'),
-        body['sendBy'] =  True if driver.get_phone_number() in message.sender.id else False
-        body['message'] = str(message.save_media(config.pathFiles,True)) if message.type != "chat" else message.content
-        body['type'] = message.type if message.type != 'document' else False
-        body['caption'] = message.caption if message.type != "chat" else False
-        if message.type == 'document':
-            body['type'] = 'file'
-        elif message.type == 'audio' or message.type == 'ptt':
-            content =  str(message.save_media(config.pathFiles,True))
-            os.rename(content,"{}.ogg".format(content))
-            body['message'] = "{}.ogg".format(content)
-            body['type'] = 'ogg'
-        elif message.type not in __DOCUMENT_TYPE :
-            body['message'] = 'No soportado'
-            logs.logError('_messages --> not suported',message)
-        return body
+        _id = getId(message)
+        chat = message._js_obj.get('chat').get('id').get('_serialized')
+        contentMessage = getMessageContent(message)    
+        
+        return {
+            "id" : _id.id,
+            "message" : {
+                "chat": chat,
+                "sendBy": _id.sendBy,
+                "message": contentMessage.content,
+                "type": contentMessage.type,
+                "caption": contentMessage.caption,
+                "akc" : 1,
+                "date" : message.timestamp       
+            }
+        }
 
     except Exception :
         logs.logError('Error interface message --> ',traceback.format_exc())
+
