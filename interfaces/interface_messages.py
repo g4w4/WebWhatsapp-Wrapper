@@ -28,6 +28,14 @@ class IdMessage():
 
 
 class ContentMessage():
+    __DOCUMENT_TYPE = {
+        'document' : 'document',
+        'image' : 'image',
+        'video' : 'video',
+        'audio' : 'audio',
+        'ptt' : 'ptt',
+        'chat' : 'chat'
+    }
     content = dict({
         "content" : None,
         "type" : "txt",
