@@ -84,15 +84,15 @@ def getFormat(message,driver):
         print(contentMessage)
         
         return {
-            "id" : _id.id,
+            "id" : _id["id"],
             "message" : {
                 "chat": chat,
-                "sendBy": _id.sendBy,
-                "message": contentMessage.content,
-                "type": contentMessage.type,
-                "caption": contentMessage.caption,
+                "sendBy": _id["sendBy"],
+                "message": contentMessage["content"],
+                "type": contentMessage["type"],
+                "caption": contentMessage["caption"],
                 "akc" : 1,
-                "date" : message.timestamp       
+                "date" : message["timestamp"]       
             }
         }
 
