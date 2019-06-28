@@ -116,7 +116,7 @@ def getOldMessages(driver):
         for chat in _allChats:
             try:
                 idChat = str(chat.get('id'))
-                chats[idChat] = []
+                chats[idChat] = {}
 
                 logs.logError('_messages --> getOldMessages','Get all messages of chat')
                 _messages = driver.get_all_messages_in_chat(idChat,True)
