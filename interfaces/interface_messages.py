@@ -21,6 +21,8 @@ class IdMessage():
         self.message = message
     
     def get(self):
+        print( self.message.id )
+        print(  self.message.id.split("-") )
         self._idMessage.id = self.message.id.split("-")[2]
         self._idMessage.sendBy = "Agent" if self.message.id.split("-")[0] == "false" else "Client"
         return self._idMessage
