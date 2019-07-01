@@ -192,7 +192,8 @@ def getScreen(driver,socketIO,id):
 def sendText(driver,socketIO,id,message):
     try:
         logs.logError('_wapi --> sendText','send')
-        driver.send_message_to_id(id,message)
+        rid = driver.send_message_to_id(id,message)
+        logs.logError('_wapi --> sendText',rid)
         driver.chat_send_seen(id)
         socketIO.emit('newMessage',{'chat':id,'message':message,'sendBy':'Agent'})
     except Exception :
