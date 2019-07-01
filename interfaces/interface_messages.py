@@ -88,7 +88,8 @@ def getFormat(message,driver):
             "caption": contentMessage["caption"],
             "akc" : 1,
             "date" : message.timestamp.strftime("%Y-%m-%d %H:%M"),
-            "id" : _id["id"]       
+            "id" : _id["id"],
+            "app" : "whatsApp"       
         }
 
     except Exception :
