@@ -24,6 +24,7 @@ class IdMessage():
     
     def get(self):
         _id = self.message.id.split("_")
+        print('ID',_id)
         self._idMessage["id"] = _id[2]
         self._idMessage["sendBy"] = "Agent" if _id[0] == "false" else "Client"
         return self._idMessage
@@ -49,6 +50,8 @@ class ContentMessage():
         self.message = message
 
     def get(self):
+
+        print('Content',self.message.type)
         if self.message.type not in self.__DOCUMENT_TYPE :
             # MEDIA NOT SUPORTED #
             self.content.content = 'No soportado'
@@ -78,13 +81,10 @@ class ContentMessage():
 ######################################################################
 def getFormat(message,driver):
     try:
-        print(message.content)
-        objId = IdMessage(message)
-        _id = objId.get()
-        objContent = ContentMessage(message)
+        _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
-        contentMessage = objContent.get()   
-        print("--->",{
+        contentMessage = ContentMessage(message).get()   
+        print("---> ", {
             "chat": chat,
             "sendBy": _id["sendBy"],
             "message": contentMessage["content"],
