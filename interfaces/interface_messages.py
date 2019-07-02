@@ -78,6 +78,7 @@ class ContentMessage():
 ######################################################################
 def getFormat(message,driver):
     try:
+        print(message.content)
         _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
         contentMessage = ContentMessage(message).get()   
