@@ -64,6 +64,8 @@ class NewMessageObserver():
                     # GET DATA #
                     data = _Data.get(level,None)
 
+                    print("data -->" data)
+
                     # Sub menu #
                     if level == "1.1" :
                         data = data.get(keyWord, None)
