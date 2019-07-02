@@ -27,6 +27,8 @@ class IdMessage():
         print('ID',_id)
         self._idMessage["id"] = _id[2]
         self._idMessage["sendBy"] = "Agent" if _id[0] == "false" else "Client"
+        print('ID --> 3',_id[0])
+        print('ID --> 3',self._idMessage)
         return self._idMessage
 
 
@@ -51,7 +53,7 @@ class ContentMessage():
 
     def get(self):
 
-        print('Content',self.message.type)
+        print('content',self.message.type)
         if self.message.type not in self.__DOCUMENT_TYPE :
             # MEDIA NOT SUPORTED #
             self.content.content = 'No soportado'
@@ -69,6 +71,7 @@ class ContentMessage():
             self.content["type"] = self.message.type
             self.content["caption"] = self.message.caption
 
+        print('content -->2',self.content)
         return self.content
 
 
@@ -81,12 +84,12 @@ class ContentMessage():
 ######################################################################
 def getFormat(message,driver):
     try:
-        _id = IdMessage(message)
+        _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
-        contentMessage = ContentMessage(message) 
+        contentMessage = ContentMessage(message).get()   
         print("---> ", {
             "chat": chat,
-            "sendBy": _id.get()["sendBy"],
+            "sendBy": _id["sendBy"],
             "message": contentMessage["content"],
             "type": contentMessage["type"],
             "caption": contentMessage["caption"],
@@ -97,13 +100,13 @@ def getFormat(message,driver):
         })
         return {
             "chat": chat,
-            "sendBy": _id.get()["sendBy"],
-            "message": contentMessage.get()["content"],
-            "type": contentMessage.get()["type"],
-            "caption": contentMessage.get()["caption"],
+            "sendBy": _id["sendBy"],
+            "message": contentMessage["content"],
+            "type": contentMessage["type"],
+            "caption": contentMessage["caption"],
             "akc": 1,
             "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
-            "id": _id.get()["id"],
+            "id": _id["id"],
             "app": "whatsApp"       
         }
 
