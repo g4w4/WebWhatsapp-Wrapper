@@ -28,11 +28,7 @@ class IdMessage():
         print('ID',_id)
         self._idMessage["id"] = _id[2]
         self._idMessage["sendBy"] = "Agent" if _id[0] == "false" else "Client"
-        print('ID --> 3',_id[0])
-        print('ID --> 3',self._idMessage)
-        print('ID --> 4',dir(self.message.sender))
-        print('ID --> 5',self.message.sender._js_obj )
-        print('ID --> 6',dir(self.message.sender._js_obj) )
+        print('ID --> 6',dir(self.message.sender._js_obj['formattedName']) )
         return self._idMessage
 
 
