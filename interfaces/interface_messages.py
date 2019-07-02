@@ -28,7 +28,7 @@ class IdMessage():
         print('ID',_id)
         self._idMessage["id"] = _id[2]
         self._idMessage["sendBy"] = "Agent" if _id[0] == "false" else "Client"
-        print('ID --> 6',dir(self.message.sender._js_obj['formattedName']) )
+        print('ID --> 6',self.message.sender._js_obj['formattedName'])
         return self._idMessage
 
 
