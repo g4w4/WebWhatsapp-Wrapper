@@ -93,7 +93,7 @@ def getGeneralInfo(driver):
                 "bateryLevel" : driver.get_battery_level(),
                 "numero" : driver.get_phone_number()
             }
-    except Exception as e:
+    except Exception :
         logs.logError('_wapi --> getGeneralInfo',traceback.format_exc())
         return False
         

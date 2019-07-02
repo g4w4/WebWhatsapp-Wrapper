@@ -55,7 +55,7 @@ class ContentMessage():
 
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # SAVE MEDIA #
-            self.content["content"] = str( self.message.save_media(config.pathFiles,True) )
+            self.content["content"] = str( self.message.save_media(config.pathFiles,True) ).replace(config.pathFiles,"")
 
         else :
             # GET TEXT #
