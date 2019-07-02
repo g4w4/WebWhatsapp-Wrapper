@@ -193,9 +193,9 @@ def sendText(driver,socketIO,id,message):
     try:
         logs.logError('_wapi --> sendText','send')
         rid = driver.send_message_to_id(id,message)
-        logs.logError('_wapi --> sendText',rid)
+        logs.logError('_wapi --> sendText ---> ',rid)
         driver.chat_send_seen(id)
-        socketIO.emit('newMessage',{'chat':id,'message':message,'sendBy':'Agent'})
+        socketIO.emit('newMessage',interface_messages.getFormatText(message,id))
     except Exception :
         logs.logError('_wapi --> sendText',traceback.format_exc())
         socketIO.emit('errorSendTxt',{'chat':id,'message':message,'sendBy':'Agent'})

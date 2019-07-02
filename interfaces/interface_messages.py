@@ -3,6 +3,8 @@ import shutil
 import traceback
 import os
 from services import config
+import datetime,uuid
+
 
 __DOCUMENT_TYPE = {
     'document' : 'document',
@@ -86,12 +88,29 @@ def getFormat(message,driver):
             "message": contentMessage["content"],
             "type": contentMessage["type"],
             "caption": contentMessage["caption"],
-            "akc" : 1,
-            "date" : message.timestamp.strftime("%Y-%m-%d %H:%M"),
-            "id" : _id["id"],
-            "app" : "whatsApp"       
+            "akc": 1,
+            "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
+            "id": _id["id"],
+            "app": "whatsApp"       
         }
 
     except Exception :
-        logs.logError('Error interface message --> ',traceback.format_exc())
+        logs.logError('Error getFormat --> ',traceback.format_exc())
+
+def getFormatText(message,chatId):
+
+    try:
+        return {
+            "chat": chatId,
+            "sendBy": "Agent",
+            "message": message,
+            "type": "txt",
+            "caption": "false",
+            "akc": 1,
+            "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "id": uuid.uuid1().hex,
+            "app": "whatsApp"       
+        }
+    except Exception :
+        logs.logError('Error getFormatText --> ',traceback.format_exc())
 
