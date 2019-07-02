@@ -16,11 +16,12 @@ __DOCUMENT_TYPE = {
 }
 
 class IdMessage(): 
-    _idMessage = dict({"id":None,"sendBy":None})
+    _idMessage = None
     message = None
 
     def __init__(self,message):
         self.message = message
+        self._idMessage = dict({"id":None,"sendBy":None})
     
     def get(self):
         _id = self.message.id.split("_")
@@ -41,15 +42,16 @@ class ContentMessage():
         'ptt' : 'ptt',
         'chat' : 'chat'
     }
-    content = dict({
-        "content" : None,
-        "type" : "txt",
-        "caption" : "false"
-    })
+    content = None
     message = None
 
     def __init__(self,message):
         self.message = message
+        self.content = dict({
+            "content" : None,
+            "type" : "txt",
+            "caption" : "false"
+        })
 
     def get(self):
 
