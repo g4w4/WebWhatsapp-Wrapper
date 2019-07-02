@@ -31,7 +31,7 @@ class IdMessage():
         print('ID --> 3',_id[0])
         print('ID --> 3',self._idMessage)
         print('ID --> 4',dir(self.message.sender))
-        print('ID --> 5',self.message.sender).id)
+        print('ID --> 5',self.message.sender.id )
         return self._idMessage
 
 
