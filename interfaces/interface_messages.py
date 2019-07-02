@@ -31,7 +31,8 @@ class IdMessage():
         print('ID --> 3',_id[0])
         print('ID --> 3',self._idMessage)
         print('ID --> 4',dir(self.message.sender))
-        print('ID --> 5',self.message.sender.id )
+        print('ID --> 5',self.message.sender._js_obj )
+        print('ID --> 6',dir(self.message.sender._js_obj) )
         return self._idMessage
 
 
@@ -86,6 +87,7 @@ class ContentMessage():
 ######################################################################
 def getFormat(message,driver):
     try:
+        phoneNumber = driver.
         _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
         contentMessage = ContentMessage(message).get()   
