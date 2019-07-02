@@ -30,7 +30,7 @@ class IdMessage():
         self._idMessage["sendBy"] = "Agent" if _id[0] == "false" else "Client"
         print('ID --> 3',_id[0])
         print('ID --> 3',self._idMessage)
-        print('ID --> 4',self.message.sender)
+        print('ID --> 4',dir(self.message.sender))
         return self._idMessage
 
 
