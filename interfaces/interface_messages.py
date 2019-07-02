@@ -79,9 +79,11 @@ class ContentMessage():
 def getFormat(message,driver):
     try:
         print(message.content)
-        _id = IdMessage(message).get()
+        objId = IdMessage(message)
+        _id = objId.get()
+        objContent = ContentMessage(message)
         chat = message._js_obj.get('chat').get('id').get('_serialized')
-        contentMessage = ContentMessage(message).get()   
+        contentMessage = objContent.get()   
         print("--->",{
             "chat": chat,
             "sendBy": _id["sendBy"],
