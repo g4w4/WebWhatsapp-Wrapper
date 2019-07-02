@@ -38,7 +38,7 @@ class NewMessageObserver():
         for message in new_messages:
             getResponse = self.Bot(message.content,message._js_obj.get('chat').get('id').get('_serialized'))
             if getResponse == None :
-                self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),_MessagesResponses["000"])
+                self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),_Menu["001"] )
             else :
                 self.driver.send_message_to_id(message._js_obj.get('chat').get('id').get('_serialized'),getResponse)
 
@@ -64,7 +64,14 @@ class NewMessageObserver():
                     # GET DATA #
                     data = _Data.get(level,None)
 
-                    print("data -->",data)
+                    # Sub menu #
+                    if level == "1.1" :
+                        data = data.get(keyWord, None)
+                        
+                        if data != None :
+                            self._Level[id] = "1.1.{}".format(keyWord)
+                        else : 
+                            return _Error["1.1"]
                     
                     # SEND RESPONSE #
                     if isinstance(data, str) :
