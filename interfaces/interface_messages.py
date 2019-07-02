@@ -81,7 +81,17 @@ def getFormat(message,driver):
         _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
         contentMessage = ContentMessage(message).get()   
-        print("--->",message)
+        print("--->",{
+            "chat": chat,
+            "sendBy": _id["sendBy"],
+            "message": contentMessage["content"],
+            "type": contentMessage["type"],
+            "caption": contentMessage["caption"],
+            "akc": 1,
+            "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
+            "id": _id["id"],
+            "app": "whatsApp"       
+        })
         return {
             "chat": chat,
             "sendBy": _id["sendBy"],
