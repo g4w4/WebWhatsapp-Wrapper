@@ -114,3 +114,20 @@ def getFormatText(message,chatId):
     except Exception :
         logs.logError('Error getFormatText --> ',traceback.format_exc())
 
+def getFormatFile(message,chatId,typeFile,caption):
+
+    try:
+        return {
+            "chat": chatId,
+            "sendBy": "Agent",
+            "message": message,
+            "type": typeFile,
+            "caption": caption,
+            "akc": 1,
+            "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "id": uuid.uuid1().hex,
+            "app": "whatsApp"       
+        }
+    except Exception :
+        logs.logError('Error getFormatText --> ',traceback.format_exc())
+
