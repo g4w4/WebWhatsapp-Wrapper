@@ -30,6 +30,7 @@ class IdMessage():
         self._idMessage["sendBy"] = "Agent" if _id[0] == "false" else "Client"
         print('ID --> 3',_id[0])
         print('ID --> 3',self._idMessage)
+        print('ID --> 4',self.message.sender)
         return self._idMessage
 
 
@@ -55,7 +56,6 @@ class ContentMessage():
 
     def get(self):
 
-        print('content',self.message.type)
         if self.message.type not in self.__DOCUMENT_TYPE :
             # MEDIA NOT SUPORTED #
             self.content.content = 'No soportado'
@@ -73,7 +73,6 @@ class ContentMessage():
             self.content["type"] = self.message.type
             self.content["caption"] = self.message.caption
 
-        print('content -->2',self.content)
         return self.content
 
 
@@ -116,7 +115,6 @@ def getFormat(message,driver):
         logs.logError('Error getFormat --> ',traceback.format_exc())
 
 def getFormatText(message,chatId):
-
     try:
         return {
             "chat": chatId,
