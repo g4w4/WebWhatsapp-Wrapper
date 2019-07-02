@@ -81,12 +81,12 @@ class ContentMessage():
 ######################################################################
 def getFormat(message,driver):
     try:
-        _id = IdMessage(message).get()
+        _id = IdMessage(message)
         chat = message._js_obj.get('chat').get('id').get('_serialized')
-        contentMessage = ContentMessage(message).get()   
+        contentMessage = ContentMessage(message) 
         print("---> ", {
             "chat": chat,
-            "sendBy": _id["sendBy"],
+            "sendBy": _id.get()["sendBy"],
             "message": contentMessage["content"],
             "type": contentMessage["type"],
             "caption": contentMessage["caption"],
@@ -97,13 +97,13 @@ def getFormat(message,driver):
         })
         return {
             "chat": chat,
-            "sendBy": _id["sendBy"],
-            "message": contentMessage["content"],
-            "type": contentMessage["type"],
-            "caption": contentMessage["caption"],
+            "sendBy": _id.get()["sendBy"],
+            "message": contentMessage.get()["content"],
+            "type": contentMessage.get()["type"],
+            "caption": contentMessage.get()["caption"],
             "akc": 1,
             "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
-            "id": _id["id"],
+            "id": _id.get()["id"],
             "app": "whatsApp"       
         }
 
