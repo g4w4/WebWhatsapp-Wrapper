@@ -26,7 +26,7 @@ class IdMessage():
     def get(self):
         _id = self.message.id.split("_")
         whoSend = self.message.sender._js_obj['formattedName']
-        print("more",message)
+        print("more",self.message)
         print("other",_id)
         print("whoSend",self._idMessage["sendBy"])
         self._idMessage["id"] = _id[2]
