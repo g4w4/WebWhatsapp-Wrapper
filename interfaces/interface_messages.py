@@ -25,10 +25,8 @@ class IdMessage():
     
     def get(self):
         _id = self.message.id.split("_")
-        whoSend = self.message.sender._js_obj['formattedName']
-        print("----->",self.message._js_obj['sender']['isMe'])
         self._idMessage["id"] = _id[2]
-        self._idMessage["sendBy"] = "Agent" if whoSend == "You" else "Client"
+        self._idMessage["sendBy"] = "Agent" if self.message._js_obj['sender']['isMe'] else "Client"
         return self._idMessage
 
 
