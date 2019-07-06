@@ -20,8 +20,8 @@ def getContacts(x, driver):
 
 def factory_message(js_obj, driver):
     """Factory function for creating appropriate object given selenium JS object"""
-    print("ok",js_obj)
-    print("dir",dir(js_obj))
+    #print("ok",js_obj)
+    #print("dir",dir(js_obj))
     if js_obj is None:
         return
 
