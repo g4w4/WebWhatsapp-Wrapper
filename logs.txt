@@ -1,0 +1,1346 @@
+2019-08-26 23:38:42.890441 : Socket-Info --> Connection whit server
+2019-08-26 23:38:42.959260 : Master-Info --> Connection success
+2019-08-26 23:38:56.473265 : Master-Info --> Check if have cache
+2019-08-26 23:39:07.086716 : Selenium --> rememberSession --> Traceback (most recent call last):
+  File "/app/pyCliente_v2.0/models/_wapi.py", line 23, in rememberSession
+    driver.wait_for_login(10)
+  File "/app/pyCliente_v2.0/webwhatsapi/__init__.py", line 272, in wait_for_login
+    EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage']))
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
+2019-08-26 23:39:07.090201 : Master-Info --> Cache is False
+2019-08-26 23:44:43.931183 : Socket-Info --> Connection whit server
+2019-08-26 23:44:43.945909 : Master-Info --> Connection success
+2019-08-26 23:44:50.152395 : Master-Info --> Check if have cache
+2019-08-26 23:45:00.709380 : Selenium --> rememberSession --> Traceback (most recent call last):
+  File "/app/pyCliente_v2.0/models/_wapi.py", line 23, in rememberSession
+    driver.wait_for_login(10)
+  File "/app/pyCliente_v2.0/webwhatsapi/__init__.py", line 272, in wait_for_login
+    EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage']))
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
+2019-08-26 23:45:00.715082 : Master-Info --> Cache is False
+2019-08-26 23:51:26.310374 : Master-Info --> on getQr
+2019-08-26 23:51:26.327448 : Master-Info --> go to qr
+2019-08-26 23:51:26.936002 : Master-Info --> send qr
+2019-08-26 23:52:24.253067 : Socket-Info --> Connection whit server
+2019-08-26 23:52:24.264777 : Master-Info --> Connection success
+2019-08-26 23:52:30.342028 : Master-Info --> Check if have cache
+2019-08-26 23:52:30.882426 : Selenium --> rememberSession --> Traceback (most recent call last):
+  File "/app/pyCliente_v2.0/models/_wapi.py", line 23, in rememberSession
+    driver.wait_for_login(10)
+  File "/app/pyCliente_v2.0/webwhatsapi/__init__.py", line 272, in wait_for_login
+    EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage']))
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/wait.py", line 71, in until
+    value = method(self._driver)
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/expected_conditions.py", line 128, in __call__
+    return _element_if_visible(_find_element(driver, self.locator))
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/expected_conditions.py", line 415, in _find_element
+    raise e
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/expected_conditions.py", line 411, in _find_element
+    return driver.find_element(*by)
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/remote/webdriver.py", line 978, in find_element
+    'value': value})['value']
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.WebDriverException: Message: Failed to decode response from marionette
+
+
+2019-08-26 23:52:30.887356 : Master-Info --> Cache is False
+2019-08-26 23:52:39.443723 : Master-Info --> on getQr
+2019-08-26 23:52:44.488430 : Master-Info --> Traceback (most recent call last):
+  File "/app/pyCliente_v2.0/models/master_hd.py", line 62, in on_getQr
+    if self.driver.is_logged_in():
+  File "/app/pyCliente_v2.0/webwhatsapi/__init__.py", line 267, in is_logged_in
+    return self.wapi_functions.isLoggedIn()
+  File "/app/pyCliente_v2.0/webwhatsapi/wapi_js_wrapper.py", line 44, in __getattr__
+    wapi_functions = dir(self)
+  File "/app/pyCliente_v2.0/webwhatsapi/wapi_js_wrapper.py", line 67, in __dir__
+    self.driver.execute_script(script.read())
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/remote/webdriver.py", line 636, in execute_script
+    'args': converted_args})['value']
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/remote/webdriver.py", line 321, in execute
+    self.error_handler.check_response(response)
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/remote/errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.InvalidSessionIdException: Message: Tried to run command without establishing a connection
+
+
+2019-08-26 23:54:17.622654 : Socket-Info --> Connection whit server
+2019-08-26 23:54:17.635781 : Master-Info --> Connection success
+2019-08-26 23:54:24.493064 : Master-Info --> Check if have cache
+2019-08-26 23:54:35.057792 : Selenium --> rememberSession --> Traceback (most recent call last):
+  File "/app/pyCliente_v2.0/models/_wapi.py", line 23, in rememberSession
+    driver.wait_for_login(10)
+  File "/app/pyCliente_v2.0/webwhatsapi/__init__.py", line 272, in wait_for_login
+    EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage']))
+  File "/usr/local/lib/python3.5/dist-packages/selenium/webdriver/support/wait.py", line 80, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
+2019-08-26 23:54:35.065766 : Master-Info --> Cache is False
+2019-08-26 23:54:41.944129 : Master-Info --> on getQr
+2019-08-26 23:54:41.962713 : Master-Info --> go to qr
+2019-08-26 23:54:42.077231 : Master-Info --> send qr
+2019-08-26 23:55:10.628812 : Master-Info --> startThreads
+2019-08-26 23:55:10.670336 : _messages --> getOldMessages --> Get all chats
+2019-08-26 23:55:10.671270 : Master-Info --> Init event loop
+2019-08-26 23:55:10.698984 : _messages --> getOldMessages --> Termino
+2019-08-26 23:56:10.644247 : _messages --> loopStatus --> Send account info
+2019-08-26 23:57:10.677324 : _messages --> loopStatus --> Send account info
+2019-08-26 23:58:10.680876 : _messages --> loopStatus --> Send account info
+2019-08-26 23:58:48.378557 : Master-Info --> Connection end
+2019-08-26 23:58:49.421451 : Master-Info --> Connection reconnect
+2019-08-26 23:58:49.434883 : Master-Info --> Connection success
+2019-08-26 23:58:49.482725 : Master-Info --> startThreads
+2019-08-26 23:58:49.487081 : _messages --> getOldMessages --> Get all chats
+2019-08-26 23:58:49.500222 : _messages --> getOldMessages --> Termino
+2019-08-26 23:59:10.681513 : _messages --> loopStatus --> Send account info
+2019-08-26 23:59:32.796525 : NewMessage FROM --> --> {'_serialized': '5215569388165@c.us', 'server': 'c.us', 'user': '5215569388165'}
+2019-08-27 00:00:10.650658 : _messages --> loopStatus --> Send account info
+2019-08-27 00:01:10.677123 : _messages --> loopStatus --> Send account info
+2019-08-27 00:02:10.704824 : _messages --> loopStatus --> Send account info
+2019-08-27 00:03:10.733812 : _messages --> loopStatus --> Send account info
+2019-08-27 00:04:10.761236 : _messages --> loopStatus --> Send account info
+2019-08-27 00:05:10.775134 : _messages --> loopStatus --> Send account info
+2019-08-27 00:06:10.806245 : _messages --> loopStatus --> Send account info
+2019-08-27 00:07:10.823284 : _messages --> loopStatus --> Send account info
+2019-08-27 00:08:10.845302 : _messages --> loopStatus --> Send account info
+2019-08-27 00:09:10.823044 : _messages --> loopStatus --> Send account info
+2019-08-27 00:10:10.793480 : _messages --> loopStatus --> Send account info
+2019-08-27 00:11:10.808599 : _messages --> loopStatus --> Send account info
+2019-08-27 00:12:10.800530 : _messages --> loopStatus --> Send account info
+2019-08-27 00:13:10.808146 : _messages --> loopStatus --> Send account info
+2019-08-27 00:14:10.831779 : _messages --> loopStatus --> Send account info
+2019-08-27 00:15:10.850035 : _messages --> loopStatus --> Send account info
+2019-08-27 00:15:48.898187 : Master-Info --> Connection end
+2019-08-27 00:15:49.927650 : Master-Info --> Connection reconnect
+2019-08-27 00:16:10.870591 : _messages --> loopStatus --> Send account info
+2019-08-27 00:16:57.692561 : Master-Info --> Connection end
+2019-08-27 00:17:10.881682 : _messages --> loopStatus --> Send account info
+2019-08-27 00:18:28.998461 : _messages --> loopStatus --> Send account info
+2019-08-27 00:19:28.984095 : _messages --> loopStatus --> Send account info
+2019-08-27 00:20:29.006089 : _messages --> loopStatus --> Send account info
+2019-08-27 00:21:29.030403 : _messages --> loopStatus --> Send account info
+2019-08-27 00:22:29.051064 : _messages --> loopStatus --> Send account info
+2019-08-27 00:23:29.069711 : _messages --> loopStatus --> Send account info
+2019-08-27 00:24:29.085567 : _messages --> loopStatus --> Send account info
+2019-08-27 00:25:29.096742 : _messages --> loopStatus --> Send account info
+2019-08-27 00:26:29.078274 : _messages --> loopStatus --> Send account info
+2019-08-27 00:27:29.066814 : _messages --> loopStatus --> Send account info
+2019-08-27 00:28:29.078976 : _messages --> loopStatus --> Send account info
+2019-08-27 00:29:12.181035 : Socket-Info --> Connection whit server
+2019-08-27 00:29:12.190953 : Master-Info --> Connection success
+2019-08-27 00:29:23.641230 : Master-Info --> Check if have cache
+2019-08-27 00:29:26.240870 : Master-Info --> Cache is True
+2019-08-27 00:29:26.247031 : _messages --> getOldMessages --> Get all chats
+2019-08-27 00:29:26.247781 : Master-Info --> Init event loop
+2019-08-27 00:29:26.272412 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 00:29:26.295225 : _messages --> getOldMessages --> Termino
+2019-08-27 00:30:26.207404 : _messages --> loopStatus --> Send account info
+2019-08-27 00:31:26.226696 : _messages --> loopStatus --> Send account info
+2019-08-27 00:32:26.253078 : _messages --> loopStatus --> Send account info
+2019-08-27 00:33:26.253489 : _messages --> loopStatus --> Send account info
+2019-08-27 00:34:26.224962 : _messages --> loopStatus --> Send account info
+2019-08-27 00:35:26.244509 : _messages --> loopStatus --> Send account info
+2019-08-27 00:36:26.274427 : _messages --> loopStatus --> Send account info
+2019-08-27 00:36:43.640931 : Master-Info --> Connection end
+2019-08-27 00:36:43.682115 : Master-Info --> Connection reconnect
+2019-08-27 00:36:43.697252 : Master-Info --> Connection success
+2019-08-27 00:36:43.734205 : Master-Info --> startThreads
+2019-08-27 00:36:43.738005 : _messages --> getOldMessages --> Get all chats
+2019-08-27 00:36:43.749629 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 00:36:43.770459 : _messages --> getOldMessages --> Termino
+2019-08-27 00:37:26.240818 : _messages --> loopStatus --> Send account info
+2019-08-27 00:38:26.218559 : _messages --> loopStatus --> Send account info
+2019-08-27 00:39:26.245327 : _messages --> loopStatus --> Send account info
+2019-08-27 00:40:26.257070 : _messages --> loopStatus --> Send account info
+2019-08-27 00:41:26.262116 : _messages --> loopStatus --> Send account info
+2019-08-27 00:42:26.283936 : _messages --> loopStatus --> Send account info
+2019-08-27 00:43:26.292530 : _messages --> loopStatus --> Send account info
+2019-08-27 00:44:15.605295 : Master-Info --> Connection end
+2019-08-27 00:44:16.633088 : Master-Info --> Connection reconnect
+2019-08-27 00:44:16.645869 : Master-Info --> Connection success
+2019-08-27 00:44:16.690119 : Master-Info --> startThreads
+2019-08-27 00:44:16.694308 : _messages --> getOldMessages --> Get all chats
+2019-08-27 00:44:16.705067 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 00:44:16.731664 : _messages --> getOldMessages --> Termino
+2019-08-27 00:44:26.271281 : _messages --> loopStatus --> Send account info
+2019-08-27 00:45:23.951780 : Master-Info --> Connection end
+2019-08-27 00:45:23.970117 : Master-Info --> Connection reconnect
+2019-08-27 00:45:23.984979 : Master-Info --> Connection success
+2019-08-27 00:45:24.021382 : Master-Info --> startThreads
+2019-08-27 00:45:24.028140 : _messages --> getOldMessages --> Get all chats
+2019-08-27 00:45:24.040410 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 00:45:24.058522 : _messages --> getOldMessages --> Termino
+2019-08-27 00:45:26.250104 : _messages --> loopStatus --> Send account info
+2019-08-27 00:46:26.273012 : _messages --> loopStatus --> Send account info
+2019-08-27 00:47:01.710502 : Master-Info --> Connection end
+2019-08-27 00:47:02.735594 : Master-Info --> Connection reconnect
+2019-08-27 00:47:02.751489 : Master-Info --> Connection success
+2019-08-27 00:47:02.789472 : Master-Info --> startThreads
+2019-08-27 00:47:02.793981 : _messages --> getOldMessages --> Get all chats
+2019-08-27 00:47:02.803785 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 00:47:02.818660 : _messages --> getOldMessages --> Termino
+2019-08-27 00:47:26.277625 : _messages --> loopStatus --> Send account info
+2019-08-27 00:48:26.296045 : _messages --> loopStatus --> Send account info
+2019-08-27 00:49:26.267947 : _messages --> loopStatus --> Send account info
+2019-08-27 00:50:26.282032 : _messages --> loopStatus --> Send account info
+2019-08-27 00:51:26.302020 : _messages --> loopStatus --> Send account info
+2019-08-27 00:52:26.329438 : _messages --> loopStatus --> Send account info
+2019-08-27 00:53:26.345431 : _messages --> loopStatus --> Send account info
+2019-08-27 00:54:26.350956 : _messages --> loopStatus --> Send account info
+2019-08-27 00:55:26.366970 : _messages --> loopStatus --> Send account info
+2019-08-27 00:56:26.356579 : _messages --> loopStatus --> Send account info
+2019-08-27 00:57:26.372080 : _messages --> loopStatus --> Send account info
+2019-08-27 01:07:43.716305 : _messages --> loopStatus --> Send account info
+2019-08-27 11:35:15.918430 : Master-Info --> Connection end
+2019-08-27 11:35:17.960041 : _messages --> loopStatus --> Send account info
+2019-08-27 11:35:26.267711 : Master-Info --> Connection reconnect
+2019-08-27 11:35:26.289251 : Master-Info --> Connection success
+2019-08-27 11:35:26.367078 : Master-Info --> startThreads
+2019-08-27 11:35:26.376359 : _messages --> getOldMessages --> Get all chats
+2019-08-27 11:35:26.401641 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 11:35:26.460342 : _messages --> getOldMessages --> Termino
+2019-08-27 11:36:26.981002 : _messages --> loopStatus --> Send account info
+2019-08-27 11:37:27.008617 : _messages --> loopStatus --> Send account info
+2019-08-27 11:38:27.018394 : _messages --> loopStatus --> Send account info
+2019-08-27 11:39:27.029267 : _messages --> loopStatus --> Send account info
+2019-08-27 11:40:27.051421 : _messages --> loopStatus --> Send account info
+2019-08-27 11:41:27.015049 : _messages --> loopStatus --> Send account info
+2019-08-27 11:42:27.027790 : _messages --> loopStatus --> Send account info
+2019-08-27 11:43:27.045192 : _messages --> loopStatus --> Send account info
+2019-08-27 11:44:27.046013 : _messages --> loopStatus --> Send account info
+2019-08-27 11:45:27.065318 : _messages --> loopStatus --> Send account info
+2019-08-27 11:46:27.069042 : _messages --> loopStatus --> Send account info
+2019-08-27 11:47:27.071204 : _messages --> loopStatus --> Send account info
+2019-08-27 11:48:27.046238 : _messages --> loopStatus --> Send account info
+2019-08-27 11:49:27.063922 : _messages --> loopStatus --> Send account info
+2019-08-27 11:50:27.073551 : _messages --> loopStatus --> Send account info
+2019-08-27 11:51:27.060527 : _messages --> loopStatus --> Send account info
+2019-08-27 11:52:27.075251 : _messages --> loopStatus --> Send account info
+2019-08-27 11:53:27.045098 : _messages --> loopStatus --> Send account info
+2019-08-27 11:54:27.043866 : _messages --> loopStatus --> Send account info
+2019-08-27 11:55:27.020809 : _messages --> loopStatus --> Send account info
+2019-08-27 11:56:27.014457 : _messages --> loopStatus --> Send account info
+2019-08-27 11:57:27.032251 : _messages --> loopStatus --> Send account info
+2019-08-27 11:58:27.001049 : _messages --> loopStatus --> Send account info
+2019-08-27 11:59:26.964897 : _messages --> loopStatus --> Send account info
+2019-08-27 12:00:26.961451 : _messages --> loopStatus --> Send account info
+2019-08-27 12:01:26.955628 : _messages --> loopStatus --> Send account info
+2019-08-27 12:02:26.977742 : _messages --> loopStatus --> Send account info
+2019-08-27 12:03:26.994510 : _messages --> loopStatus --> Send account info
+2019-08-27 12:04:27.017286 : _messages --> loopStatus --> Send account info
+2019-08-27 12:05:27.046443 : _messages --> loopStatus --> Send account info
+2019-08-27 12:06:27.051872 : _messages --> loopStatus --> Send account info
+2019-08-27 12:07:27.009537 : _messages --> loopStatus --> Send account info
+2019-08-27 12:08:26.997330 : _messages --> loopStatus --> Send account info
+2019-08-27 12:09:26.998530 : _messages --> loopStatus --> Send account info
+2019-08-27 12:10:27.002928 : _messages --> loopStatus --> Send account info
+2019-08-27 12:11:26.984598 : _messages --> loopStatus --> Send account info
+2019-08-27 12:12:27.006043 : _messages --> loopStatus --> Send account info
+2019-08-27 12:13:27.018872 : _messages --> loopStatus --> Send account info
+2019-08-27 12:14:27.039463 : _messages --> loopStatus --> Send account info
+2019-08-27 12:15:27.044106 : _messages --> loopStatus --> Send account info
+2019-08-27 12:16:27.055410 : _messages --> loopStatus --> Send account info
+2019-08-27 12:17:27.076238 : _messages --> loopStatus --> Send account info
+2019-08-27 12:18:27.088428 : _messages --> loopStatus --> Send account info
+2019-08-27 12:19:27.056813 : _messages --> loopStatus --> Send account info
+2019-08-27 12:20:27.070930 : _messages --> loopStatus --> Send account info
+2019-08-27 12:21:27.067690 : _messages --> loopStatus --> Send account info
+2019-08-27 12:22:27.054806 : _messages --> loopStatus --> Send account info
+2019-08-27 12:23:27.042656 : _messages --> loopStatus --> Send account info
+2019-08-27 12:50:20.665678 : Master-Info --> Connection end
+2019-08-27 12:50:20.825714 : Master-Info --> Connection reconnect
+2019-08-27 12:50:20.860440 : Master-Info --> Connection success
+2019-08-27 12:50:20.936600 : Master-Info --> startThreads
+2019-08-27 12:50:20.942160 : _messages --> getOldMessages --> Get all chats
+2019-08-27 12:50:20.957333 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 12:50:20.979573 : _messages --> getOldMessages --> Termino
+2019-08-27 12:51:02.357426 : _messages --> loopStatus --> Send account info
+2019-08-27 12:52:02.343487 : _messages --> loopStatus --> Send account info
+2019-08-27 13:21:13.944842 : _messages --> loopStatus --> Send account info
+2019-08-27 13:22:15.674286 : _messages --> loopStatus --> Send account info
+2019-08-27 13:23:15.679088 : _messages --> loopStatus --> Send account info
+2019-08-27 13:24:18.923646 : _messages --> loopStatus --> Send account info
+2019-08-27 13:25:18.930602 : _messages --> loopStatus --> Send account info
+2019-08-27 13:26:18.950399 : _messages --> loopStatus --> Send account info
+2019-08-27 13:27:18.964320 : _messages --> loopStatus --> Send account info
+2019-08-27 13:29:22.791527 : _messages --> loopStatus --> Send account info
+2019-08-27 13:30:24.086379 : _messages --> loopStatus --> Send account info
+2019-08-27 13:31:24.106208 : _messages --> loopStatus --> Send account info
+2019-08-27 13:32:24.101748 : _messages --> loopStatus --> Send account info
+2019-08-27 13:33:24.118175 : _messages --> loopStatus --> Send account info
+2019-08-27 13:34:24.136848 : _messages --> loopStatus --> Send account info
+2019-08-27 13:35:24.129268 : _messages --> loopStatus --> Send account info
+2019-08-27 13:36:24.121755 : _messages --> loopStatus --> Send account info
+2019-08-27 13:37:24.096155 : _messages --> loopStatus --> Send account info
+2019-08-27 13:38:24.110084 : _messages --> loopStatus --> Send account info
+2019-08-27 13:39:24.073898 : _messages --> loopStatus --> Send account info
+2019-08-27 13:40:24.041913 : _messages --> loopStatus --> Send account info
+2019-08-27 13:41:24.028028 : _messages --> loopStatus --> Send account info
+2019-08-27 13:42:24.045922 : _messages --> loopStatus --> Send account info
+2019-08-27 13:43:24.038887 : _messages --> loopStatus --> Send account info
+2019-08-27 13:44:24.045072 : _messages --> loopStatus --> Send account info
+2019-08-27 13:45:24.063823 : _messages --> loopStatus --> Send account info
+2019-08-27 13:46:24.058655 : _messages --> loopStatus --> Send account info
+2019-08-27 13:47:24.078615 : _messages --> loopStatus --> Send account info
+2019-08-27 13:48:24.107371 : _messages --> loopStatus --> Send account info
+2019-08-27 13:49:24.113235 : _messages --> loopStatus --> Send account info
+2019-08-27 13:50:24.088313 : _messages --> loopStatus --> Send account info
+2019-08-27 13:51:24.108191 : _messages --> loopStatus --> Send account info
+2019-08-27 13:52:24.099149 : _messages --> loopStatus --> Send account info
+2019-08-27 13:53:24.074296 : _messages --> loopStatus --> Send account info
+2019-08-27 13:54:24.086146 : _messages --> loopStatus --> Send account info
+2019-08-27 13:55:24.062562 : _messages --> loopStatus --> Send account info
+2019-08-27 13:56:24.091151 : _messages --> loopStatus --> Send account info
+2019-08-27 13:57:24.091226 : _messages --> loopStatus --> Send account info
+2019-08-27 13:58:24.099122 : _messages --> loopStatus --> Send account info
+2019-08-27 13:59:24.116677 : _messages --> loopStatus --> Send account info
+2019-08-27 14:00:24.127943 : _messages --> loopStatus --> Send account info
+2019-08-27 14:01:24.135139 : _messages --> loopStatus --> Send account info
+2019-08-27 14:02:24.108765 : _messages --> loopStatus --> Send account info
+2019-08-27 14:03:24.127169 : _messages --> loopStatus --> Send account info
+2019-08-27 14:04:24.129122 : _messages --> loopStatus --> Send account info
+2019-08-27 14:05:24.105864 : _messages --> loopStatus --> Send account info
+2019-08-27 14:06:24.105905 : _messages --> loopStatus --> Send account info
+2019-08-27 14:07:24.120537 : _messages --> loopStatus --> Send account info
+2019-08-27 14:08:24.138407 : _messages --> loopStatus --> Send account info
+2019-08-27 14:09:24.139132 : _messages --> loopStatus --> Send account info
+2019-08-27 14:10:24.161343 : _messages --> loopStatus --> Send account info
+2019-08-27 14:11:24.159683 : _messages --> loopStatus --> Send account info
+2019-08-27 14:12:24.122816 : _messages --> loopStatus --> Send account info
+2019-08-27 14:13:24.081798 : _messages --> loopStatus --> Send account info
+2019-08-27 14:14:24.079696 : _messages --> loopStatus --> Send account info
+2019-08-27 14:15:24.050786 : _messages --> loopStatus --> Send account info
+2019-08-27 14:16:24.030376 : _messages --> loopStatus --> Send account info
+2019-08-27 14:17:24.012750 : _messages --> loopStatus --> Send account info
+2019-08-27 14:18:24.013806 : _messages --> loopStatus --> Send account info
+2019-08-27 14:19:23.990084 : _messages --> loopStatus --> Send account info
+2019-08-27 14:20:23.964731 : _messages --> loopStatus --> Send account info
+2019-08-27 14:21:23.955703 : _messages --> loopStatus --> Send account info
+2019-08-27 14:22:23.936098 : _messages --> loopStatus --> Send account info
+2019-08-27 14:23:23.951686 : _messages --> loopStatus --> Send account info
+2019-08-27 14:24:23.931220 : _messages --> loopStatus --> Send account info
+2019-08-27 14:25:27.589726 : _messages --> loopStatus --> Send account info
+2019-08-27 14:32:01.458164 : _messages --> loopStatus --> Send account info
+2019-08-27 14:33:01.473465 : _messages --> loopStatus --> Send account info
+2019-08-27 14:34:01.493148 : _messages --> loopStatus --> Send account info
+2019-08-27 14:34:52.861347 : Master-Info --> Connection end
+2019-08-27 14:35:01.464995 : _messages --> loopStatus --> Send account info
+2019-08-27 14:35:13.989784 : Master-Info --> Connection reconnect
+2019-08-27 14:35:14.005512 : Master-Info --> Connection success
+2019-08-27 14:35:14.071565 : Master-Info --> startThreads
+2019-08-27 14:35:14.075530 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:35:14.087555 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:35:14.104976 : _messages --> getOldMessages --> Termino
+2019-08-27 14:36:13.566294 : _messages --> loopStatus --> Send account info
+2019-08-27 14:37:13.588330 : _messages --> loopStatus --> Send account info
+2019-08-27 14:38:13.553877 : _messages --> loopStatus --> Send account info
+2019-08-27 14:39:13.512160 : _messages --> loopStatus --> Send account info
+2019-08-27 14:40:13.531612 : _messages --> loopStatus --> Send account info
+2019-08-27 14:41:13.544683 : _messages --> loopStatus --> Send account info
+2019-08-27 14:42:05.080560 : Master-Info --> Connection end
+2019-08-27 14:42:06.123116 : Master-Info --> Connection reconnect
+2019-08-27 14:42:06.137147 : Master-Info --> Connection success
+2019-08-27 14:42:06.171648 : Master-Info --> startThreads
+2019-08-27 14:42:06.175137 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:42:06.186984 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:42:06.204129 : _messages --> getOldMessages --> Termino
+2019-08-27 14:42:13.533809 : _messages --> loopStatus --> Send account info
+2019-08-27 14:42:27.483952 : Master-Info --> Connection end
+2019-08-27 14:42:28.511900 : Master-Info --> Connection reconnect
+2019-08-27 14:42:28.526870 : Master-Info --> Connection success
+2019-08-27 14:42:28.557810 : Master-Info --> startThreads
+2019-08-27 14:42:28.563106 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:42:28.572241 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:42:28.585699 : _messages --> getOldMessages --> Termino
+2019-08-27 14:43:13.497458 : _messages --> loopStatus --> Send account info
+2019-08-27 14:44:13.513457 : _messages --> loopStatus --> Send account info
+2019-08-27 14:45:13.533801 : _messages --> loopStatus --> Send account info
+2019-08-27 14:46:13.504415 : _messages --> loopStatus --> Send account info
+2019-08-27 14:47:10.504255 : Master-Info --> Connection end
+2019-08-27 14:47:10.536797 : Master-Info --> Connection reconnect
+2019-08-27 14:47:10.550895 : Master-Info --> Connection success
+2019-08-27 14:47:10.585237 : Master-Info --> startThreads
+2019-08-27 14:47:10.589583 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:47:10.600881 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:47:10.616244 : _messages --> getOldMessages --> Termino
+2019-08-27 14:47:13.513713 : _messages --> loopStatus --> Send account info
+2019-08-27 14:47:31.365422 : Master-Info --> Connection end
+2019-08-27 14:47:31.400569 : Master-Info --> Connection reconnect
+2019-08-27 14:47:31.414293 : Master-Info --> Connection success
+2019-08-27 14:47:31.449754 : Master-Info --> startThreads
+2019-08-27 14:47:31.454994 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:47:31.464200 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:47:31.477369 : _messages --> getOldMessages --> Termino
+2019-08-27 14:48:12.828201 : Master-Info --> Connection end
+2019-08-27 14:48:12.861696 : Master-Info --> Connection reconnect
+2019-08-27 14:48:12.877961 : Master-Info --> Connection success
+2019-08-27 14:48:12.916281 : Master-Info --> startThreads
+2019-08-27 14:48:12.920601 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:48:12.933553 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:48:12.948785 : _messages --> getOldMessages --> Termino
+2019-08-27 14:48:13.489533 : _messages --> loopStatus --> Send account info
+2019-08-27 14:49:13.451438 : _messages --> loopStatus --> Send account info
+2019-08-27 14:50:13.470131 : _messages --> loopStatus --> Send account info
+2019-08-27 14:50:47.531042 : Master-Info --> Connection end
+2019-08-27 14:50:47.565127 : Master-Info --> Connection reconnect
+2019-08-27 14:50:47.582223 : Master-Info --> Connection success
+2019-08-27 14:50:47.625710 : Master-Info --> startThreads
+2019-08-27 14:50:47.629820 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:50:47.639491 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:50:47.654154 : _messages --> getOldMessages --> Termino
+2019-08-27 14:51:01.605066 : Master-Info --> Connection end
+2019-08-27 14:51:01.635289 : Master-Info --> Connection reconnect
+2019-08-27 14:51:01.649811 : Master-Info --> Connection success
+2019-08-27 14:51:01.682779 : Master-Info --> startThreads
+2019-08-27 14:51:01.689396 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:51:01.699020 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:51:01.712278 : _messages --> getOldMessages --> Termino
+2019-08-27 14:51:13.490912 : _messages --> loopStatus --> Send account info
+2019-08-27 14:51:23.641732 : Master-Info --> Connection end
+2019-08-27 14:51:23.675228 : Master-Info --> Connection reconnect
+2019-08-27 14:51:23.690154 : Master-Info --> Connection success
+2019-08-27 14:51:23.725609 : Master-Info --> startThreads
+2019-08-27 14:51:23.730244 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:51:23.739274 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:51:23.754818 : _messages --> getOldMessages --> Termino
+2019-08-27 14:52:13.465851 : _messages --> loopStatus --> Send account info
+2019-08-27 14:53:13.476792 : _messages --> loopStatus --> Send account info
+2019-08-27 14:53:34.666729 : Master-Info --> Connection end
+2019-08-27 14:53:34.701573 : Master-Info --> Connection reconnect
+2019-08-27 14:53:34.717110 : Master-Info --> Connection success
+2019-08-27 14:53:34.751940 : Master-Info --> startThreads
+2019-08-27 14:53:34.757165 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:53:34.770532 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:53:34.784148 : _messages --> getOldMessages --> Termino
+2019-08-27 14:54:02.118553 : Master-Info --> Connection end
+2019-08-27 14:54:03.145912 : Master-Info --> Connection reconnect
+2019-08-27 14:54:03.162624 : Master-Info --> Connection success
+2019-08-27 14:54:03.200490 : Master-Info --> startThreads
+2019-08-27 14:54:03.206122 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:54:03.217009 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:54:03.229102 : _messages --> getOldMessages --> Termino
+2019-08-27 14:54:13.482685 : _messages --> loopStatus --> Send account info
+2019-08-27 14:55:13.496814 : _messages --> loopStatus --> Send account info
+2019-08-27 14:56:13.505011 : _messages --> loopStatus --> Send account info
+2019-08-27 14:56:35.456835 : Master-Info --> Connection end
+2019-08-27 14:56:35.489583 : Master-Info --> Connection reconnect
+2019-08-27 14:56:35.504726 : Master-Info --> Connection success
+2019-08-27 14:56:35.535226 : Master-Info --> startThreads
+2019-08-27 14:56:35.539778 : _messages --> getOldMessages --> Get all chats
+2019-08-27 14:56:35.550880 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 14:56:35.562534 : _messages --> getOldMessages --> Termino
+2019-08-27 14:57:13.500106 : _messages --> loopStatus --> Send account info
+2019-08-27 14:58:13.503255 : _messages --> loopStatus --> Send account info
+2019-08-27 14:59:13.527803 : _messages --> loopStatus --> Send account info
+2019-08-27 15:00:13.552581 : _messages --> loopStatus --> Send account info
+2019-08-27 15:01:13.563509 : _messages --> loopStatus --> Send account info
+2019-08-27 15:02:13.576264 : _messages --> loopStatus --> Send account info
+2019-08-27 15:03:13.545295 : _messages --> loopStatus --> Send account info
+2019-08-27 15:04:13.550832 : _messages --> loopStatus --> Send account info
+2019-08-27 15:05:13.570467 : _messages --> loopStatus --> Send account info
+2019-08-27 15:06:13.572556 : _messages --> loopStatus --> Send account info
+2019-08-27 15:07:13.572868 : _messages --> loopStatus --> Send account info
+2019-08-27 15:08:13.590549 : _messages --> loopStatus --> Send account info
+2019-08-27 15:09:13.582025 : _messages --> loopStatus --> Send account info
+2019-08-27 15:10:13.546284 : _messages --> loopStatus --> Send account info
+2019-08-27 15:11:13.531788 : _messages --> loopStatus --> Send account info
+2019-08-27 15:12:13.527075 : _messages --> loopStatus --> Send account info
+2019-08-27 15:13:13.516776 : _messages --> loopStatus --> Send account info
+2019-08-27 15:14:13.515413 : _messages --> loopStatus --> Send account info
+2019-08-27 15:15:13.516088 : _messages --> loopStatus --> Send account info
+2019-08-27 15:16:13.531003 : _messages --> loopStatus --> Send account info
+2019-08-27 15:17:13.547494 : _messages --> loopStatus --> Send account info
+2019-08-27 15:18:13.543862 : _messages --> loopStatus --> Send account info
+2019-08-27 15:19:13.563948 : _messages --> loopStatus --> Send account info
+2019-08-27 15:20:13.588348 : _messages --> loopStatus --> Send account info
+2019-08-27 15:21:13.608571 : _messages --> loopStatus --> Send account info
+2019-08-27 15:22:13.606241 : _messages --> loopStatus --> Send account info
+2019-08-27 15:23:13.613422 : _messages --> loopStatus --> Send account info
+2019-08-27 15:24:13.633581 : _messages --> loopStatus --> Send account info
+2019-08-27 15:25:13.632415 : _messages --> loopStatus --> Send account info
+2019-08-27 15:26:13.605748 : _messages --> loopStatus --> Send account info
+2019-08-27 15:27:13.568853 : _messages --> loopStatus --> Send account info
+2019-08-27 15:28:13.546997 : _messages --> loopStatus --> Send account info
+2019-08-27 15:29:13.560510 : _messages --> loopStatus --> Send account info
+2019-08-27 15:30:13.527839 : _messages --> loopStatus --> Send account info
+2019-08-27 15:31:13.523642 : _messages --> loopStatus --> Send account info
+2019-08-27 15:32:13.541070 : _messages --> loopStatus --> Send account info
+2019-08-27 15:33:13.564558 : _messages --> loopStatus --> Send account info
+2019-08-27 15:34:13.588354 : _messages --> loopStatus --> Send account info
+2019-08-27 15:35:13.562848 : _messages --> loopStatus --> Send account info
+2019-08-27 15:36:13.546451 : _messages --> loopStatus --> Send account info
+2019-08-27 15:37:13.570152 : _messages --> loopStatus --> Send account info
+2019-08-27 15:38:13.579383 : _messages --> loopStatus --> Send account info
+2019-08-27 15:39:13.598317 : _messages --> loopStatus --> Send account info
+2019-08-27 15:40:13.564843 : _messages --> loopStatus --> Send account info
+2019-08-27 15:41:13.523588 : _messages --> loopStatus --> Send account info
+2019-08-27 15:42:13.538473 : _messages --> loopStatus --> Send account info
+2019-08-27 15:43:13.558082 : _messages --> loopStatus --> Send account info
+2019-08-27 15:44:13.545951 : _messages --> loopStatus --> Send account info
+2019-08-27 15:45:13.547101 : _messages --> loopStatus --> Send account info
+2019-08-27 15:46:13.569447 : _messages --> loopStatus --> Send account info
+2019-08-27 15:47:13.594706 : _messages --> loopStatus --> Send account info
+2019-08-27 15:48:13.578587 : _messages --> loopStatus --> Send account info
+2019-08-27 15:49:13.604331 : _messages --> loopStatus --> Send account info
+2019-08-27 15:50:13.568325 : _messages --> loopStatus --> Send account info
+2019-08-27 15:51:13.581670 : _messages --> loopStatus --> Send account info
+2019-08-27 15:52:13.606921 : _messages --> loopStatus --> Send account info
+2019-08-27 15:53:13.617300 : _messages --> loopStatus --> Send account info
+2019-08-27 15:54:13.626748 : _messages --> loopStatus --> Send account info
+2019-08-27 15:55:13.614311 : _messages --> loopStatus --> Send account info
+2019-08-27 15:56:13.579431 : _messages --> loopStatus --> Send account info
+2019-08-27 15:57:13.553404 : _messages --> loopStatus --> Send account info
+2019-08-27 15:58:13.580513 : _messages --> loopStatus --> Send account info
+2019-08-27 15:59:13.557928 : _messages --> loopStatus --> Send account info
+2019-08-27 16:00:13.568672 : _messages --> loopStatus --> Send account info
+2019-08-27 16:01:13.563417 : _messages --> loopStatus --> Send account info
+2019-08-27 16:02:13.578348 : _messages --> loopStatus --> Send account info
+2019-08-27 16:03:13.579070 : _messages --> loopStatus --> Send account info
+2019-08-27 16:04:13.604797 : _messages --> loopStatus --> Send account info
+2019-08-27 16:05:13.605658 : _messages --> loopStatus --> Send account info
+2019-08-27 16:06:13.602273 : _messages --> loopStatus --> Send account info
+2019-08-27 16:07:13.564699 : _messages --> loopStatus --> Send account info
+2019-08-27 16:08:13.533943 : _messages --> loopStatus --> Send account info
+2019-08-27 16:09:13.501901 : _messages --> loopStatus --> Send account info
+2019-08-27 16:10:13.497440 : _messages --> loopStatus --> Send account info
+2019-08-27 16:11:13.519103 : _messages --> loopStatus --> Send account info
+2019-08-27 16:12:13.540698 : _messages --> loopStatus --> Send account info
+2019-08-27 16:13:13.511153 : _messages --> loopStatus --> Send account info
+2019-08-27 16:14:13.512673 : _messages --> loopStatus --> Send account info
+2019-08-27 16:15:13.492495 : _messages --> loopStatus --> Send account info
+2019-08-27 16:16:13.506582 : _messages --> loopStatus --> Send account info
+2019-08-27 16:17:13.512714 : _messages --> loopStatus --> Send account info
+2019-08-27 16:18:13.473889 : _messages --> loopStatus --> Send account info
+2019-08-27 16:19:13.488331 : _messages --> loopStatus --> Send account info
+2019-08-27 16:20:13.450541 : _messages --> loopStatus --> Send account info
+2019-08-27 16:21:13.426218 : _messages --> loopStatus --> Send account info
+2019-08-27 16:22:13.418398 : _messages --> loopStatus --> Send account info
+2019-08-27 16:23:13.418818 : _messages --> loopStatus --> Send account info
+2019-08-27 16:24:13.445506 : _messages --> loopStatus --> Send account info
+2019-08-27 16:25:13.456146 : _messages --> loopStatus --> Send account info
+2019-08-27 16:26:13.455477 : _messages --> loopStatus --> Send account info
+2019-08-27 16:27:13.466677 : _messages --> loopStatus --> Send account info
+2019-08-27 16:28:13.479810 : _messages --> loopStatus --> Send account info
+2019-08-27 16:29:13.463014 : _messages --> loopStatus --> Send account info
+2019-08-27 16:30:13.437175 : _messages --> loopStatus --> Send account info
+2019-08-27 16:31:13.408043 : _messages --> loopStatus --> Send account info
+2019-08-27 16:32:13.403538 : _messages --> loopStatus --> Send account info
+2019-08-27 16:33:13.422457 : _messages --> loopStatus --> Send account info
+2019-08-27 16:34:13.409322 : _messages --> loopStatus --> Send account info
+2019-08-27 16:35:13.374256 : _messages --> loopStatus --> Send account info
+2019-08-27 16:36:13.359509 : _messages --> loopStatus --> Send account info
+2019-08-27 16:37:13.334550 : _messages --> loopStatus --> Send account info
+2019-08-27 16:38:13.319523 : _messages --> loopStatus --> Send account info
+2019-08-27 16:39:13.338517 : _messages --> loopStatus --> Send account info
+2019-08-27 16:40:13.354280 : _messages --> loopStatus --> Send account info
+2019-08-27 16:41:13.327715 : _messages --> loopStatus --> Send account info
+2019-08-27 16:42:13.341199 : _messages --> loopStatus --> Send account info
+2019-08-27 16:43:13.308327 : _messages --> loopStatus --> Send account info
+2019-08-27 16:44:13.270325 : _messages --> loopStatus --> Send account info
+2019-08-27 16:45:13.289791 : _messages --> loopStatus --> Send account info
+2019-08-27 16:46:13.273230 : _messages --> loopStatus --> Send account info
+2019-08-27 16:47:13.290352 : _messages --> loopStatus --> Send account info
+2019-08-27 16:48:13.275881 : _messages --> loopStatus --> Send account info
+2019-08-27 16:49:13.270856 : _messages --> loopStatus --> Send account info
+2019-08-27 16:50:13.277340 : _messages --> loopStatus --> Send account info
+2019-08-27 16:51:13.301500 : _messages --> loopStatus --> Send account info
+2019-08-27 16:52:13.322840 : _messages --> loopStatus --> Send account info
+2019-08-27 16:53:13.293884 : _messages --> loopStatus --> Send account info
+2019-08-27 16:54:13.312357 : _messages --> loopStatus --> Send account info
+2019-08-27 16:55:13.308553 : _messages --> loopStatus --> Send account info
+2019-08-27 16:56:13.309403 : _messages --> loopStatus --> Send account info
+2019-08-27 16:57:13.286590 : _messages --> loopStatus --> Send account info
+2019-08-27 16:58:13.252537 : _messages --> loopStatus --> Send account info
+2019-08-27 16:59:13.227138 : _messages --> loopStatus --> Send account info
+2019-08-27 17:00:13.238410 : _messages --> loopStatus --> Send account info
+2019-08-27 17:01:13.277453 : _messages --> loopStatus --> Send account info
+2019-08-27 17:02:13.251865 : _messages --> loopStatus --> Send account info
+2019-08-27 17:03:13.270984 : _messages --> loopStatus --> Send account info
+2019-08-27 17:04:13.240298 : _messages --> loopStatus --> Send account info
+2019-08-27 17:05:13.226269 : _messages --> loopStatus --> Send account info
+2019-08-27 17:06:13.213462 : _messages --> loopStatus --> Send account info
+2019-08-27 17:07:13.234382 : _messages --> loopStatus --> Send account info
+2019-08-27 17:08:13.223661 : _messages --> loopStatus --> Send account info
+2019-08-27 17:09:13.242412 : _messages --> loopStatus --> Send account info
+2019-08-27 17:10:13.228685 : _messages --> loopStatus --> Send account info
+2019-08-27 17:11:13.234184 : _messages --> loopStatus --> Send account info
+2019-08-27 17:12:13.212783 : _messages --> loopStatus --> Send account info
+2019-08-27 17:13:13.224265 : _messages --> loopStatus --> Send account info
+2019-08-27 17:14:13.237025 : _messages --> loopStatus --> Send account info
+2019-08-27 17:15:13.258112 : _messages --> loopStatus --> Send account info
+2019-08-27 17:16:13.274242 : _messages --> loopStatus --> Send account info
+2019-08-27 17:17:13.276855 : _messages --> loopStatus --> Send account info
+2019-08-27 17:18:13.294823 : _messages --> loopStatus --> Send account info
+2019-08-27 17:19:13.271661 : _messages --> loopStatus --> Send account info
+2019-08-27 17:20:13.259499 : _messages --> loopStatus --> Send account info
+2019-08-27 17:21:13.262121 : _messages --> loopStatus --> Send account info
+2019-08-27 17:22:13.285943 : _messages --> loopStatus --> Send account info
+2019-08-27 17:23:13.255431 : _messages --> loopStatus --> Send account info
+2019-08-27 17:24:13.265364 : _messages --> loopStatus --> Send account info
+2019-08-27 17:25:13.280398 : _messages --> loopStatus --> Send account info
+2019-08-27 17:26:13.299046 : _messages --> loopStatus --> Send account info
+2019-08-27 17:27:13.296551 : _messages --> loopStatus --> Send account info
+2019-08-27 17:28:13.338883 : _messages --> loopStatus --> Send account info
+2019-08-27 17:28:31.148571 : Master-Info --> Connection end
+2019-08-27 17:28:32.175418 : Master-Info --> Connection reconnect
+2019-08-27 17:28:32.185988 : Master-Info --> Connection success
+2019-08-27 17:28:32.218695 : Master-Info --> startThreads
+2019-08-27 17:28:32.223551 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:28:32.237317 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:28:32.252648 : _messages --> getOldMessages --> Termino
+2019-08-27 17:29:13.359977 : _messages --> loopStatus --> Send account info
+2019-08-27 17:29:59.329400 : Master-Info --> Connection end
+2019-08-27 17:29:59.362249 : Master-Info --> Connection reconnect
+2019-08-27 17:29:59.376487 : Master-Info --> Connection success
+2019-08-27 17:29:59.409925 : Master-Info --> startThreads
+2019-08-27 17:29:59.415045 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:29:59.424985 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:29:59.439610 : _messages --> getOldMessages --> Termino
+2019-08-27 17:30:13.376774 : _messages --> loopStatus --> Send account info
+2019-08-27 17:31:13.347076 : _messages --> loopStatus --> Send account info
+2019-08-27 17:31:23.733530 : Master-Info --> Connection end
+2019-08-27 17:31:25.785190 : Master-Info --> Connection reconnect
+2019-08-27 17:31:25.799918 : Master-Info --> Connection success
+2019-08-27 17:31:25.837482 : Master-Info --> startThreads
+2019-08-27 17:31:25.841481 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:31:25.853764 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:31:25.866811 : _messages --> getOldMessages --> Termino
+2019-08-27 17:31:45.731027 : Master-Info --> Connection end
+2019-08-27 17:31:45.765911 : Master-Info --> Connection reconnect
+2019-08-27 17:31:45.782183 : Master-Info --> Connection success
+2019-08-27 17:31:45.815569 : Master-Info --> startThreads
+2019-08-27 17:31:45.820372 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:31:45.829328 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:31:45.843819 : _messages --> getOldMessages --> Termino
+2019-08-27 17:32:13.361468 : _messages --> loopStatus --> Send account info
+2019-08-27 17:33:01.413891 : Master-Info --> Connection end
+2019-08-27 17:33:01.448617 : Master-Info --> Connection reconnect
+2019-08-27 17:33:01.463166 : Master-Info --> Connection success
+2019-08-27 17:33:01.504488 : Master-Info --> startThreads
+2019-08-27 17:33:01.510305 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:33:01.522458 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:33:01.536843 : _messages --> getOldMessages --> Termino
+2019-08-27 17:33:13.323488 : _messages --> loopStatus --> Send account info
+2019-08-27 17:34:13.321512 : _messages --> loopStatus --> Send account info
+2019-08-27 17:35:13.331903 : _messages --> loopStatus --> Send account info
+2019-08-27 17:36:13.310846 : _messages --> loopStatus --> Send account info
+2019-08-27 17:37:13.321884 : _messages --> loopStatus --> Send account info
+2019-08-27 17:38:13.333772 : _messages --> loopStatus --> Send account info
+2019-08-27 17:39:13.299981 : _messages --> loopStatus --> Send account info
+2019-08-27 17:40:01.046178 : Master-Info --> Connection end
+2019-08-27 17:40:02.085090 : Master-Info --> Connection reconnect
+2019-08-27 17:40:02.097677 : Master-Info --> Connection success
+2019-08-27 17:40:02.138677 : Master-Info --> startThreads
+2019-08-27 17:40:02.144526 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:40:02.156986 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:40:02.173034 : _messages --> getOldMessages --> Termino
+2019-08-27 17:40:13.259426 : _messages --> loopStatus --> Send account info
+2019-08-27 17:41:13.258800 : _messages --> loopStatus --> Send account info
+2019-08-27 17:41:17.471840 : Master-Info --> Connection end
+2019-08-27 17:41:18.532186 : Master-Info --> Connection reconnect
+2019-08-27 17:41:18.552823 : Master-Info --> Connection success
+2019-08-27 17:41:18.592225 : Master-Info --> startThreads
+2019-08-27 17:41:18.607817 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:41:18.639021 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:41:18.654286 : _messages --> getOldMessages --> Termino
+2019-08-27 17:42:11.850254 : Master-Info --> Connection end
+2019-08-27 17:42:11.884255 : Master-Info --> Connection reconnect
+2019-08-27 17:42:11.897940 : Master-Info --> Connection success
+2019-08-27 17:42:11.931761 : Master-Info --> startThreads
+2019-08-27 17:42:11.936136 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:42:11.949366 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:42:11.961581 : _messages --> getOldMessages --> Termino
+2019-08-27 17:42:13.232587 : _messages --> loopStatus --> Send account info
+2019-08-27 17:43:13.251172 : _messages --> loopStatus --> Send account info
+2019-08-27 17:44:13.229380 : _messages --> loopStatus --> Send account info
+2019-08-27 17:45:13.251033 : _messages --> loopStatus --> Send account info
+2019-08-27 17:46:13.249253 : _messages --> loopStatus --> Send account info
+2019-08-27 17:47:13.247217 : _messages --> loopStatus --> Send account info
+2019-08-27 17:48:13.219520 : _messages --> loopStatus --> Send account info
+2019-08-27 17:49:13.193172 : _messages --> loopStatus --> Send account info
+2019-08-27 17:50:13.187017 : _messages --> loopStatus --> Send account info
+2019-08-27 17:51:13.159684 : _messages --> loopStatus --> Send account info
+2019-08-27 17:52:13.171131 : _messages --> loopStatus --> Send account info
+2019-08-27 17:53:13.149955 : _messages --> loopStatus --> Send account info
+2019-08-27 17:53:24.376765 : Master-Info --> Connection end
+2019-08-27 17:53:25.404162 : Master-Info --> Connection reconnect
+2019-08-27 17:53:25.415008 : Master-Info --> Connection success
+2019-08-27 17:53:25.449478 : Master-Info --> startThreads
+2019-08-27 17:53:25.455475 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:53:25.472223 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:53:25.493826 : _messages --> getOldMessages --> Termino
+2019-08-27 17:54:13.140196 : _messages --> loopStatus --> Send account info
+2019-08-27 17:55:13.157177 : _messages --> loopStatus --> Send account info
+2019-08-27 17:56:13.165885 : _messages --> loopStatus --> Send account info
+2019-08-27 17:57:13.143325 : _messages --> loopStatus --> Send account info
+2019-08-27 17:57:16.224792 : Master-Info --> Connection end
+2019-08-27 17:57:17.253126 : Master-Info --> Connection reconnect
+2019-08-27 17:57:17.263708 : Master-Info --> Connection success
+2019-08-27 17:57:17.296839 : Master-Info --> startThreads
+2019-08-27 17:57:17.301310 : _messages --> getOldMessages --> Get all chats
+2019-08-27 17:57:17.312051 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 17:57:17.328026 : _messages --> getOldMessages --> Termino
+2019-08-27 17:58:13.164343 : _messages --> loopStatus --> Send account info
+2019-08-27 17:59:13.126935 : _messages --> loopStatus --> Send account info
+2019-08-27 18:00:13.142630 : _messages --> loopStatus --> Send account info
+2019-08-27 18:01:13.149887 : _messages --> loopStatus --> Send account info
+2019-08-27 18:02:13.109104 : _messages --> loopStatus --> Send account info
+2019-08-27 18:02:37.611667 : Master-Info --> Connection end
+2019-08-27 18:02:38.641092 : Master-Info --> Connection reconnect
+2019-08-27 18:02:38.656344 : Master-Info --> Connection success
+2019-08-27 18:02:38.701265 : Master-Info --> startThreads
+2019-08-27 18:02:38.710062 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:02:38.725676 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:02:38.754021 : _messages --> getOldMessages --> Termino
+2019-08-27 18:03:13.127582 : _messages --> loopStatus --> Send account info
+2019-08-27 18:04:13.126952 : _messages --> loopStatus --> Send account info
+2019-08-27 18:05:13.145658 : _messages --> loopStatus --> Send account info
+2019-08-27 18:05:16.549264 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 18:06:13.149735 : _messages --> loopStatus --> Send account info
+2019-08-27 18:07:13.131242 : _messages --> loopStatus --> Send account info
+2019-08-27 18:08:13.141295 : _messages --> loopStatus --> Send account info
+2019-08-27 18:09:13.123351 : _messages --> loopStatus --> Send account info
+2019-08-27 18:10:13.116917 : _messages --> loopStatus --> Send account info
+2019-08-27 18:11:13.098049 : _messages --> loopStatus --> Send account info
+2019-08-27 18:11:24.366278 : Master-Info --> Connection end
+2019-08-27 18:11:25.415402 : Master-Info --> Connection reconnect
+2019-08-27 18:11:25.444094 : Master-Info --> Connection success
+2019-08-27 18:11:25.477745 : Master-Info --> startThreads
+2019-08-27 18:11:25.482858 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:11:25.494549 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:11:25.514671 : _messages --> getOldMessages --> Termino
+2019-08-27 18:12:13.118884 : _messages --> loopStatus --> Send account info
+2019-08-27 18:13:13.139566 : _messages --> loopStatus --> Send account info
+2019-08-27 18:14:13.126712 : _messages --> loopStatus --> Send account info
+2019-08-27 18:15:13.100151 : _messages --> loopStatus --> Send account info
+2019-08-27 18:16:13.082238 : _messages --> loopStatus --> Send account info
+2019-08-27 18:17:13.064797 : _messages --> loopStatus --> Send account info
+2019-08-27 18:18:13.078254 : _messages --> loopStatus --> Send account info
+2019-08-27 18:19:13.098221 : _messages --> loopStatus --> Send account info
+2019-08-27 18:20:13.056004 : _messages --> loopStatus --> Send account info
+2019-08-27 18:21:13.061930 : _messages --> loopStatus --> Send account info
+2019-08-27 18:22:13.068795 : _messages --> loopStatus --> Send account info
+2019-08-27 18:23:13.088995 : _messages --> loopStatus --> Send account info
+2019-08-27 18:24:13.098470 : _messages --> loopStatus --> Send account info
+2019-08-27 18:25:13.116171 : _messages --> loopStatus --> Send account info
+2019-08-27 18:26:13.129990 : _messages --> loopStatus --> Send account info
+2019-08-27 18:27:13.155039 : _messages --> loopStatus --> Send account info
+2019-08-27 18:28:13.166130 : _messages --> loopStatus --> Send account info
+2019-08-27 18:29:13.186839 : _messages --> loopStatus --> Send account info
+2019-08-27 18:30:12.241038 : Master-Info --> Connection end
+2019-08-27 18:30:13.174884 : _messages --> loopStatus --> Send account info
+2019-08-27 18:30:13.268427 : Master-Info --> Connection reconnect
+2019-08-27 18:30:13.279051 : Master-Info --> Connection success
+2019-08-27 18:30:13.310752 : Master-Info --> startThreads
+2019-08-27 18:30:13.315887 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:30:13.325236 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:30:13.343590 : _messages --> getOldMessages --> Termino
+2019-08-27 18:30:35.452539 : Master-Info --> Connection end
+2019-08-27 18:31:13.216248 : _messages --> loopStatus --> Send account info
+2019-08-27 18:31:47.905205 : Master-Info --> Connection reconnect
+2019-08-27 18:31:47.919890 : Master-Info --> Connection success
+2019-08-27 18:31:47.955196 : Master-Info --> startThreads
+2019-08-27 18:31:47.959361 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:31:47.968049 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:31:47.983612 : _messages --> getOldMessages --> Termino
+2019-08-27 18:31:52.965351 : Master-Info --> Connection reconnect
+2019-08-27 18:31:52.981529 : Master-Info --> Connection success
+2019-08-27 18:31:53.019714 : Master-Info --> startThreads
+2019-08-27 18:31:53.024920 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:31:53.036153 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:31:53.051659 : _messages --> getOldMessages --> Termino
+2019-08-27 18:32:45.457472 : Master-Info --> Connection end
+2019-08-27 18:32:45.495778 : Master-Info --> Connection reconnect
+2019-08-27 18:32:45.511883 : Master-Info --> Connection success
+2019-08-27 18:32:45.555147 : Master-Info --> startThreads
+2019-08-27 18:32:45.561029 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:32:45.570654 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:32:45.588969 : _messages --> getOldMessages --> Termino
+2019-08-27 18:32:48.453503 : _messages --> loopStatus --> Send account info
+2019-08-27 18:33:26.880530 : Master-Info --> Connection end
+2019-08-27 18:33:26.914078 : Master-Info --> Connection reconnect
+2019-08-27 18:33:26.929181 : Master-Info --> Connection success
+2019-08-27 18:33:26.964303 : Master-Info --> startThreads
+2019-08-27 18:33:26.969687 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:33:26.981986 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:33:26.999854 : _messages --> getOldMessages --> Termino
+2019-08-27 18:33:48.469228 : _messages --> loopStatus --> Send account info
+2019-08-27 18:34:48.484991 : _messages --> loopStatus --> Send account info
+2019-08-27 18:35:48.446777 : _messages --> loopStatus --> Send account info
+2019-08-27 18:36:48.459563 : _messages --> loopStatus --> Send account info
+2019-08-27 18:37:48.450583 : _messages --> loopStatus --> Send account info
+2019-08-27 18:38:48.440220 : _messages --> loopStatus --> Send account info
+2019-08-27 18:39:48.467103 : _messages --> loopStatus --> Send account info
+2019-08-27 18:40:48.436362 : _messages --> loopStatus --> Send account info
+2019-08-27 18:41:17.222280 : Master-Info --> Connection end
+2019-08-27 18:41:18.249766 : Master-Info --> Connection reconnect
+2019-08-27 18:41:18.262425 : Master-Info --> Connection success
+2019-08-27 18:41:18.293859 : Master-Info --> startThreads
+2019-08-27 18:41:18.298731 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:41:18.312636 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:41:18.329919 : _messages --> getOldMessages --> Termino
+2019-08-27 18:41:48.445579 : _messages --> loopStatus --> Send account info
+2019-08-27 18:42:48.466654 : _messages --> loopStatus --> Send account info
+2019-08-27 18:43:48.483281 : _messages --> loopStatus --> Send account info
+2019-08-27 18:43:59.678605 : Master-Info --> Connection end
+2019-08-27 18:44:00.707541 : Master-Info --> Connection reconnect
+2019-08-27 18:44:00.719207 : Master-Info --> Connection success
+2019-08-27 18:44:00.755930 : Master-Info --> startThreads
+2019-08-27 18:44:00.763337 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:44:00.780059 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:44:00.801266 : _messages --> getOldMessages --> Termino
+2019-08-27 18:44:30.871340 : Master-Info --> Connection end
+2019-08-27 18:44:31.898318 : Master-Info --> Connection reconnect
+2019-08-27 18:44:31.910877 : Master-Info --> Connection success
+2019-08-27 18:44:31.945755 : Master-Info --> startThreads
+2019-08-27 18:44:31.950921 : _messages --> getOldMessages --> Get all chats
+2019-08-27 18:44:31.962080 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 18:44:31.979282 : _messages --> getOldMessages --> Termino
+2019-08-27 18:44:36.900882 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 18:44:48.494611 : _messages --> loopStatus --> Send account info
+2019-08-27 18:45:48.514680 : _messages --> loopStatus --> Send account info
+2019-08-27 18:46:48.533282 : _messages --> loopStatus --> Send account info
+2019-08-27 18:47:48.546525 : _messages --> loopStatus --> Send account info
+2019-08-27 18:48:48.537321 : _messages --> loopStatus --> Send account info
+2019-08-27 18:49:48.553696 : _messages --> loopStatus --> Send account info
+2019-08-27 18:50:48.515490 : _messages --> loopStatus --> Send account info
+2019-08-27 18:51:48.537545 : _messages --> loopStatus --> Send account info
+2019-08-27 18:52:48.546301 : _messages --> loopStatus --> Send account info
+2019-08-27 18:53:48.568184 : _messages --> loopStatus --> Send account info
+2019-08-27 18:54:48.585970 : _messages --> loopStatus --> Send account info
+2019-08-27 18:55:48.562415 : _messages --> loopStatus --> Send account info
+2019-08-27 18:56:48.581307 : _messages --> loopStatus --> Send account info
+2019-08-27 18:57:48.589477 : _messages --> loopStatus --> Send account info
+2019-08-27 18:58:48.585206 : _messages --> loopStatus --> Send account info
+2019-08-27 18:59:48.548968 : _messages --> loopStatus --> Send account info
+2019-08-27 19:00:48.563454 : _messages --> loopStatus --> Send account info
+2019-08-27 19:01:48.533085 : _messages --> loopStatus --> Send account info
+2019-08-27 19:02:48.509082 : _messages --> loopStatus --> Send account info
+2019-08-27 19:03:48.470004 : _messages --> loopStatus --> Send account info
+2019-08-27 19:04:48.478251 : _messages --> loopStatus --> Send account info
+2019-08-27 19:05:48.504022 : _messages --> loopStatus --> Send account info
+2019-08-27 19:06:48.526834 : _messages --> loopStatus --> Send account info
+2019-08-27 19:06:48.644345 : Master-Info --> Connection end
+2019-08-27 19:26:26.530190 : Socket-Info --> Connection whit server
+2019-08-27 19:26:26.541762 : Master-Info --> Connection success
+2019-08-27 19:26:38.853802 : Master-Info --> Check if have cache
+2019-08-27 19:26:41.288381 : Master-Info --> Cache is True
+2019-08-27 19:26:41.298947 : _messages --> getOldMessages --> Get all chats
+2019-08-27 19:26:41.299661 : Master-Info --> Init event loop
+2019-08-27 19:26:41.319712 : _messages --> getOldMessages --> Termino
+2019-08-27 19:27:41.264799 : _messages --> loopStatus --> Send account info
+2019-08-27 19:28:11.894430 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 19:28:41.284920 : _messages --> loopStatus --> Send account info
+2019-08-27 19:29:41.266447 : _messages --> loopStatus --> Send account info
+2019-08-27 19:30:23.869826 : _wapi --> sendText --> send
+2019-08-27 19:30:23.895598 : _wapi --> sendText --->  --> False
+2019-08-27 19:30:32.870445 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 19:30:41.262204 : _messages --> loopStatus --> Send account info
+2019-08-27 19:31:41.269950 : _messages --> loopStatus --> Send account info
+2019-08-27 19:32:41.254911 : _messages --> loopStatus --> Send account info
+2019-08-27 19:33:41.278742 : _messages --> loopStatus --> Send account info
+2019-08-27 19:34:41.310577 : _messages --> loopStatus --> Send account info
+2019-08-27 19:35:41.311923 : _messages --> loopStatus --> Send account info
+2019-08-27 19:36:41.314046 : _messages --> loopStatus --> Send account info
+2019-08-27 19:37:41.327696 : _messages --> loopStatus --> Send account info
+2019-08-27 19:38:41.297428 : _messages --> loopStatus --> Send account info
+2019-08-27 19:39:41.293524 : _messages --> loopStatus --> Send account info
+2019-08-27 19:40:41.291351 : _messages --> loopStatus --> Send account info
+2019-08-27 19:41:09.725399 : Master-Info --> Connection end
+2019-08-27 19:41:10.753907 : Master-Info --> Connection reconnect
+2019-08-27 19:41:10.765897 : Master-Info --> Connection success
+2019-08-27 19:41:10.809964 : Master-Info --> startThreads
+2019-08-27 19:41:10.818443 : _messages --> getOldMessages --> Get all chats
+2019-08-27 19:41:10.831932 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 19:41:10.873920 : _messages --> getOldMessages --> Termino
+2019-08-27 19:41:41.265303 : _messages --> loopStatus --> Send account info
+2019-08-27 19:42:41.289026 : _messages --> loopStatus --> Send account info
+2019-08-27 19:43:41.311053 : _messages --> loopStatus --> Send account info
+2019-08-27 19:44:41.306262 : _messages --> loopStatus --> Send account info
+2019-08-27 19:45:16.488446 : Master-Info --> Connection end
+2019-08-27 19:45:17.517400 : Master-Info --> Connection reconnect
+2019-08-27 19:45:17.530718 : Master-Info --> Connection success
+2019-08-27 19:45:17.569781 : Master-Info --> startThreads
+2019-08-27 19:45:17.574253 : _messages --> getOldMessages --> Get all chats
+2019-08-27 19:45:17.592265 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 19:45:17.618839 : _messages --> getOldMessages --> Termino
+2019-08-27 19:45:41.333694 : _messages --> loopStatus --> Send account info
+2019-08-27 19:46:41.341288 : _messages --> loopStatus --> Send account info
+2019-08-27 19:47:41.360474 : _messages --> loopStatus --> Send account info
+2019-08-27 19:48:41.373994 : _messages --> loopStatus --> Send account info
+2019-08-27 19:49:41.349157 : _messages --> loopStatus --> Send account info
+2019-08-27 19:50:41.375031 : _messages --> loopStatus --> Send account info
+2019-08-27 19:51:41.391006 : _messages --> loopStatus --> Send account info
+2019-08-27 19:52:41.361119 : _messages --> loopStatus --> Send account info
+2019-08-27 19:53:41.382886 : _messages --> loopStatus --> Send account info
+2019-08-27 19:54:41.407066 : _messages --> loopStatus --> Send account info
+2019-08-27 19:55:41.370415 : _messages --> loopStatus --> Send account info
+2019-08-27 19:56:41.387779 : _messages --> loopStatus --> Send account info
+2019-08-27 19:57:41.413207 : _messages --> loopStatus --> Send account info
+2019-08-27 19:58:41.437969 : _messages --> loopStatus --> Send account info
+2019-08-27 19:59:41.415235 : _messages --> loopStatus --> Send account info
+2019-08-27 20:00:41.417373 : _messages --> loopStatus --> Send account info
+2019-08-27 20:01:41.428032 : _messages --> loopStatus --> Send account info
+2019-08-27 20:02:41.430318 : _messages --> loopStatus --> Send account info
+2019-08-27 20:03:41.447463 : _messages --> loopStatus --> Send account info
+2019-08-27 20:04:16.589283 : Master-Info --> Connection end
+2019-08-27 20:04:17.617613 : Master-Info --> Connection reconnect
+2019-08-27 20:04:17.627933 : Master-Info --> Connection success
+2019-08-27 20:04:17.660690 : Master-Info --> startThreads
+2019-08-27 20:04:17.665393 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:04:17.681101 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:04:17.701632 : _messages --> getOldMessages --> Termino
+2019-08-27 20:04:41.568561 : _messages --> loopStatus --> Send account info
+2019-08-27 20:04:44.475333 : Master-Info --> Connection end
+2019-08-27 20:05:32.756386 : Master-Info --> Connection reconnect
+2019-08-27 20:05:32.768567 : Master-Info --> Connection success
+2019-08-27 20:05:32.809896 : Master-Info --> startThreads
+2019-08-27 20:05:32.817200 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:05:32.830058 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:05:32.853098 : _messages --> getOldMessages --> Termino
+2019-08-27 20:05:41.577051 : _messages --> loopStatus --> Send account info
+2019-08-27 20:05:45.357906 : Master-Info --> Connection end
+2019-08-27 20:06:14.077686 : Master-Info --> Connection reconnect
+2019-08-27 20:06:14.092665 : Master-Info --> Connection success
+2019-08-27 20:06:14.125787 : Master-Info --> startThreads
+2019-08-27 20:06:14.131227 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:06:14.139941 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:06:14.166624 : _messages --> getOldMessages --> Termino
+2019-08-27 20:06:19.129116 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 20:06:41.593140 : _messages --> loopStatus --> Send account info
+2019-08-27 20:07:41.604472 : _messages --> loopStatus --> Send account info
+2019-08-27 20:08:41.633782 : _messages --> loopStatus --> Send account info
+2019-08-27 20:09:41.645625 : _messages --> loopStatus --> Send account info
+2019-08-27 20:10:41.669428 : _messages --> loopStatus --> Send account info
+2019-08-27 20:11:41.672901 : _messages --> loopStatus --> Send account info
+2019-08-27 20:12:41.698207 : _messages --> loopStatus --> Send account info
+2019-08-27 20:13:41.716811 : _messages --> loopStatus --> Send account info
+2019-08-27 20:14:41.700598 : _messages --> loopStatus --> Send account info
+2019-08-27 20:15:41.697371 : _messages --> loopStatus --> Send account info
+2019-08-27 20:16:41.674897 : _messages --> loopStatus --> Send account info
+2019-08-27 20:17:41.698785 : _messages --> loopStatus --> Send account info
+2019-08-27 20:18:41.699116 : _messages --> loopStatus --> Send account info
+2019-08-27 20:19:41.681363 : _messages --> loopStatus --> Send account info
+2019-08-27 20:20:41.689055 : _messages --> loopStatus --> Send account info
+2019-08-27 20:21:41.711197 : _messages --> loopStatus --> Send account info
+2019-08-27 20:22:41.709187 : _messages --> loopStatus --> Send account info
+2019-08-27 20:23:41.723683 : _messages --> loopStatus --> Send account info
+2019-08-27 20:24:41.750937 : _messages --> loopStatus --> Send account info
+2019-08-27 20:25:41.779457 : _messages --> loopStatus --> Send account info
+2019-08-27 20:26:41.806710 : _messages --> loopStatus --> Send account info
+2019-08-27 20:27:41.777023 : _messages --> loopStatus --> Send account info
+2019-08-27 20:32:26.649141 : _messages --> loopStatus --> Send account info
+2019-08-27 20:33:26.860836 : _messages --> loopStatus --> Send account info
+2019-08-27 20:34:26.860260 : _messages --> loopStatus --> Send account info
+2019-08-27 20:35:26.838761 : _messages --> loopStatus --> Send account info
+2019-08-27 20:36:26.848333 : _messages --> loopStatus --> Send account info
+2019-08-27 20:37:26.862671 : _messages --> loopStatus --> Send account info
+2019-08-27 20:38:26.836881 : _messages --> loopStatus --> Send account info
+2019-08-27 20:39:26.842609 : _messages --> loopStatus --> Send account info
+2019-08-27 20:40:26.862541 : _messages --> loopStatus --> Send account info
+2019-08-27 20:41:26.853509 : _messages --> loopStatus --> Send account info
+2019-08-27 20:42:26.882528 : _messages --> loopStatus --> Send account info
+2019-08-27 20:43:26.901275 : _messages --> loopStatus --> Send account info
+2019-08-27 20:44:26.891739 : _messages --> loopStatus --> Send account info
+2019-08-27 20:45:26.916064 : _messages --> loopStatus --> Send account info
+2019-08-27 20:46:26.935152 : _messages --> loopStatus --> Send account info
+2019-08-27 20:47:26.944288 : _messages --> loopStatus --> Send account info
+2019-08-27 20:48:26.968132 : _messages --> loopStatus --> Send account info
+2019-08-27 20:49:26.981716 : _messages --> loopStatus --> Send account info
+2019-08-27 20:50:26.974349 : _messages --> loopStatus --> Send account info
+2019-08-27 20:50:45.833054 : Master-Info --> Connection end
+2019-08-27 20:50:46.864346 : Master-Info --> Connection reconnect
+2019-08-27 20:50:46.882621 : Master-Info --> Connection success
+2019-08-27 20:50:46.921359 : Master-Info --> startThreads
+2019-08-27 20:50:46.928483 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:50:46.939958 : _messages --> getOldMessages --> Termino
+2019-08-27 20:51:01.433760 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 20:51:26.991630 : _messages --> loopStatus --> Send account info
+2019-08-27 20:52:27.006611 : _messages --> loopStatus --> Send account info
+2019-08-27 20:52:55.104924 : Master-Info --> Connection end
+2019-08-27 20:52:55.152616 : Master-Info --> Connection reconnect
+2019-08-27 20:52:55.166215 : Master-Info --> Connection success
+2019-08-27 20:52:55.200220 : Master-Info --> startThreads
+2019-08-27 20:52:55.204870 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:52:55.215359 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:52:55.229731 : _messages --> getOldMessages --> Termino
+2019-08-27 20:53:06.637908 : _wapi --> sendText --> send
+2019-08-27 20:53:06.655317 : _wapi --> sendText --->  --> False
+2019-08-27 20:53:26.979812 : _messages --> loopStatus --> Send account info
+2019-08-27 20:54:24.608023 : Master-Info --> Connection end
+2019-08-27 20:54:27.000145 : _messages --> loopStatus --> Send account info
+2019-08-27 20:54:33.671332 : Master-Info --> Connection reconnect
+2019-08-27 20:54:33.689445 : Master-Info --> Connection success
+2019-08-27 20:54:33.723140 : Master-Info --> startThreads
+2019-08-27 20:54:33.726974 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:54:33.737195 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:54:33.756096 : _messages --> getOldMessages --> Termino
+2019-08-27 20:54:38.733035 : Master-Info --> Connection reconnect
+2019-08-27 20:54:38.747344 : Master-Info --> Connection success
+2019-08-27 20:54:38.786361 : Master-Info --> startThreads
+2019-08-27 20:54:38.796937 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:54:38.813452 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:54:38.840847 : _messages --> getOldMessages --> Termino
+2019-08-27 20:54:42.448747 : _wapi --> sendText --> send
+2019-08-27 20:54:42.463216 : _wapi --> sendText --->  --> False
+2019-08-27 20:55:21.641912 : Master-Info --> Connection end
+2019-08-27 20:55:21.680977 : Master-Info --> Connection reconnect
+2019-08-27 20:55:21.694955 : Master-Info --> Connection success
+2019-08-27 20:55:21.731544 : Master-Info --> startThreads
+2019-08-27 20:55:21.736143 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:55:21.745517 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:55:21.766412 : _messages --> getOldMessages --> Termino
+2019-08-27 20:55:34.038849 : _messages --> loopStatus --> Send account info
+2019-08-27 20:56:34.054919 : _messages --> loopStatus --> Send account info
+2019-08-27 20:57:34.033315 : _messages --> loopStatus --> Send account info
+2019-08-27 20:57:38.184094 : Master-Info --> Connection end
+2019-08-27 20:57:40.232932 : Master-Info --> Connection reconnect
+2019-08-27 20:57:40.245388 : Master-Info --> Connection success
+2019-08-27 20:57:40.283787 : Master-Info --> startThreads
+2019-08-27 20:57:40.287839 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:57:40.297228 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:57:40.315624 : _messages --> getOldMessages --> Termino
+2019-08-27 20:58:03.055272 : Master-Info --> Connection end
+2019-08-27 20:58:03.085337 : Master-Info --> Connection reconnect
+2019-08-27 20:58:03.099837 : Master-Info --> Connection success
+2019-08-27 20:58:03.136758 : Master-Info --> startThreads
+2019-08-27 20:58:03.142039 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:58:03.153141 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:58:03.175308 : _messages --> getOldMessages --> Termino
+2019-08-27 20:58:34.053906 : _messages --> loopStatus --> Send account info
+2019-08-27 20:58:48.281178 : Master-Info --> Connection end
+2019-08-27 20:58:48.313426 : Master-Info --> Connection reconnect
+2019-08-27 20:58:48.329684 : Master-Info --> Connection success
+2019-08-27 20:58:48.360690 : Master-Info --> startThreads
+2019-08-27 20:58:48.364668 : _messages --> getOldMessages --> Get all chats
+2019-08-27 20:58:48.374661 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 20:58:48.398415 : _messages --> getOldMessages --> Termino
+2019-08-27 20:59:02.482291 : _wapi --> sendText --> send
+2019-08-27 20:59:02.499883 : _wapi --> sendText --->  --> False
+2019-08-27 20:59:16.334706 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 20:59:34.071853 : _messages --> loopStatus --> Send account info
+2019-08-27 21:00:34.064147 : _messages --> loopStatus --> Send account info
+2019-08-27 21:01:34.045111 : _messages --> loopStatus --> Send account info
+2019-08-27 21:02:34.060779 : _messages --> loopStatus --> Send account info
+2019-08-27 21:03:34.058032 : _messages --> loopStatus --> Send account info
+2019-08-27 21:04:34.053524 : _messages --> loopStatus --> Send account info
+2019-08-27 21:05:34.074101 : _messages --> loopStatus --> Send account info
+2019-08-27 21:06:34.076674 : _messages --> loopStatus --> Send account info
+2019-08-27 21:07:34.105726 : _messages --> loopStatus --> Send account info
+2019-08-27 21:08:34.125118 : _messages --> loopStatus --> Send account info
+2019-08-27 21:09:34.131896 : _messages --> loopStatus --> Send account info
+2019-08-27 21:10:34.146454 : _messages --> loopStatus --> Send account info
+2019-08-27 21:11:34.137135 : _messages --> loopStatus --> Send account info
+2019-08-27 21:12:34.155453 : _messages --> loopStatus --> Send account info
+2019-08-27 21:13:34.152005 : _messages --> loopStatus --> Send account info
+2019-08-27 21:14:34.156435 : _messages --> loopStatus --> Send account info
+2019-08-27 21:15:37.489026 : _messages --> loopStatus --> Send account info
+2019-08-27 22:25:00.571144 : _messages --> loopStatus --> Send account info
+2019-08-27 22:26:00.579155 : _messages --> loopStatus --> Send account info
+2019-08-27 22:27:00.585083 : _messages --> loopStatus --> Send account info
+2019-08-27 22:28:00.548528 : _messages --> loopStatus --> Send account info
+2019-08-27 22:29:00.560580 : _messages --> loopStatus --> Send account info
+2019-08-27 22:30:00.548518 : _messages --> loopStatus --> Send account info
+2019-08-27 22:31:00.534702 : _messages --> loopStatus --> Send account info
+2019-08-27 22:32:00.557346 : _messages --> loopStatus --> Send account info
+2019-08-27 22:33:00.565765 : _messages --> loopStatus --> Send account info
+2019-08-27 22:34:00.576297 : _messages --> loopStatus --> Send account info
+2019-08-27 22:35:00.591787 : _messages --> loopStatus --> Send account info
+2019-08-27 22:36:00.592407 : _messages --> loopStatus --> Send account info
+2019-08-27 22:37:00.593714 : _messages --> loopStatus --> Send account info
+2019-08-27 22:38:00.592079 : _messages --> loopStatus --> Send account info
+2019-08-27 22:39:00.580257 : _messages --> loopStatus --> Send account info
+2019-08-27 22:40:00.604679 : _messages --> loopStatus --> Send account info
+2019-08-27 22:41:00.623796 : _messages --> loopStatus --> Send account info
+2019-08-27 22:42:00.587052 : _messages --> loopStatus --> Send account info
+2019-08-27 22:43:00.596815 : _messages --> loopStatus --> Send account info
+2019-08-27 22:44:00.601986 : _messages --> loopStatus --> Send account info
+2019-08-27 22:45:00.572272 : _messages --> loopStatus --> Send account info
+2019-08-27 22:46:00.582014 : _messages --> loopStatus --> Send account info
+2019-08-27 22:47:00.589467 : _messages --> loopStatus --> Send account info
+2019-08-27 22:48:00.600472 : _messages --> loopStatus --> Send account info
+2019-08-27 22:49:00.612142 : _messages --> loopStatus --> Send account info
+2019-08-27 22:50:00.623069 : _messages --> loopStatus --> Send account info
+2019-08-27 22:51:00.655611 : _messages --> loopStatus --> Send account info
+2019-08-27 22:51:41.997032 : Master-Info --> Connection end
+2019-08-27 22:51:42.030287 : Master-Info --> Connection reconnect
+2019-08-27 22:51:42.046316 : Master-Info --> Connection success
+2019-08-27 22:51:42.076249 : Master-Info --> startThreads
+2019-08-27 22:51:42.081246 : _messages --> getOldMessages --> Get all chats
+2019-08-27 22:51:42.093830 : _messages --> getOldMessages --> Termino
+2019-08-27 22:52:00.655035 : _messages --> loopStatus --> Send account info
+2019-08-27 22:53:00.672919 : _messages --> loopStatus --> Send account info
+2019-08-27 22:54:00.691077 : _messages --> loopStatus --> Send account info
+2019-08-27 22:54:09.356664 : Master-Info --> Connection end
+2019-08-27 22:54:09.392026 : Master-Info --> Connection reconnect
+2019-08-27 22:54:09.407681 : Master-Info --> Connection success
+2019-08-27 22:54:09.445689 : Master-Info --> startThreads
+2019-08-27 22:54:09.451670 : _messages --> getOldMessages --> Get all chats
+2019-08-27 22:54:09.462973 : _messages --> getOldMessages --> Termino
+2019-08-27 22:55:00.672062 : _messages --> loopStatus --> Send account info
+2019-08-27 22:55:46.314126 : Master-Info --> Connection end
+2019-08-27 22:55:47.346766 : Master-Info --> Connection reconnect
+2019-08-27 22:55:47.360180 : Master-Info --> Connection success
+2019-08-27 22:55:47.398459 : Master-Info --> startThreads
+2019-08-27 22:55:47.404373 : _messages --> getOldMessages --> Get all chats
+2019-08-27 22:55:47.417725 : _messages --> getOldMessages --> Termino
+2019-08-27 22:56:00.692701 : _messages --> loopStatus --> Send account info
+2019-08-27 22:57:00.710790 : _messages --> loopStatus --> Send account info
+2019-08-27 22:58:00.689351 : _messages --> loopStatus --> Send account info
+2019-08-27 22:59:00.707974 : _messages --> loopStatus --> Send account info
+2019-08-27 23:00:00.675602 : _messages --> loopStatus --> Send account info
+2019-08-27 23:01:00.684373 : _messages --> loopStatus --> Send account info
+2019-08-27 23:02:00.701137 : _messages --> loopStatus --> Send account info
+2019-08-27 23:03:00.722398 : _messages --> loopStatus --> Send account info
+2019-08-27 23:04:00.749633 : _messages --> loopStatus --> Send account info
+2019-08-27 23:05:00.733392 : _messages --> loopStatus --> Send account info
+2019-08-27 23:06:00.750091 : _messages --> loopStatus --> Send account info
+2019-08-27 23:07:00.772163 : _messages --> loopStatus --> Send account info
+2019-08-27 23:08:00.788529 : _messages --> loopStatus --> Send account info
+2019-08-27 23:09:00.805293 : _messages --> loopStatus --> Send account info
+2019-08-27 23:10:00.815349 : _messages --> loopStatus --> Send account info
+2019-08-27 23:11:00.829349 : _messages --> loopStatus --> Send account info
+2019-08-27 23:12:00.846442 : _messages --> loopStatus --> Send account info
+2019-08-27 23:13:00.835066 : _messages --> loopStatus --> Send account info
+2019-08-27 23:14:00.807930 : _messages --> loopStatus --> Send account info
+2019-08-27 23:15:00.824793 : _messages --> loopStatus --> Send account info
+2019-08-27 23:15:49.629117 : Master-Info --> Connection end
+2019-08-27 23:15:50.654282 : Master-Info --> Connection reconnect
+2019-08-27 23:15:50.670242 : Master-Info --> Connection success
+2019-08-27 23:15:50.716209 : Master-Info --> startThreads
+2019-08-27 23:15:50.722998 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:15:50.735301 : _messages --> getOldMessages --> Termino
+2019-08-27 23:16:00.817527 : _messages --> loopStatus --> Send account info
+2019-08-27 23:16:51.389384 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:17:00.814799 : _messages --> loopStatus --> Send account info
+2019-08-27 23:18:00.798278 : _messages --> loopStatus --> Send account info
+2019-08-27 23:18:42.675284 : Master-Info --> Connection end
+2019-08-27 23:18:42.708626 : Master-Info --> Connection reconnect
+2019-08-27 23:18:42.726129 : Master-Info --> Connection success
+2019-08-27 23:18:42.766206 : Master-Info --> startThreads
+2019-08-27 23:18:42.771394 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:18:42.781767 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 23:18:42.797418 : _messages --> getOldMessages --> Termino
+2019-08-27 23:19:00.773228 : _messages --> loopStatus --> Send account info
+2019-08-27 23:19:28.036262 : _wapi --> sendText --> send
+2019-08-27 23:19:28.057709 : _wapi --> sendText --->  --> False
+2019-08-27 23:19:48.703753 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:20:00.783855 : _messages --> loopStatus --> Send account info
+2019-08-27 23:21:00.761532 : _messages --> loopStatus --> Send account info
+2019-08-27 23:21:01.456355 : Master-Info --> Connection end
+2019-08-27 23:21:02.499202 : Master-Info --> Connection reconnect
+2019-08-27 23:21:02.514713 : Master-Info --> Connection success
+2019-08-27 23:21:02.547758 : Master-Info --> startThreads
+2019-08-27 23:21:02.553175 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:21:02.565483 : _messages --> getOldMessages --> Termino
+2019-08-27 23:21:07.559639 : Master-Info --> Connection reconnect
+2019-08-27 23:21:07.574199 : Master-Info --> Connection success
+2019-08-27 23:21:07.614737 : Master-Info --> startThreads
+2019-08-27 23:21:07.621316 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:21:07.637336 : _messages --> getOldMessages --> Termino
+2019-08-27 23:21:20.994809 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:22:02.801043 : _messages --> loopStatus --> Send account info
+2019-08-27 23:23:02.784369 : _messages --> loopStatus --> Send account info
+2019-08-27 23:24:02.802918 : _messages --> loopStatus --> Send account info
+2019-08-27 23:24:17.724872 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:24:45.599053 : Master-Info --> Connection end
+2019-08-27 23:24:46.629488 : Master-Info --> Connection reconnect
+2019-08-27 23:24:46.642178 : Master-Info --> Connection success
+2019-08-27 23:24:46.680105 : Master-Info --> startThreads
+2019-08-27 23:24:46.684521 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:24:46.696671 : _messages --> getOldMessages --> Termino
+2019-08-27 23:24:54.853980 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:25:02.793674 : _messages --> loopStatus --> Send account info
+2019-08-27 23:25:04.207913 : _wapi --> sendText --> send
+2019-08-27 23:25:04.226417 : _wapi --> sendText --->  --> False
+2019-08-27 23:25:24.224378 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:26:02.805658 : _messages --> loopStatus --> Send account info
+2019-08-27 23:26:06.792098 : Master-Info --> Connection end
+2019-08-27 23:26:07.827101 : Master-Info --> Connection reconnect
+2019-08-27 23:26:07.842360 : Master-Info --> Connection success
+2019-08-27 23:26:07.878067 : Master-Info --> startThreads
+2019-08-27 23:26:07.883509 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:26:07.894851 : _messages --> getOldMessages --> Termino
+2019-08-27 23:26:23.347672 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:26:34.554465 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:27:02.776265 : _messages --> loopStatus --> Send account info
+2019-08-27 23:27:07.517627 : Master-Info --> Connection end
+2019-08-27 23:27:08.546379 : Master-Info --> Connection reconnect
+2019-08-27 23:27:08.561398 : Master-Info --> Connection success
+2019-08-27 23:27:08.593033 : Master-Info --> startThreads
+2019-08-27 23:27:08.598323 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:27:08.609300 : _messages --> getOldMessages --> Termino
+2019-08-27 23:27:15.637445 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:27:30.762605 : _wapi --> sendText --> send
+2019-08-27 23:27:30.779354 : _wapi --> sendText --->  --> False
+2019-08-27 23:27:36.868168 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:28:02.764383 : _messages --> loopStatus --> Send account info
+2019-08-27 23:29:02.783112 : _messages --> loopStatus --> Send account info
+2019-08-27 23:30:02.771579 : _messages --> loopStatus --> Send account info
+2019-08-27 23:31:02.759567 : _messages --> loopStatus --> Send account info
+2019-08-27 23:31:26.919067 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:31:34.088185 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:32:02.736876 : _messages --> loopStatus --> Send account info
+2019-08-27 23:33:02.738376 : _messages --> loopStatus --> Send account info
+2019-08-27 23:33:33.578453 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:33:38.880238 : _wapi --> sendText --> send
+2019-08-27 23:33:38.899109 : _wapi --> sendText --->  --> False
+2019-08-27 23:33:45.641008 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:34:02.745866 : _messages --> loopStatus --> Send account info
+2019-08-27 23:35:02.746112 : _messages --> loopStatus --> Send account info
+2019-08-27 23:36:02.742191 : _messages --> loopStatus --> Send account info
+2019-08-27 23:37:02.757480 : _messages --> loopStatus --> Send account info
+2019-08-27 23:37:50.715663 : Master-Info --> Connection end
+2019-08-27 23:37:54.756120 : Master-Info --> Connection reconnect
+2019-08-27 23:37:54.773047 : Master-Info --> Connection success
+2019-08-27 23:37:54.808909 : Master-Info --> startThreads
+2019-08-27 23:37:54.813163 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:37:54.823913 : _messages --> getOldMessages --> Termino
+2019-08-27 23:38:02.768869 : _messages --> loopStatus --> Send account info
+2019-08-27 23:38:17.880784 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:38:43.997099 : _wapi --> sendText --> send
+2019-08-27 23:38:44.022432 : _wapi --> sendText --->  --> False
+2019-08-27 23:39:02.783404 : _messages --> loopStatus --> Send account info
+2019-08-27 23:40:02.771150 : _messages --> loopStatus --> Send account info
+2019-08-27 23:41:02.784532 : _messages --> loopStatus --> Send account info
+2019-08-27 23:42:02.744973 : _messages --> loopStatus --> Send account info
+2019-08-27 23:43:02.714200 : _messages --> loopStatus --> Send account info
+2019-08-27 23:44:02.677900 : _messages --> loopStatus --> Send account info
+2019-08-27 23:45:02.690345 : _messages --> loopStatus --> Send account info
+2019-08-27 23:46:02.707776 : _messages --> loopStatus --> Send account info
+2019-08-27 23:47:02.725404 : _messages --> loopStatus --> Send account info
+2019-08-27 23:48:02.736147 : _messages --> loopStatus --> Send account info
+2019-08-27 23:49:02.750637 : _messages --> loopStatus --> Send account info
+2019-08-27 23:50:02.748461 : _messages --> loopStatus --> Send account info
+2019-08-27 23:51:02.726735 : _messages --> loopStatus --> Send account info
+2019-08-27 23:52:02.732597 : _messages --> loopStatus --> Send account info
+2019-08-27 23:53:02.753873 : _messages --> loopStatus --> Send account info
+2019-08-27 23:53:15.571370 : Master-Info --> Connection end
+2019-08-27 23:53:16.606372 : Master-Info --> Connection reconnect
+2019-08-27 23:53:16.625635 : Master-Info --> Connection success
+2019-08-27 23:53:16.666370 : Master-Info --> startThreads
+2019-08-27 23:53:16.670625 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:53:16.684363 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 23:53:16.720920 : _messages --> getOldMessages --> Termino
+2019-08-27 23:53:47.232451 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:54:02.762406 : _messages --> loopStatus --> Send account info
+2019-08-27 23:55:02.777278 : _messages --> loopStatus --> Send account info
+2019-08-27 23:55:19.004993 : Master-Info --> Connection end
+2019-08-27 23:55:19.039037 : Master-Info --> Connection reconnect
+2019-08-27 23:55:19.054694 : Master-Info --> Connection success
+2019-08-27 23:55:19.094692 : Master-Info --> startThreads
+2019-08-27 23:55:19.099876 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:55:19.111504 : _messages --> getOldMessages --> Termino
+2019-08-27 23:56:02.795794 : _messages --> loopStatus --> Send account info
+2019-08-27 23:56:08.605894 : Master-Info --> Connection end
+2019-08-27 23:56:18.691523 : Master-Info --> Connection reconnect
+2019-08-27 23:56:18.704159 : Master-Info --> Connection success
+2019-08-27 23:56:18.742515 : Master-Info --> startThreads
+2019-08-27 23:56:18.747669 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:56:18.761071 : _messages --> getOldMessages --> Termino
+2019-08-27 23:56:55.774207 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:57:01.207906 : _wapi --> sendText --> send
+2019-08-27 23:57:01.226962 : _wapi --> sendText --->  --> False
+2019-08-27 23:57:02.769180 : _messages --> loopStatus --> Send account info
+2019-08-27 23:57:08.326952 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-27 23:57:52.259917 : Master-Info --> Connection end
+2019-08-27 23:57:53.258146 : Master-Info --> Connection reconnect
+2019-08-27 23:57:53.272465 : Master-Info --> Connection success
+2019-08-27 23:57:53.307411 : Master-Info --> startThreads
+2019-08-27 23:57:53.313990 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:57:53.324412 : _messages --> getOldMessages --> Termino
+2019-08-27 23:57:58.125224 : NewMessage FROM --> --> {'user': '5215569388165', 'server': 'c.us', '_serialized': '5215569388165@c.us'}
+2019-08-27 23:58:02.775401 : _messages --> loopStatus --> Send account info
+2019-08-27 23:59:02.766007 : _messages --> loopStatus --> Send account info
+2019-08-27 23:59:17.850849 : Socket-Info --> Connection whit server
+2019-08-27 23:59:17.865338 : Master-Info --> Connection success
+2019-08-27 23:59:29.956356 : Master-Info --> Check if have cache
+2019-08-27 23:59:32.642437 : Master-Info --> Cache is True
+2019-08-27 23:59:32.647480 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:59:32.648362 : Master-Info --> Init event loop
+2019-08-27 23:59:32.658492 : Master-Info --> Connection reconnect
+2019-08-27 23:59:32.668628 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 23:59:32.697029 : _messages --> getOldMessages --> Termino
+2019-08-27 23:59:33.675544 : Master-Info --> Connection end
+2019-08-27 23:59:47.796850 : Master-Info --> Connection reconnect
+2019-08-27 23:59:47.826103 : Master-Info --> Connection reconnect
+2019-08-27 23:59:47.832455 : Master-Info --> Connection success
+2019-08-27 23:59:47.886566 : Master-Info --> startThreads
+2019-08-27 23:59:47.891286 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:59:47.892704 : Master-Info --> Connection success
+2019-08-27 23:59:47.908159 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 23:59:47.952442 : _messages --> getOldMessages --> Termino
+2019-08-27 23:59:47.985919 : Master-Info --> startThreads
+2019-08-27 23:59:47.990803 : _messages --> getOldMessages --> Get all chats
+2019-08-27 23:59:48.004239 : _messages --> getOldMessages --> Get all messages of chat
+2019-08-27 23:59:48.038280 : _messages --> getOldMessages --> Termino
+2019-08-28 00:00:02.182267 : _wapi --> sendText --> send
+2019-08-28 00:00:02.203075 : _wapi --> sendText --->  --> False
+2019-08-28 00:00:08.425919 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-28 00:00:32.646431 : _messages --> loopStatus --> Send account info
+2019-08-28 00:01:32.644511 : _messages --> loopStatus --> Send account info
+2019-08-28 00:02:32.638162 : _messages --> loopStatus --> Send account info
+2019-08-28 00:03:32.626789 : _messages --> loopStatus --> Send account info
+2019-08-28 00:04:32.646095 : _messages --> loopStatus --> Send account info
+2019-08-28 00:05:22.320390 : Master-Info --> Connection end
+2019-08-28 00:05:23.358510 : Master-Info --> Connection reconnect
+2019-08-28 00:05:23.372680 : Master-Info --> Connection success
+2019-08-28 00:05:23.469375 : Master-Info --> startThreads
+2019-08-28 00:05:23.473216 : _messages --> getOldMessages --> Get all chats
+2019-08-28 00:05:23.487689 : _messages --> getOldMessages --> Termino
+2019-08-28 00:05:32.664306 : _messages --> loopStatus --> Send account info
+2019-08-28 00:06:02.889079 : Master-Info --> Connection end
+2019-08-28 00:06:03.916865 : Master-Info --> Connection reconnect
+2019-08-28 00:06:03.927929 : Master-Info --> Connection success
+2019-08-28 00:06:03.964381 : Master-Info --> startThreads
+2019-08-28 00:06:03.969007 : _messages --> getOldMessages --> Get all chats
+2019-08-28 00:06:03.980352 : _messages --> getOldMessages --> Termino
+2019-08-28 00:06:20.907000 : NewMessage FROM --> --> {'_serialized': '5215569388165@c.us', 'server': 'c.us', 'user': '5215569388165'}
+2019-08-28 00:06:32.686834 : _messages --> loopStatus --> Send account info
+2019-08-28 00:06:43.011672 : _wapi --> sendText --> send
+2019-08-28 00:06:43.034726 : _wapi --> sendText --->  --> False
+2019-08-28 00:07:03.004943 : _wapi --> --> Delete Chat 5215569388165@c.us
+2019-08-28 00:07:32.657137 : _messages --> loopStatus --> Send account info
+2019-08-28 00:08:32.666427 : _messages --> loopStatus --> Send account info
+2019-08-28 00:09:32.683816 : _messages --> loopStatus --> Send account info
+2019-08-28 00:10:32.695052 : _messages --> loopStatus --> Send account info
+2019-08-28 00:11:32.708015 : _messages --> loopStatus --> Send account info
+2019-08-28 00:12:32.729179 : _messages --> loopStatus --> Send account info
+2019-08-28 00:13:27.742686 : NewMessage FROM --> --> {'_serialized': '5215569388165@c.us', 'server': 'c.us', 'user': '5215569388165'}
+2019-08-28 00:13:32.754792 : _messages --> loopStatus --> Send account info
+2019-08-28 00:14:32.778568 : _messages --> loopStatus --> Send account info
+2019-08-28 00:15:32.757202 : _messages --> loopStatus --> Send account info
+2019-08-28 00:16:32.772137 : _messages --> loopStatus --> Send account info
+2019-08-28 00:17:32.770810 : _messages --> loopStatus --> Send account info
+2019-08-28 00:18:32.789058 : _messages --> loopStatus --> Send account info
+2019-08-28 00:19:32.782651 : _messages --> loopStatus --> Send account info
+2019-08-28 00:20:32.804221 : _messages --> loopStatus --> Send account info
+2019-08-28 00:21:32.825312 : _messages --> loopStatus --> Send account info
+2019-08-28 00:22:32.832466 : _messages --> loopStatus --> Send account info
+2019-08-28 00:23:32.838129 : _messages --> loopStatus --> Send account info
+2019-08-28 00:24:32.852428 : _messages --> loopStatus --> Send account info
+2019-08-28 00:25:32.870500 : _messages --> loopStatus --> Send account info
+2019-08-28 00:26:32.898253 : _messages --> loopStatus --> Send account info
+2019-08-28 00:27:32.918499 : _messages --> loopStatus --> Send account info
+2019-08-28 00:28:32.937834 : _messages --> loopStatus --> Send account info
+2019-08-28 00:29:32.905919 : _messages --> loopStatus --> Send account info
+2019-08-28 00:30:32.913610 : _messages --> loopStatus --> Send account info
+2019-08-28 00:31:32.888963 : _messages --> loopStatus --> Send account info
+2019-08-28 00:32:32.896916 : _messages --> loopStatus --> Send account info
+2019-08-28 00:33:32.870237 : _messages --> loopStatus --> Send account info
+2019-08-28 00:34:32.900369 : _messages --> loopStatus --> Send account info
+2019-08-28 00:35:32.873609 : _messages --> loopStatus --> Send account info
+2019-08-28 00:36:32.891365 : _messages --> loopStatus --> Send account info
+2019-08-28 00:36:57.450166 : Master-Info --> Connection end
