@@ -54,7 +54,7 @@ class ContentMessage():
 
         if self.message.type not in self.__DOCUMENT_TYPE :
             # MEDIA NOT SUPORTED #
-             print( "NOT SUPORTED" )
+            print( "NOT SUPORTED" )
             self.content.content = 'No soportado'
 
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
