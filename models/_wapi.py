@@ -126,6 +126,7 @@ def getOldMessages(driver):
 
                 for message in _messages:
                     try:
+                        print(message)
                         body = interface_messages.getFormat(message,driver)
 
                         chats[idChat].append(body)
