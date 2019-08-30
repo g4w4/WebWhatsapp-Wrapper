@@ -86,10 +86,11 @@ def waitLogin(driver,socketId):
 def getGeneralInfo(driver):
     try:
         if driver is None :
+            logs.logError('_wapi --> getGeneralInfo','DIVER NOT FOUND')
             return False
         else :
             return {
-                "whatsAppJoin" : driver.is_logged_in(),
+                "whatsAppJoin" : driver.is_connected(),
                 "bateryLevel" : driver.get_battery_level(),
                 "numero" : driver.get_phone_number()
             }
