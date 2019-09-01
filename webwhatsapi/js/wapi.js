@@ -1210,9 +1210,13 @@ window.WAPI.getBufferedNewMessages = function (done) {
 /** End new messages observable functions **/
 
 window.WAPI.sendImage = function async (imgBase64, chatid, filename, caption, done) {
-    r = await window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@c.us',''), filename, caption, done).then( a => a).catch( e => e)
-    if (done !== undefined) done(r);
-    return r;
+    window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@c.us',''), filename, caption, done).then( a => {
+        if (done !== undefined) done(a);
+        return a
+    }).catch( e => {
+        if (done !== undefined) done(e);
+        return e
+    })
 //var idUser = new window.Store.UserConstructor(chatid);
 //var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
 // create new chat
