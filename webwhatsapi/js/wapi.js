@@ -1210,28 +1210,26 @@ window.WAPI.getBufferedNewMessages = function (done) {
 /** End new messages observable functions **/
 
 window.WAPI.sendImage = function async (imgBase64, chatid, filename, caption, done) {
-    window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@c.us',''), filename, caption, done).then( a => {
-        if (done !== undefined) done(a);
-        return a
+
+//var idUser = new window.Store.UserConstructor(chatid);
+var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
+return Store.Chat.find(idUser).then((chat) => {
+    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+    var mc = new Store.MediaCollection();
+    mc.processFiles([mediaBlob], chat, 1).then(() => {
+        var media = mc.models[0];
+        media.sendToChat(chat, { caption: caption }).then( a => {
+            if (done !== undefined) done(a);
+            return a
+        }).catch( e => {
+            if (done !== undefined) done(e);
+            return e
+        });
     }).catch( e => {
         if (done !== undefined) done(e);
         return e
-    })
-//var idUser = new window.Store.UserConstructor(chatid);
-//var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
-// create new chat
-// return Store.Chat.find(idUser).then((chat) => {
-//     var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-//     var mc = new Store.MediaCollection();
-//     mc.processFiles([mediaBlob], chat, 1).then(() => {
-//         var media = mc.models[0];
-//         media.sendToChat(chat, { caption: caption });
-//         if (done !== undefined) done(true);
-//     }).catch( err => {
-//         if (done !== undefined) done(err);
-//     });
-//     window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@c.us',''), filename, caption, done)
-// });
+    });
+});
 }
 
 window.WAPI.sendImageToPhone = async function(
