@@ -214,9 +214,9 @@ def sendText(driver,socketIO,id,message):
 def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
     try:
         logs.logError('_wapi --> Sending File '+typeMessage,'')
-        driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
+        s= driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
         t = driver.chat_send_seen(id)
-        logs.logError('_wapi --> Send File end',t)
+        logs.logError('_wapi --> Send File end',s)
         socketIO.emit('newMessage', interface_messages.getFormatFile(fileMessage,id,typeMessage,caption) )
         socketIO.emit('newMessage',{'chat':id,'message':fileMessage,'type':typeMessage,'caption':caption,'sendBy':'Agent'})
     except Exception :
