@@ -592,7 +592,9 @@ class WhatsAPIDriver(object):
         """
         imgBase64 = self.convert_to_base64(path)
         filename = os.path.split(path)[-1]
-        return self.wapi_functions.sendImage(imgBase64, chatid, filename, caption)
+        t = self.wapi_functions.sendImage(imgBase64, chatid, filename, caption)
+        print( t )
+        return t
     
     
 

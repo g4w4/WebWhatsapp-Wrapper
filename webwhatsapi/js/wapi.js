@@ -1223,7 +1223,7 @@ return Store.Chat.find(idUser).then((chat) => {
     }).catch( err => {
         if (done !== undefined) done(err);
     });
-    window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@@c.us',''), filename, caption, done)
+    window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@c.us',''), filename, caption, done)
 });
 }
 
