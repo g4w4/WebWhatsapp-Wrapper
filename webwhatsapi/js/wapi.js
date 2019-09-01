@@ -1220,9 +1220,42 @@ return Store.Chat.find(idUser).then((chat) => {
         var media = mc.models[0];
         media.sendToChat(chat, { caption: caption });
         if (done !== undefined) done(true);
+    }).catch( err => {
+        if (done !== undefined) done(err);
     });
+    window.WAPI.sendImageToPhone(imgBase64,chatid.replace('@@c.us',''), filename, caption, done)
 });
 }
+
+window.WAPI.sendImageToPhone = async function(
+    imgBase64,
+    phone,
+    filename,
+    caption,
+    done
+  ) {
+    var user = await WAPI.findUserByPhone(phone);
+    var chat = await WAPI.getChat(user);
+
+    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+    var mc = new Store.MediaCollection();
+
+    await mc.processFiles([mediaBlob], chat, 1);
+
+    var media = mc.models[0];
+
+    if (!media) {
+      if (done !== undefined) done(false);
+      return false;
+    }
+    media.sendToChat(chat, { caption: caption });
+
+    if (done !== undefined) done(true);
+
+    return true;
+  };
+
+
 
 window.WAPI.base64ImageToFile = function (b64Data, filename) {
     var arr   = b64Data.split(',');
