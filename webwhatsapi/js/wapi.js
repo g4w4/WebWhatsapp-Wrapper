@@ -1209,20 +1209,62 @@ window.WAPI.getBufferedNewMessages = function (done) {
 };
 /** End new messages observable functions **/
 
-window.WAPI.sendImage = function (imgBase64, chatid, filename, caption, done) {
+window.WAPI.sendImage = function async (imgBase64, chatid, filename, caption, done) {
+
 //var idUser = new window.Store.UserConstructor(chatid);
 var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
-// create new chat
 return Store.Chat.find(idUser).then((chat) => {
     var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
     var mc = new Store.MediaCollection();
     mc.processFiles([mediaBlob], chat, 1).then(() => {
         var media = mc.models[0];
-        media.sendToChat(chat, { caption: caption });
-        if (done !== undefined) done(true);
+        media.sendToChat(chat, { caption: caption }).then( a => {
+            if (done !== undefined) done(a);
+            return a
+        }).catch( e => {
+            if (done !== undefined) done(e);
+            return e
+        });
+    }).catch( e => {
+        if (done !== undefined) done(e);
+        return e
     });
 });
 }
+
+window.WAPI.sendImageToPhone = async function(
+    imgBase64,
+    phone,
+    filename,
+    caption,
+    done
+  ) {
+    try {
+        var user = await WAPI.findUserByPhone(phone);
+        var chat = await WAPI.getChat(user);
+
+        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+        var mc = new Store.MediaCollection();
+
+        await mc.processFiles([mediaBlob], chat, 1);
+
+        var media = mc.models[0];
+
+        if (!media) {
+        if (done !== undefined) done(false);
+        return false;
+        }
+        media.sendToChat(chat, { caption: caption });
+
+        if (done !== undefined) done(true);
+
+        return true;
+    } catch (error) {
+        return error.message || error
+    }
+  };
+
+
 
 window.WAPI.base64ImageToFile = function (b64Data, filename) {
     var arr   = b64Data.split(',');

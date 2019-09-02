@@ -136,6 +136,7 @@ class JsFunction(object):
             else:
                 raise JsException("Error in function {0} ({1}). Command: {2}".format(self.function_name, e.msg, command))
         except WebDriverException as e:
+            print(e)
             if e.msg == 'Timed out':
                 raise WapiPhoneNotConnectedException("Phone not connected to Internet")
             raise JsException("Error in function {0} ({1}). Command: {2}".format(self.function_name, e.msg, command))

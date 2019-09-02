@@ -122,11 +122,8 @@ def getOldMessages(driver):
                 logs.logError('_messages --> getOldMessages','Get all messages of chat')
                 _messages = driver.get_all_messages_in_chat(idChat,True)
 
-                print(_messages)
-
                 for message in _messages:
                     try:
-                        print(message)
                         body = interface_messages.getFormat(message,driver)
 
                         chats[idChat].append(body)
@@ -217,9 +214,9 @@ def sendText(driver,socketIO,id,message):
 def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
     try:
         logs.logError('_wapi --> Sending File '+typeMessage,'')
-        driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
+        s= driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
         driver.chat_send_seen(id)
-        logs.logError('_wapi --> Send File end','')
+        logs.logError('_wapi --> Send File end',s)
         socketIO.emit('newMessage', interface_messages.getFormatFile(fileMessage,id,typeMessage,caption) )
         socketIO.emit('newMessage',{'chat':id,'message':fileMessage,'type':typeMessage,'caption':caption,'sendBy':'Agent'})
     except Exception :

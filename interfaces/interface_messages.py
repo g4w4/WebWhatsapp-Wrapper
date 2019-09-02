@@ -54,17 +54,14 @@ class ContentMessage():
 
         if self.message.type not in self.__DOCUMENT_TYPE :
             # MEDIA NOT SUPORTED #
-            print( "NOT SUPORTED" )
             self.content.content = 'No soportado'
 
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # SAVE MEDIA #
-            print( "SaveMedia" )
-            self.content["content"] = str( self.message.save_media(config.pathFiles,False) ).replace(config.pathFiles,"")
+            self.content["content"] = str( self.message.save_media(config.pathFiles,True) ).replace(config.pathFiles,"")
 
         else :
             # GET TEXT #
-            print( "TXT" )
             self.content["content"] =  self.message.content
         
         if self.message.type in self.__DOCUMENT_TYPE and self.message.type != "chat" :
@@ -72,7 +69,6 @@ class ContentMessage():
             self.content["type"] = self.message.type
             self.content["caption"] = self.message.caption
 
-        print( "SAlio 2" )
         return self.content
 
 
@@ -85,11 +81,9 @@ class ContentMessage():
 ######################################################################
 def getFormat(message,driver):
     try:
-        print(message)
         _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
         contentMessage = ContentMessage(message).get()   
-        print('Salio del content')
         return {
             "chat": chat,
             "sendBy": _id["sendBy"],
