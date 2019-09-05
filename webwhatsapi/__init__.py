@@ -590,6 +590,7 @@ class WhatsAPIDriver(object):
         :param caption:
         :return:
         """
+        print( path )
         imgBase64 = self.convert_to_base64(path)
         filename = os.path.split(path)[-1]
         print("AHANAJAJAJ")

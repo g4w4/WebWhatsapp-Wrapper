@@ -130,7 +130,6 @@ class start():
 
     def sincGetOldMessages(self):
         chats = _wapi.getOldMessages(self.driver)
-        print( chats )
         self.socketIO.emit('oldMessages',chats)
 
         

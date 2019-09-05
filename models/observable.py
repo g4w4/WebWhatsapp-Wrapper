@@ -19,6 +19,13 @@ class NewMessageObserver():
                 me = "{}@c.us".format(self.driver.get_phone_number())
                 exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
                 exitGroup.start()
-            else : 
-                _message = interface_messages.getFormat(message,self.driver)
-                self.socket.emit('newMessage',_message)
+            else :
+                if  message._js_obj['type'] == "location":
+                    print( "Es ubicación" )
+                    print(  message._js_obj['lng']  )
+                    print(  message._js_obj['lat']  )
+                    _message = interface_messages.getLocation( message, self.driver)
+                    self.socket.emit('newMessage',_message)
+                else:
+                    _message = interface_messages.getFormat(message,self.driver)
+                    self.socket.emit('newMessage',_message)

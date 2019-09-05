@@ -132,3 +132,20 @@ def getFormatFile(message,chatId,typeFile,caption):
     except Exception :
         logs.logError('Error getFormatText --> ',traceback.format_exc())
 
+def getLocation(message,diver):
+    _id = IdMessage(message).get()
+    chat = message._js_obj.get('chat').get('id').get('_serialized')
+    return {
+        "chat": chat,
+        "sendBy": _id["sendBy"],
+        "message": "Ubicación",
+        "type": "location",
+        "caption": "false",
+        "lng": message._js_obj['lng'],  
+        "lat": message._js_obj['lat'],
+        "akc": 1,
+        "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
+        "id": _id["id"],
+        "app": "whatsApp"       
+    }
+

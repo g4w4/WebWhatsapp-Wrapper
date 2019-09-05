@@ -1214,21 +1214,28 @@ window.WAPI.sendImage = function async (imgBase64, chatid, filename, caption, do
 //var idUser = new window.Store.UserConstructor(chatid);
 var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
 return Store.Chat.find(idUser).then((chat) => {
-    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-    var mc = new Store.MediaCollection();
-    mc.processFiles([mediaBlob], chat, 1).then(() => {
-        var media = mc.models[0];
-        media.sendToChat(chat, { caption: caption }).then( a => {
-            if (done !== undefined) done(a);
-            return a
+    try {
+        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+
+        var mc = new Store.MediaCollection();
+        mc.processFiles([mediaBlob], chat, 1).then((a) => {
+           try {
+                var media = mc.models[0];
+                media.sendToChat(chat, { caption: caption })
+                if (done !== undefined) done('sucess');
+                return 'suucess'
+           } catch (e) {
+                if (done !== undefined) done('error');
+                return 'Errror'
+           }
         }).catch( e => {
             if (done !== undefined) done(e);
             return e
         });
-    }).catch( e => {
+    } catch (e) {
         if (done !== undefined) done(e);
         return e
-    });
+    }
 });
 }
 
@@ -1267,17 +1274,21 @@ window.WAPI.sendImageToPhone = async function(
 
 
 window.WAPI.base64ImageToFile = function (b64Data, filename) {
-    var arr   = b64Data.split(',');
-    var mime  = arr[0].match(/:(.*?);/)[1];
-    var bstr  = atob(arr[1]);
-    var n     = bstr.length;
-    var u8arr = new Uint8Array(n);
+    try {
+        var arr   = b64Data.split(',');
+        var mime  = arr[0].match(/:(.*?);/)[1];
+        var bstr  = atob(arr[1]);
+        var n     = bstr.length;
+        var u8arr = new Uint8Array(n);
 
-    while (n--) {
-        u8arr[n] = bstr.charCodeAt(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, {type: mime});
+    } catch (error) {
+        return error.message || error
     }
-
-    return new File([u8arr], filename, {type: mime});
 };
 
 /**
