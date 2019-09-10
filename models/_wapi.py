@@ -8,6 +8,16 @@ from services import config
 from interfaces import interface_messages
 
 
+__DOCUMENT_TYPE = {
+    'document' : 'document',
+    'image' : 'image',
+    'video' : 'video',
+    'audio' : 'audio',
+    'ptt' : 'ptt',
+    'chat' : 'chat'
+}
+
+
 ############################ rememberSession(driver) ############
 # Desc : wait for session                                       #
 # Params : driver obj                                           #       
@@ -122,12 +132,19 @@ def getOldMessages(driver):
                 logs.logError('_messages --> getOldMessages','Get all messages of chat')
                 _messages = driver.get_all_messages_in_chat(idChat,True)
 
+                
+
                 for message in _messages:
-                    try:
-                        body = interface_messages.getFormat(message,driver)
 
-                        chats[idChat].append(body)
+                    print( message.type )
 
+                    try:    
+                        if message.type == "location":
+                            body = interface_messages.getLocation(message,driver)
+                            chats[idChat].append(body)
+                        else:
+                            body = interface_messages.getFormat(message,driver)
+                            chats[idChat].append(body)
                     except Exception :
                         logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
 
@@ -214,7 +231,8 @@ def sendText(driver,socketIO,id,message):
 def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
     try:
         logs.logError('_wapi --> Sending File '+typeMessage,'')
-        s= driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
+
+        s = driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
         driver.chat_send_seen(id)
         logs.logError('_wapi --> Send File end',s)
         socketIO.emit('newMessage', interface_messages.getFormatFile(fileMessage,id,typeMessage,caption) )

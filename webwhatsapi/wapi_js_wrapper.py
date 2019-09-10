@@ -128,6 +128,8 @@ class JsFunction(object):
         try:
             return self.driver.execute_async_script(command)
         except JavascriptException as e:
+            print(" fallo algo bb")
+            print( e )
             if 'WAPI is not defined' in e.msg and self.is_a_retry is not True:
                 self.wapi_wrapper.available_functions = None
                 retry_command = getattr(self.wapi_wrapper, self.function_name)
@@ -136,6 +138,7 @@ class JsFunction(object):
             else:
                 raise JsException("Error in function {0} ({1}). Command: {2}".format(self.function_name, e.msg, command))
         except WebDriverException as e:
+            print(" fallo algo bb")
             print(e)
             if e.msg == 'Timed out':
                 raise WapiPhoneNotConnectedException("Phone not connected to Internet")
