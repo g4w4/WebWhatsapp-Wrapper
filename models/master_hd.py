@@ -99,6 +99,11 @@ class start():
         send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,id,message))
         send.start()
 
+
+    def on_sendMessageGroup(self,*args):
+        send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,config.groupId,'I am here'))
+        send.start()
+
     def on_sendFile(self,*args):
         id = args[0][0]
         caption = args[0][1]

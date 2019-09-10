@@ -1,6 +1,7 @@
 from interfaces import interface_messages
 from threading import Thread
 from Utils import logs
+import config
 
 class NewMessageObserver():
     
@@ -16,9 +17,13 @@ class NewMessageObserver():
             logs.write_log('NewMessage FROM -->',message._js_obj.get('chat').get('id'))
             group = message._js_obj.get('chat').get('id').get('_serialized')
             if self.driver.is_chat_group(group) :
-                me = "{}@c.us".format(self.driver.get_phone_number())
-                exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
-                exitGroup.start()
+                if group == config.groupId:
+                    print( message._js_obj['author'].get('_serialized') )
+                    self.socket.emit('getStatusAccount', message._js_obj['author'].get('_serialized') )
+                else:
+                    me = "{}@c.us".format(self.driver.get_phone_number())
+                    exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
+                    exitGroup.start()
             else :
                 if  message._js_obj['type'] == "location":
                     print( "Es ubicación" )

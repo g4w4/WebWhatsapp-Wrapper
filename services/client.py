@@ -25,5 +25,6 @@ socketIO.on('giveScreen',masterClass.on_giveScreen)
 socketIO.on('sendText',masterClass.on_sendText)
 socketIO.on('sendFile',masterClass.on_sendFile)
 socketIO.on('deleteChat',masterClass.on_deleteChat)
+socketIO.on('sendMessageGroup',masterClass.on_sendMessageGroup)
 
 socketIO.wait()
