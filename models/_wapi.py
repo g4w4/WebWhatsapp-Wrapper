@@ -130,6 +130,9 @@ def getOldMessages(driver):
                 chats[idChat] = []
 
                 logs.logError('_messages --> getOldMessages','Get all messages of chat')
+                print("Cargando mensajes")
+                x = driver.chat_load_all_earlier_messages(idChat)
+                print("Termino mensajes")
                 _messages = driver.get_all_messages_in_chat(idChat,True)
 
                 
@@ -142,9 +145,11 @@ def getOldMessages(driver):
                         if message.type == "location":
                             body = interface_messages.getLocation(message,driver)
                             chats[idChat].append(body)
-                        else:
+                        elif message.type != 'ptt':
                             body = interface_messages.getFormat(message,driver)
                             chats[idChat].append(body)
+                        else :
+                            print( 'Fallo audio' )
                     except Exception :
                         logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
 
