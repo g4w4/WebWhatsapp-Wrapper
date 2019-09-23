@@ -988,6 +988,7 @@ window.WAPI.downloadFileWithCredentials = function (url, done) {
                 };
             } else {
                 console.error(xhr.statusText);
+		done(false);
             }
         } else {
             console.log(err);
