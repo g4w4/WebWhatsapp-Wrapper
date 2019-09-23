@@ -149,7 +149,7 @@ def getOldMessages(driver):
                             body = interface_messages.getFormat(message,driver)
                             chats[idChat].append(body)
                         else :
-                            print( 'Fallo audio' )                    
+                            print( 'Fallo audio' )
                     except Exception :
                         logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
 

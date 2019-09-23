@@ -1017,6 +1017,7 @@ window.WAPI.downloadFile = function (url, done) {
                 };
             } else {
                 console.error(xhr.statusText);
+                done(false)
             }
         } else {
             console.log(err);
