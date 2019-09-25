@@ -40,4 +40,5 @@ API_session
 API_session/**
 
 Utils/configUtils.py
+logs.txt
 
