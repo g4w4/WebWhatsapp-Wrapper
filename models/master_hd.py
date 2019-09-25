@@ -17,6 +17,7 @@ class start():
     awaitLogin = None
     __Keyword = "Master-Info"
     sessionStart = False
+    messagesStore = {}
 
     def __init__(self,socket): 
         if not os.path.exists(config.pathSession): os.makedirs(config.pathSession)
@@ -28,12 +29,14 @@ class start():
 
     def on_welcome(self,*args):
         try:
+            #print( args[0].get('messages').get('5215587156@c.us','9171') )
+            self.messagesStore =  args[0].get('messages')
             logs.logError(self.__Keyword,'Connection success')
             if self.driver != None and self.driver.is_logged_in():
                 # Is reconnection send all data #
                 self.socketIO.emit('change',_wapi.getGeneralInfo(self.driver))
                 logs.logError(self.__Keyword,'startThreads')
-                self.startThreads()
+                self.startThreads( self.messagesStore, self.socketIO )
             else:
                 # It's the first connection, try to remember session #
                 self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
@@ -42,7 +45,7 @@ class start():
                 rember = _wapi.rememberSession(self.driver,self.socketIO)
                 logs.logError(self.__Keyword,'Cache is {}'.format(rember))
                 if rember :     
-                    self.startThreads()
+                    self.startThreads( self.messagesStore, self.socketIO )
         except Exception :
             logs.logError('Master-Error',traceback.format_exc())
             # ALERTA #
@@ -66,7 +69,7 @@ class start():
 
                 # If not detect session #
                 if self.sessionStart == False:
-                    self.startThreads()
+                    self.startThreads( self.messagesStore , self.socketIO )
 
             else :
                 logs.logError(self.__Keyword,'go to qr')
@@ -80,7 +83,7 @@ class start():
                     logs.logError(self.__Keyword,'startThreads')
                     self.socketIO.emit('change',_wapi.getGeneralInfo(self.driver))
                     self.socketIO.emit('receiverLogin',args[0])
-                    self.startThreads()
+                    self.startThreads( self.messagesStore , self.socketIO )
                 else :
                     logs.logError(self.__Keyword,'Session down')
                     # ALERT #
@@ -116,9 +119,9 @@ class start():
         delChat = Thread(target=_wapi.deleteChat,args=(self.driver,args[0],))
         delChat.start()
 
-    def startThreads(self):
+    def startThreads(self,*args):
         try:
-            oldMessges = Thread(target=self.sincGetOldMessages)
+            oldMessges = Thread(target=self.sincGetOldMessages,args=(args[0],args[1]))
             oldMessges.start()
 
             if self.sessionStart == False:
@@ -133,8 +136,8 @@ class start():
             logs.logError(self.__Keyword,traceback.format_exc())
             # Alert #
 
-    def sincGetOldMessages(self):
-        chats = _wapi.getOldMessages(self.driver)
+    def sincGetOldMessages(self,*args):
+        chats = _wapi.getOldMessages(self.driver,args[0],args[1])
         self.socketIO.emit('oldMessages',chats)
 
         

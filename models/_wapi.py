@@ -116,50 +116,84 @@ def getGeneralInfo(driver):
 # Last Update : 27-06-19                                             #
 # By : g4w4                                                          #
 ######################################################################
-def getOldMessages(driver):
+def getOldMessages(driver,messages_save,socket):
     try:
-        #Variable return 
+         
         chats = {}
 
         logs.logError('_messages --> getOldMessages','Get all chats')
         _allChats = driver.get_chats_whit_messages()
+
+        print("Esto tengo yo")
+        print( messages_save )
         
         for chat in _allChats:
             try:
                 idChat = str(chat.get('id'))
-                chats[idChat] = []
 
-                logs.logError('_messages --> getOldMessages','Get all messages of chat')
-                print("Cargando mensajes")
-                x = driver.chat_load_all_earlier_messages(idChat)
-                print("Termino mensajes")
-                _messages = driver.get_all_messages_in_chat(idChat,True)
+                if messages_save.get(idChat,False) != False:
+                    print("si esta")
+                    x = driver.chat_load_all_earlier_messages(idChat)
+                    _messages = driver.get_all_messages_in_chat(idChat,True)
 
+                    #Count messages#
+                    i = 0
+                    for message in _messages:
+                        i= i + 1
+                    
+                    print("Mensajes")
+                    print(idChat)
+                    print( i )
+                    print(messages_save.get(idChat,False))
+                    print(idChat)
+
+                    if i != messages_save.get(idChat,False):
+                        print("netro aqui")
+                        b = 0
+                        x = driver.chat_load_all_earlier_messages(idChat)
+                        _messages = driver.get_all_messages_in_chat(idChat,True)
+                        for message in _messages:
+                            b=b+1
+                            print(b)
+                            print( messages_save.get(idChat,False) )
+                            print(b > messages_save.get(idChat,False))
+                            if b > messages_save.get(idChat,False) :
+                                try:    
+                                    if  message._js_obj['type'] == "location":
+                                        _message = interface_messages.getLocation( message, driver)
+                                        socket.emit('newMessage',_message)
+                                    else:
+                                        _message = interface_messages.getFormat(message,driver)
+                                        socket.emit('newMessage',_message)
+                                except Exception :
+                                    logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
+                else :
+
+                    chats[idChat] = []
+
+                    logs.logError('_messages --> getOldMessages','Get all messages of chat')
+                    x = driver.chat_load_all_earlier_messages(idChat)
+                    _messages = driver.get_all_messages_in_chat(idChat,True)
                 
+                    for message in _messages:
 
-                for message in _messages:
-
-                    print( message.type )
-
-                    try:    
-                        if message.type == "location":
-                            body = interface_messages.getLocation(message,driver)
-                            chats[idChat].append(body)
-                        elif message.type != 'ptt':
-                            body = interface_messages.getFormat(message,driver)
-                            chats[idChat].append(body)
-                        else :
-                            print( 'Fallo audio' )
-                    except Exception :
-                        logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
+                        try:    
+                            if message.type == "location":
+                                body = interface_messages.getLocation(message,driver)
+                                chats[idChat].append(body)
+                            else :
+                                body = interface_messages.getFormat(message,driver)
+                                chats[idChat].append(body)
+                        except Exception :
+                            logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
 
             except Exception :
                 logs.logError('for driver.get_chats_whit_messages()--> getOldMessages',traceback.format_exc())
 
-        logs.logError('_messages --> getOldMessages','Termino')
+        #logs.logError('_messages --> getOldMessages','Termino')
         return chats
     except Exception :
-        logs.logError('_messages --> getOldMessages',traceback.format_exc())
+        #logs.logError('_messages --> getOldMessages',traceback.format_exc())
         return False
 
 
