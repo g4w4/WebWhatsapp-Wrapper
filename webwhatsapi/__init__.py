@@ -7,6 +7,7 @@ WebWhatsAPI module
 import binascii
 import logging
 from json import dumps, loads
+import time
 
 import os
 import shutil
@@ -277,6 +278,11 @@ class WhatsAPIDriver(object):
         WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage']))
         )
+
+    def reload_api( self ):
+        self.wapi_functions = WapiJsWrapper(self.driver, self)
+        self.driver.set_script_timeout(500)
+        self.driver.implicitly_wait(10)
 
     def get_qr_plain(self):
         return self.driver.find_element_by_css_selector(self._SELECTORS['qrCodePlain']).get_attribute("data-ref")

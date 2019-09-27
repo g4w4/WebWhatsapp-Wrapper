@@ -49,17 +49,19 @@ class WapiJsWrapper(object):
         return JsFunction(item, self.driver, self)
  
     def __dir__(self):
+
         """
         Load wapi.js and returns its functions
- 
+
         :return: List of functions in window.WAPI
         """
         if self.available_functions is not None:
             return self.available_functions
- 
+
         """Sleep wait until WhatsApp loads and creates webpack objects"""
-        time.sleep(10)
-       
+        
+        time.sleep(20)
+
         print("Loading WhatsApp API...")
         try:
             script_path = os.path.dirname(os.path.abspath(__file__))
@@ -67,12 +69,13 @@ class WapiJsWrapper(object):
             script_path = os.getcwd()
         with open(os.path.join(script_path, "js", "wapi.js"), "r") as script:
             self.driver.execute_script(script.read())
- 
+
         result = self.driver.execute_script("return window.WAPI")
- 
+
         print("WhatsApp API Loaded...")
 
         print( result )
+        self.reload = False
         if result:
             self.available_functions = result.keys()
             return self.available_functions

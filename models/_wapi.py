@@ -79,6 +79,7 @@ def getQrCode(driver):
 def waitLogin(driver,socketId):
     try:
         driver.wait_for_login(120)
+        driver.reload_api()
         driver.save_firefox_profile()
         return True
     except Exception :
