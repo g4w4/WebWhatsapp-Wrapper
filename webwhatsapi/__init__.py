@@ -205,7 +205,6 @@ class WhatsAPIDriver(object):
                 self.driver = webdriver.Firefox(capabilities=capabilities, options=options,
                                                     **extra_params)
 
-
         elif self.client == "chrome":
             self._profile = webdriver.ChromeOptions()
             if self._profile_path is not None:
@@ -221,6 +220,7 @@ class WhatsAPIDriver(object):
             self.driver = webdriver.Chrome(chrome_options=self._profile, **extra_params)
 
         elif client == 'remote':
+            print("Starting webdriver")
             if self._profile_path is not None:
                 self._profile = webdriver.FirefoxProfile(self._profile_path)
             else:
@@ -234,6 +234,8 @@ class WhatsAPIDriver(object):
 
         else:
             self.logger.error("Invalid client: %s" % client)
+
+        print("A caragar cosas ")
         self.username = username
         self.wapi_functions = WapiJsWrapper(self.driver, self)
 

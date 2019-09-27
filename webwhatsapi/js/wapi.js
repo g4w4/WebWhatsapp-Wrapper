@@ -1125,10 +1125,11 @@ window.WAPI._newMessagesBuffer    = (sessionStorage.getItem('saved_msgs') != nul
 window.WAPI._newMessagesDebouncer = null;
 window.WAPI._newMessagesCallbacks = [];
 
-window.Store.Msg.off('add');
+if( window.Store.Msg  ) window.Store.Msg.off('add')
+
 sessionStorage.removeItem('saved_msgs');
 
-window.WAPI._newMessagesListener = window.Store.Msg.on('add', (newMessage) => {
+window.WAPI._newMessagesListener = window.Store.Msg ? window.Store.Msg.on('add', (newMessage) => {
     if (newMessage && newMessage.isNewMsg && !newMessage.isSentByMe) {
         let message = window.WAPI.processMessageObj(newMessage, false, false);
         if (message) {
@@ -1164,7 +1165,7 @@ window.WAPI._newMessagesListener = window.Store.Msg.on('add', (newMessage) => {
             }, 1000);
         }
     }
-});
+}) : {}
 
 window.WAPI._unloadInform = (event) => {
     // Save in the buffer the ungot unreaded messages
