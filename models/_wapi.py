@@ -184,6 +184,10 @@ def getOldMessages(driver,messages_save,socket):
                                 chats[idChat].append(body)
                             else :
                                 body = interface_messages.getFormat(message,driver)
+
+                                if body.get('type','') != 'txt':
+                                    print( body )
+
                                 chats[idChat].append(body)
                         except Exception :
                             logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
@@ -191,7 +195,7 @@ def getOldMessages(driver,messages_save,socket):
             except Exception :
                 logs.logError('for driver.get_chats_whit_messages()--> getOldMessages',traceback.format_exc())
 
-        #logs.logError('_messages --> getOldMessages','Termino')
+        logs.logError('_messages --> getOldMessages','Termino')
         return chats
     except Exception :
         #logs.logError('_messages --> getOldMessages',traceback.format_exc())
