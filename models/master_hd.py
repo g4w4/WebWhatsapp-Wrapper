@@ -30,13 +30,15 @@ class start():
     def on_welcome(self,*args):
         try:
             #print( args[0].get('messages').get('5215587156@c.us','9171') )
-            self.messagesStore =  args[0].get('messages')
+            #self.messagesStore =  args[0].get('messages')
+            self.messagesStore =  {}
             logs.logError(self.__Keyword,'Connection success')
             if self.driver != None and self.driver.is_logged_in():
                 # Is reconnection send all data #
                 self.socketIO.emit('change',_wapi.getGeneralInfo(self.driver))
                 logs.logError(self.__Keyword,'startThreads')
-                self.startThreads( self.messagesStore, self.socketIO )
+                #self.startThreads( self.messagesStore, self.socketIO )
+                self.startThreads( {} , self.socketIO )
             else:
                 # It's the first connection, try to remember session #
                 self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
@@ -45,7 +47,8 @@ class start():
                 rember = _wapi.rememberSession(self.driver,self.socketIO)
                 logs.logError(self.__Keyword,'Cache is {}'.format(rember))
                 if rember :     
-                    self.startThreads( self.messagesStore, self.socketIO )
+                    #self.startThreads( self.messagesStore, self.socketIO )
+                    self.startThreads( {}, self.socketIO )
         except Exception :
             logs.logError('Master-Error',traceback.format_exc())
             # ALERTA #
