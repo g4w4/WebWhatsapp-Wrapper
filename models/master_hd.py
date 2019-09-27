@@ -43,7 +43,7 @@ class start():
                 # It's the first connection, try to remember session #
                 self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
                 self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
-                 print("DUerme")
+                print("DUerme")
                 time.sleep(60)
                 logs.logError(self.__Keyword,'Check if have cache')
                 rember = _wapi.rememberSession(self.driver,self.socketIO)
