@@ -162,9 +162,13 @@ def getOldMessages(driver,messages_save,socket):
                                 try:    
                                     if  message._js_obj['type'] == "location":
                                         _message = interface_messages.getLocation( message, driver)
+                                        print("mando mensaje")
+                                        print(_message)
                                         socket.emit('newMessage',_message)
                                     else:
                                         _message = interface_messages.getFormat(message,driver)
+                                        print("mando mensaje")
+                                        print(_message)
                                         socket.emit('newMessage',_message)
                                 except Exception :
                                     logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
