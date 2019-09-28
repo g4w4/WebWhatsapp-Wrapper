@@ -164,12 +164,14 @@ def getOldMessages(driver,messages_save,socket):
                                         _message = interface_messages.getLocation( message, driver)
                                         print("mando mensaje")
                                         print(_message)
-                                        socket.emit('newMessage',_message)
+                                        if _message != None:
+                                            socket.emit('newMessage',_message)
                                     else:
                                         _message = interface_messages.getFormat(message,driver)
                                         print("mando mensaje")
                                         print(_message)
-                                        socket.emit('newMessage',_message)
+                                        if _message != None:
+                                            socket.emit('newMessage',_message)
                                 except Exception :
                                     logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
                 else :
@@ -185,14 +187,16 @@ def getOldMessages(driver,messages_save,socket):
                         try:    
                             if message.type == "location":
                                 body = interface_messages.getLocation(message,driver)
-                                chats[idChat].append(body)
+                                if body != None :
+                                    chats[idChat].append(body)
                             else :
                                 body = interface_messages.getFormat(message,driver)
 
                                 if body.get('type','') != 'txt':
                                     print( body )
 
-                                chats[idChat].append(body)
+                                if body != None :
+                                    chats[idChat].append(body)
                         except Exception :
                             logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
 
