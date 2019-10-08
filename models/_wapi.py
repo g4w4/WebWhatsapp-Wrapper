@@ -30,7 +30,7 @@ def rememberSession(driver,socket):
         if driver is None :
             return False
         else :
-            driver.wait_for_login(10)
+            driver.wait_for_login(60)
             if driver.is_logged_in():
                 socket.emit('change',getGeneralInfo(driver))
                 socket.emit('reboot',"Success")
