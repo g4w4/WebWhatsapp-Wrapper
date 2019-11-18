@@ -143,5 +143,17 @@ class start():
         chats = _wapi.getOldMessages(self.driver,args[0],args[1])
         self.socketIO.emit('oldMessages',chats)
 
+
+    def on_isValid(self,*args):
+        id = args[0][0]
+        valid = Thread(target=_wapi.isValid,args=(self.driver,self.socketIO,id))
+        valid.start()
+
+    def on_blockNumber(self,*args):
+        id = args[0][0]
+        print('Bloqueo de numero'+ id)
+        valid = Thread(target=_wapi.blockNumber,args=(self.driver,self.socketIO,id))
+        valid.start()
+
         
         

@@ -65,6 +65,7 @@ class WhatsAPIDriver(object):
     _PROXY = None
 
     _URL = "https://web.whatsapp.com"
+    
 
     _LOCAL_STORAGE_FILE = 'localStorage.json'
 
@@ -152,7 +153,7 @@ class WhatsAPIDriver(object):
 
     def __init__(self, client="firefox", username="API", proxy=None, command_executor=None, loadstyles=False,
                  profile=None, headless=False, autoconnect=True, logger=None, extra_params=None, chrome_options=None, 
-                 executable_path=None):
+                 executable_path=None,number=None):
         """Initialises the webdriver"""
 
         self.logger = logger or self.logger
@@ -244,10 +245,13 @@ class WhatsAPIDriver(object):
         self.driver.implicitly_wait(10)
 
         if autoconnect:
-            self.connect()
+            self.connect(number)
 
-    def connect(self):
-        self.driver.get(self._URL)
+    def connect(self,number):
+        if number != None:
+            self.create_chat_by_number(number)
+        else:
+            self.driver.get(self._URL)
         
         profilePath = ""
         if self.client == "chrome":
@@ -803,3 +807,6 @@ class WhatsAPIDriver(object):
 
     def is_chat_group(self,idChat):
         return self.wapi_functions.isChatGroup(idChat)
+    
+    def get_info_contact(self,idChat):
+        return self.wapi_functions.getInfoContact(idChat)

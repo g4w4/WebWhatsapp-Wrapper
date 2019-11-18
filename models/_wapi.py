@@ -326,5 +326,32 @@ def getScreenApi(driver):
         driver.screenshot(name)
         return idName
     except Exception :
-        logs.logError('_wapi --> getScreen',traceback.format_exc())
+        logs.logError('_wapi --> getScreen Error',traceback.format_exc())
         # Alert # 
+
+# Return if is valid the number
+def isValid(driver,socketIO,number):
+    try:
+        print(number)
+        numberWhatsApp = "521{}@c.us".format(number.get('number'))
+        isValid = driver.check_number_status(numberWhatsApp)
+        number['whats_in'] = isValid.status
+        socketIO.emit('validQuery', number)
+    except Exception :
+        if "TypeError: <NumberStatus -" in traceback.format_exc() :
+            socketIO.emit('validQuery', {'isValid':"400",'number':number} )
+        else :
+            logs.logError('Master-API',traceback.format_exc())
+            return False
+
+# Blocked number
+def blockNumber(driver,socketIO,number):
+    try:
+        driver.contact_block(number)
+        socketIO.emit('successBlocked', number)
+    except Exception :
+        if "TypeError: <NumberStatus -" in traceback.format_exc() :
+            socketIO.emit('validQuery', {'isValid':"400",'number':number} )
+        else :
+            logs.logError('Master-API',traceback.format_exc())
+            return False

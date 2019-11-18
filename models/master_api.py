@@ -37,8 +37,8 @@ class start():
         try:
             self.driver = WhatsAPIDriver(profile=configAPI.pathSession, client='remote', command_executor=configAPI.selemiunIP)
             logs.logError('Master-API',"WhatsApp on")
-            loop = Thread(target=self.loopSession)
-            loop.start()
+            # loop = Thread(target=self.loopSession)
+            # loop.start()
         except Exception:
             logs.logError('Master-API',traceback.format_exc())
             logs.sendMailError(_MessageError["Selenium"])
@@ -141,5 +141,25 @@ class start():
                 logs.logError('Master-API',traceback.format_exc())
                 return _Responses["500"] 
 
+    def getLastSend(self,number,fullNumber):
+        try:
+            ## Crea el chat ##
+            self.driver.create_chat_by_number(number)
+            isValid = self.driver.check_number_status(fullNumber)
+            print("ES valido ?¿")
+            if isValid.status == 200 :
+                print("ES valido si creemos el chat")
+                print("Login listo ahora retornemos la info")
+                objReturn = self.driver.get_info_contact(fullNumber)
+                print( objReturn )
+                return objReturn
+            else:
+                print("me mintio carnaito")
+                return _Responses["500"]
+            
+
+        except Exception :
+            logs.logError('Master-API',traceback.format_exc())
+            return _Responses["500"]
 
             

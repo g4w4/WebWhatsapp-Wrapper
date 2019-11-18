@@ -69,6 +69,16 @@ def isValid():
     except Exception:
         logs.logError('Master-API',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
+@app.route("/isValidV2",methods=["POST"])
+def isValidV2():
+    try:
+        valid = master.getLastSend(request.form["number"], request.form["fullnumber"])
+        return Response(json.dumps(valid), mimetype='application/json')
+    except Exception:
+        logs.logError('Master-API',traceback.format_exc())
+        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+    
     
 
 if __name__ == '__main__':

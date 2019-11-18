@@ -1529,3 +1529,29 @@ window.WAPI.isChatGroup = function (idChat,done) {
         return false;
     }    
 };
+
+/**
+ * Return all info of contact
+ * Important Onli if the chat exist
+ * @param {*} idChat '000000000000@c.us'
+ * @param {*} done - function - Callback function
+ */
+window.WAPI.getInfoContact = (idChat,done) => {
+    let objReturn = ''
+
+    try {
+        Store.Presence.find(idChat).then( info => {
+            objReturn = info.__x_chatstate.__x_type == 'available' ? 'online' : info.__x_chatstate.__x_t
+            done( objReturn )
+            return objReturn
+        }).catch( err => {
+            objReturn = err.message || err
+            done( objReturn )
+            return objReturn
+        })
+    } catch (error) {
+        objReturn = error.message || error
+        done( objReturn )
+        return objReturn
+    }
+}
