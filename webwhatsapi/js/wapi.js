@@ -13,7 +13,6 @@ if (!window.Store) {
             let neededObjects = [
                 { id: "Store", conditions: (module) => (module.Chat && module.Msg) ? module : null },
                 { id: "MediaCollection", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.processFiles !== undefined) ? module.default : null },
-                
                 { id: "MediaProcess", conditions: (module) => (module.BLOB) ? module : null },
                 { id: "Wap", conditions: (module) => (module.createGroup) ? module : null },
                 { id: "ServiceWorker", conditions: (module) => (module.default && module.default.killServiceWorker) ? module : null },
@@ -285,13 +284,13 @@ window.WAPI.getAllGroups = function (done) {
 window.WAPI.getChat = function (id, done) {
     id = typeof id == "string" ? id : id._serialized;
     const found = window.Store.Chat.get(id);
+    found.sendMessage = (found.sendMessage) ? found.sendMessage : function () { return window.Store.sendMessage.apply(this, arguments); };
     if (done !== undefined) done(found);
     return found;
 }
 
 window.WAPI.getChatByName = function (name, done) {
     const found = window.Store.Chat.find((chat) => chat.name === name);
-    found.sendMessage = (found.sendMessage) ? found.sendMessage : function () { return window.Store.sendMessage.apply(this, arguments); };
     if (done !== undefined) done(found);
     return found;
 };
@@ -989,7 +988,6 @@ window.WAPI.downloadFileWithCredentials = function (url, done) {
                 };
             } else {
                 console.error(xhr.statusText);
-		done(false);
             }
         } else {
             console.log(err);
@@ -1018,7 +1016,6 @@ window.WAPI.downloadFile = function (url, done) {
                 };
             } else {
                 console.error(xhr.statusText);
-                done(false)
             }
         } else {
             console.log(err);
@@ -1047,8 +1044,6 @@ window.WAPI.getBatteryLevel = function (done) {
 
 window.WAPI.deleteConversation = function (chatId, done) {
     let userId       = new window.Store.UserConstructor(chatId, {intentionallyUsePrivateConstructor: true});
-
-    //let conversation = window.Store.Chat.get(userId);
     let conversation = WAPI.getChat(userId);
 
     if (!conversation) {
@@ -1126,11 +1121,10 @@ window.WAPI._newMessagesBuffer    = (sessionStorage.getItem('saved_msgs') != nul
 window.WAPI._newMessagesDebouncer = null;
 window.WAPI._newMessagesCallbacks = [];
 
-if( window.Store.Msg  ) window.Store.Msg.off('add')
-
+window.Store.Msg.off('add');
 sessionStorage.removeItem('saved_msgs');
 
-window.WAPI._newMessagesListener = window.Store.Msg ? window.Store.Msg.on('add', (newMessage) => {
+window.WAPI._newMessagesListener = window.Store.Msg.on('add', (newMessage) => {
     if (newMessage && newMessage.isNewMsg && !newMessage.isSentByMe) {
         let message = window.WAPI.processMessageObj(newMessage, false, false);
         if (message) {
@@ -1166,7 +1160,7 @@ window.WAPI._newMessagesListener = window.Store.Msg ? window.Store.Msg.on('add',
             }, 1000);
         }
     }
-}) : {}
+});
 
 window.WAPI._unloadInform = (event) => {
     // Save in the buffer the ungot unreaded messages
@@ -1213,86 +1207,33 @@ window.WAPI.getBufferedNewMessages = function (done) {
 };
 /** End new messages observable functions **/
 
-window.WAPI.sendImage = function async (imgBase64, chatid, filename, caption, done) {
-
+window.WAPI.sendImage = function (imgBase64, chatid, filename, caption, done) {
 //var idUser = new window.Store.UserConstructor(chatid);
 var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
+// create new chat
 return Store.Chat.find(idUser).then((chat) => {
-    try {
-        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-
-        var mc = new Store.MediaCollection();
-        mc.processFiles([mediaBlob], chat, 1).then((a) => {
-           try {
-                var media = mc.models[0];
-                media.sendToChat(chat, { caption: caption })
-                if (done !== undefined) done('sucess');
-                return 'suucess'
-           } catch (e) {
-                if (done !== undefined) done('error');
-                return 'Errror'
-           }
-        }).catch( e => {
-            if (done !== undefined) done(e);
-            return e
-        });
-    } catch (e) {
-        if (done !== undefined) done(e);
-        return e
-    }
+    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+    var mc = new Store.MediaCollection();
+    mc.processFiles([mediaBlob], chat, 1).then(() => {
+        var media = mc.models[0];
+        media.sendToChat(chat, { caption: caption });
+        if (done !== undefined) done(true);
+    });
 });
 }
 
-window.WAPI.sendImageToPhone = async function(
-    imgBase64,
-    phone,
-    filename,
-    caption,
-    done
-  ) {
-    try {
-        var user = await WAPI.findUserByPhone(phone);
-        var chat = await WAPI.getChat(user);
-
-        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-        var mc = new Store.MediaCollection();
-
-        await mc.processFiles([mediaBlob], chat, 1);
-
-        var media = mc.models[0];
-
-        if (!media) {
-        if (done !== undefined) done(false);
-        return false;
-        }
-        media.sendToChat(chat, { caption: caption });
-
-        if (done !== undefined) done(true);
-
-        return true;
-    } catch (error) {
-        return error.message || error
-    }
-  };
-
-
-
 window.WAPI.base64ImageToFile = function (b64Data, filename) {
-    try {
-        var arr   = b64Data.split(',');
-        var mime  = arr[0].match(/:(.*?);/)[1];
-        var bstr  = atob(arr[1]);
-        var n     = bstr.length;
-        var u8arr = new Uint8Array(n);
+    var arr   = b64Data.split(',');
+    var mime  = arr[0].match(/:(.*?);/)[1];
+    var bstr  = atob(arr[1]);
+    var n     = bstr.length;
+    var u8arr = new Uint8Array(n);
 
-        while (n--) {
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-
-        return new File([u8arr], filename, {type: mime});
-    } catch (error) {
-        return error.message || error
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
     }
+
+    return new File([u8arr], filename, {type: mime});
 };
 
 /**
@@ -1457,86 +1398,6 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
         done(true); return true;
     })
 }
-
-/**
-* Return phone number
-* @param {*} done - function - Callback function
-*/
-window.WAPI.getPhoneNumber = function (done) {
-    if (window.Store.Conn.__x_me.user) {
-        if (done !== undefined) {
-            done(Store.Conn.__x_me.user);
-        }
-        return Store.Conn.__x_me.user;
-    }
-    output = window.Store.Conn.__x_me.user;
-    if (done !== undefined) {
-        done(output);
-    }
-    return output;
-};
-
-/**
-* Return all chats if not is group
-* @param {*} done - function - Callback function
-*/
-window.WAPI.getChatsWhitMessages = function (done) {
-    try {
-     var tmp_chat = []
-     
-     if(window.Store.Chat.models && window.Store.Chat.models.length > 0){
-         for( let x = 0; x < window.Store.Chat.models.length ;x ++){
-             chat = x;
-             if(window.Store.Chat.models[chat] && !window.Store.Chat.models[chat].isGroup){
-                 unread = window.Store.Chat.models[chat].__x_unreadCount;
-                 id = window.Store.Chat.models[chat].id._serialized
-                 tmp_chat.push( {id:id,unread:unread})
-             }
-         }
-     }
-     
- 
-     if (done !== undefined) {
-         done(tmp_chat);
-     }
- 
-     return tmp_chat;
-    } catch (error) {
- 
-     if (done !== undefined) {
-         done([]);
-     }
-     return [error.message]
-        
-    }
-};
-
-/**
-* Return if chat is group
-* @param {*} idChat '000000000000@c.us'
-* @param {*} done - function - Callback function
-*/
-window.WAPI.isChatGroup = function (idChat,done) {
-    let chat =  window.Store.Chat.get(idChat)
-    if (chat) {
-        if (done !== undefined) {
-            done(chat.isGroup);
-        }
-        return chat.isGroup;
-    }else{
-        if (done !== undefined) {
-            done(false);
-        }
-        return false;
-    }    
-};
-
-/**
- * Return all info of contact
- * Important Onli if the chat exist
- * @param {*} idChat '000000000000@c.us'
- * @param {*} done - function - Callback function
- */
 window.WAPI.getInfoContact = (idChat,done) => {
     let objReturn = ''
 
