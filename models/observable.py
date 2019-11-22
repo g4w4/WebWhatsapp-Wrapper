@@ -16,16 +16,18 @@ class NewMessageObserver():
     def on_message_received(self, new_messages):   
         for message in new_messages:
             logs.write_log('NewMessage FROM -->',message._js_obj.get('chat').get('id'))
-            group = message._js_obj.get('chat').get('id').get('_serialized')
             try:
+                group = message._js_obj.get('chat').get('id').get('_serialized')
                 if self.driver.is_chat_group(group) :
                     if group == config.groupId:
+                        print( "GRUPO" )
                         print( message._js_obj['author'].get('_serialized') )
                         self.socket.emit('getStatusAccount', message._js_obj['author'].get('_serialized') )
                     else:
+                        print( "GRUPO" )
                         me = "{}@c.us".format(self.driver.get_phone_number())
-                        exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
-                        exitGroup.start()
+                        # exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
+                        # exitGroup.start()
                 else :
                     if  message._js_obj['type'] == "location":
                         print( "Es ubicación" )
@@ -34,7 +36,9 @@ class NewMessageObserver():
                         _message = interface_messages.getLocation( message, self.driver)
                         self.socket.emit('newMessage',_message)
                     else:
+                        print( "Es Nomarl" )
                         _message = interface_messages.getFormat(message,self.driver)
+                        print(_message)
                         self.socket.emit('newMessage',_message)
             except Exception :
-                logs.logError(self.__Keyword,traceback.format_exc())
+                print(traceback.format_exc())
