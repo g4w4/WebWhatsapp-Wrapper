@@ -19,8 +19,6 @@ namePic=""
 	
 time.sleep(5)
 
-print("Vamos a ver el numero "+ number)
-
 driver = WhatsAPIDriver(profile=configAPI.pathSession, client='remote', command_executor=configAPI.selemiunIP)
 
 driver.create_chat_by_number(number)
@@ -28,42 +26,39 @@ driver.create_chat_by_number(number)
 driver.wait_for_login()
 
 isValid = driver.check_number_status(fullNumber)
-print("ES valido ?¿")
 if isValid.status == 200 :
-    print("ES valido si creemos el chat")
-    print("Login listo ahora retornemos la info")
     objReturn = driver.get_info_contact(fullNumber)
-    print( objReturn )
-    pic = driver.get_profile_pic_from_id(fullNumber)
-    if pic != False:
-        idName = uuid4().hex
-        name = "{}{}".format(configAPI.pathFiles,idName+'.png')
-        iioo = BytesIO(pic)
-        with open(name, "wb") as f:
-            f.write(iioo.getvalue())
-        namePic = name
+    print( "Result: "+objReturn )
+    # pic = driver.get_profile_pic_from_id(fullNumber)
+    # if pic != False:
+    #     idName = uuid4().hex
+    #     name = "{}{}".format(configAPI.pathFiles,idName+'.png')
+    #     iioo = BytesIO(pic)
+    #     with open(name, "wb") as f:
+    #         f.write(iioo.getvalue())
+    #     namePic = name
     print( objReturn )
 else:
-    objReturn = "Sin WhatsApp"
+    print(  "Sin WhatsApp" )
 
 
 
   
-# defining the api-endpoint  
-API_ENDPOINT = "http://192.168.0.6:6070/login"
+# # defining the api-endpoint  
+# API_ENDPOINT = "http://192.168.0.6:6070/login"
   
-  # data to be sent to api 
-data = {'lastlogin':objReturn, 
-        'number':number, 
-        'account':account,
-        'namePic':namePic } 
+#   # data to be sent to api 
+# data = {'lastlogin':objReturn, 
+#         'number':number, 
+#         'account':account,
+#         'namePic':namePic } 
   
-# sending post request and saving response as response object 
-r = requests.post(url = API_ENDPOINT, data = data) 
+# # sending post request and saving response as response object 
+# r = requests.post(url = API_ENDPOINT, data = data) 
   
-# extracting response text  
-pastebin_url = r.text 
-print(pastebin_url)
+# # extracting response text  
+# pastebin_url = r.text 
+# print(pastebin_url)
 
 driver.close()
 
