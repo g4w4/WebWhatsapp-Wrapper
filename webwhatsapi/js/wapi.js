@@ -1,4 +1,22 @@
+
+
+// BY GAMA 
+
 /**
+* Return phone number
+* @param {*} done - function - Callback function
+*/
+window.WAPI.getPhoneNumber = function (done) {
+    if (window.Store.Conn.__x_me.user) {
+        if (done !== undefined) {
+            done(Store.Conn.__x_me.user);
+        }
+        return Store.Conn.__x_me.user;
+    }
+    output = window.Store.Conn.__x_me.user;
+    if (done !== undefined) {
+        done(output);
+    }/**
  * This script contains WAPI functions that need to be run in the context of the webpage
  */
 
@@ -1398,6 +1416,16 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
         done(true); return true;
     })
 }
+    return output;
+};
+
+
+/**
+ * Return all info of contact
+ * Important Onli if the chat exist
+ * @param {*} idChat '000000000000@c.us'
+ * @param {*} done - function - Callback function
+ */
 window.WAPI.getInfoContact = (idChat,done) => {
     let objReturn = ''
 
