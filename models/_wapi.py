@@ -335,6 +335,7 @@ def isValid(driver,socketIO,number):
         print(number)
         numberWhatsApp = "521{}@c.us".format(number.get('number'))
         isValid = driver.check_number_status(numberWhatsApp)
+        print( isValid )
         number['whats_in'] = isValid.status
         socketIO.emit('validQuery', number)
     except Exception :
