@@ -342,6 +342,7 @@ def isValid(driver,socketIO,number):
             socketIO.emit('validQuery', {'isValid':"400",'number':number} )
         else :
             logs.logError('Master-API',traceback.format_exc())
+            socketIO.emit('validQuery', {'isValid':"400",'number':number} )
             return False
 
 # Blocked number
