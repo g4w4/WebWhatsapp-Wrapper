@@ -338,6 +338,7 @@ def isValid(driver,socketIO,number):
         print( isValid )
         number['whats_in'] = isValid.status
         socketIO.emit('validQuery', number)
+        print("EMITIO")
     except Exception :
         if "TypeError: <NumberStatus -" in traceback.format_exc() :
             socketIO.emit('validQuery', {'isValid':"400",'number':number} )
