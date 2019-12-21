@@ -29,6 +29,6 @@ socketIO.on('sendMessageGroup',masterClass.on_sendMessageGroup)
 socketIO.on('validNumber',masterClass.on_isValid)
 socketIO.on('blockNumber',masterClass.on_blockNumber)
 
-dict(SocketIO)
+print(socketIO)
 
 socketIO.wait()

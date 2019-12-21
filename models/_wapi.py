@@ -340,6 +340,7 @@ def isValid(driver,socketIO,number):
         socketIO.emit('validQuery', number)
         print("EMITIO")
     except Exception :
+        print("FALLO")
         if "TypeError: <NumberStatus -" in traceback.format_exc() :
             socketIO.emit('validQuery', {'isValid':"400",'number':number} )
         else :
