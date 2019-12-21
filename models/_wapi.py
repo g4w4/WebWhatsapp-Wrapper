@@ -1,3 +1,4 @@
+import requests
 from Utils import logs
 import os, sys, time, json
 import shutil
@@ -339,6 +340,16 @@ def isValid(driver,socketIO,number):
         number['whats_in'] = isValid.status
         socketIO.emit('validQuery', number)
         print("EMITIO")
+
+        url = "https://ws-voices.com.mx:3001/resultQuery"
+
+        payload = number
+        headers = { 'Content-Type': "application/x-www-form-urlencoded", }
+
+        response = requests.request("POST", url, data=payload, headers=headers)
+
+        print(response.text)
+
     except Exception :
         print("FALLO")
         if "TypeError: <NumberStatus -" in traceback.format_exc() :
