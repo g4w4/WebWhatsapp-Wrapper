@@ -338,7 +338,7 @@ def isValid(driver,socketIO,number):
         isValid = driver.check_number_status(numberWhatsApp)
         print( isValid )
         number['whats_in'] = isValid.status
-        socketIO.emit('validQuery', number)
+        #socketIO.emit('validQuery', number)
         print("EMITIO")
 
         url = "https://ws-voices.com.mx:3001/resultQuery"
