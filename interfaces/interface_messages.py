@@ -59,6 +59,11 @@ class ContentMessage():
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # SAVE MEDIA #
             self.content["content"] = str( self.message.save_media(config.pathFiles,True) ).replace(config.pathFiles,"")
+            print("1---->"+self.content["content"] )
+            newName =  uuid.uuid1().hex + self.content["content"]
+            os.rename(config.pathFiles+self.content["content"],config.pathFiles+newName)
+            self.content["content"] = newName
+            print("2---->"+self.content["content"] )
 
         else :
             # GET TEXT #
