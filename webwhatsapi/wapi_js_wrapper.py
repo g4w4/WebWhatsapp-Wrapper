@@ -67,9 +67,8 @@ class WapiJsWrapper(object):
             script_path = os.path.dirname(os.path.abspath(__file__))
         except NameError:
             script_path = os.getcwd()
-
-
-        result = self.driver.execute_script("if (document.querySelector('*[data-icon=chat]') !== null) { return true } else { return false }")
+        result = self.driver.execute_script(
+            "if (document.querySelector('*[data-icon=chat]') !== null) { return true } else { return false }")  # noqa E501
         if result:
             with open(os.path.join(script_path, "js", "wapi.js"), "r") as script:
                 self.driver.execute_script(script.read())
@@ -141,7 +140,8 @@ class JsFunction(object):
                 retry_command.is_a_retry = True
                 retry_command(*args, **kwargs)
             else:
-                raise JsException("Error in function {0} ({1}). Command: {2}".format(self.function_name, e.msg, command))
+                raise JsException(
+                    "Error in function {0} ({1}). Command: {2}".format(self.function_name, e.msg, command))
         except WebDriverException as e:
             if e.msg == 'Timed out':
                 raise WapiPhoneNotConnectedException("Phone not connected to Internet")
@@ -168,7 +168,7 @@ class NewMessagesObservable(Thread):
                         new_messages.append(factory_message(js_message, self.wapi_driver))
  
                     self._inform_all(new_messages)
-            except Exception as e:
+            except Exception as e:  # noqa F841
                 pass
  
             time.sleep(2)
