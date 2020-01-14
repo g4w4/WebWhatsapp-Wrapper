@@ -50,40 +50,42 @@ class ContentMessage():
             "caption" : "false"
         })
 
+    """
+    Retorna el contenido y el tipo de mensaje
+    Returns {type,caption,content}
+    """
     def get(self):
 
         if self.message.type not in self.__DOCUMENT_TYPE :
-            # MEDIA NOT SUPORTED #
+            # Media no soportada #
             self.content.content = 'No soportado'
 
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
-            # SAVE MEDIA #
+            # Guara el contenido del archivo #
             self.content["content"] = str( self.message.save_media(config.pathFiles,True) ).replace(config.pathFiles,"")
-            print("1---->"+self.content["content"] )
             newName =  uuid.uuid1().hex + self.content["content"]
             os.rename(config.pathFiles+self.content["content"],config.pathFiles+newName)
             self.content["content"] = newName
-            print("2---->"+self.content["content"] )
 
         else :
-            # GET TEXT #
+            # Obtiene el contenido del texto #
             self.content["content"] =  self.message.content
         
+        # Si el mensaje es un archivo y esta dento de los soportados #
         if self.message.type in self.__DOCUMENT_TYPE and self.message.type != "chat" :
-            # GET TYPE AND CAPTION#
+
+            # Guardamos su tipo y su descripción #
             self.content["type"] = self.message.type
             self.content["caption"] = self.message.caption
 
         return self.content
 
 
-####################### getFormat(message,driver) ###################
-# Desc : Give format to message                                      #
-# Params : message objWapi driver obj                                #       
-# Return :  obj {chat,sendBy,messsage,type,caption}                  #                          
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################
+"""
+Retorna el objeto del mensaje
+Params (message) message
+Returns { chat,sendBy,message,type,caption,akc,date,id,app }
+"""
 def getFormat(message,driver):
     try:
         _id = IdMessage(message).get()
@@ -95,7 +97,7 @@ def getFormat(message,driver):
             "message": contentMessage["content"],
             "type": contentMessage["type"],
             "caption": contentMessage["caption"],
-            "akc": 1,
+            "akc": 2,
             "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
             "id": _id["id"],
             "app": "whatsApp"       
@@ -103,6 +105,29 @@ def getFormat(message,driver):
 
     except Exception :
         logs.logError('Error getFormat --> ',traceback.format_exc())
+
+"""
+Retorna el objeto del mensaje de ubicación
+Params (message) message
+Returns { chat,sendBy,message,type,caption,lng,lat,akc,date,id,app }
+"""
+def getLocation(message,diver):
+    _id = IdMessage(message).get()
+    chat = message._js_obj.get('chat').get('id').get('_serialized')
+    return {
+        "chat": chat,
+        "sendBy": _id["sendBy"],
+        "message": "Ubicación",
+        "type": "location",
+        "caption": "false",
+        "lng": message._js_obj['lng'],  
+        "lat": message._js_obj['lat'],
+        "akc": 2,
+        "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
+        "id": _id["id"],
+        "app": "whatsApp"       
+    }
+
 
 def getFormatText(message,chatId):
     try:
@@ -136,21 +161,3 @@ def getFormatFile(message,chatId,typeFile,caption):
         }
     except Exception :
         logs.logError('Error getFormatText --> ',traceback.format_exc())
-
-def getLocation(message,diver):
-    _id = IdMessage(message).get()
-    chat = message._js_obj.get('chat').get('id').get('_serialized')
-    return {
-        "chat": chat,
-        "sendBy": _id["sendBy"],
-        "message": "Ubicación",
-        "type": "location",
-        "caption": "false",
-        "lng": message._js_obj['lng'],  
-        "lat": message._js_obj['lat'],
-        "akc": 1,
-        "date": message.timestamp.strftime("%Y-%m-%d %H:%M"),
-        "id": _id["id"],
-        "app": "whatsApp"       
-    }
-

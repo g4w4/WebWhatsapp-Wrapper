@@ -8,6 +8,8 @@ from webwhatsapi.objects.message import Message, MediaMessage
 import config
 from Utils import logs
 from models import _wapi,observable
+from interfaces import interface_events
+import concurrent.futures
 
 
 class start():
@@ -19,92 +21,184 @@ class start():
     sessionStart = False
     messagesStore = {}
 
+
     def __init__(self,socket): 
         if not os.path.exists(config.pathSession): os.makedirs(config.pathSession)
         self.socketIO = socket
 
+    """  Cacha la conección exitosa al server y manda la auth """
     def on_connect(self,*args):
         logs.logError('Socket-Info','Connection whit server')
-        self.socketIO.emit('Auth',config.token)
+        event = interface_events.auth(config.token)
+        self.socketIO.emit( event["event"], event["info"] )  
 
+    """ Realiza la negociación para el inicio de sessión en whatsApp 
+        Params args[0] token de autentificación
+    """
     def on_welcome(self,*args):
+        logs.logError('Socket-Info','welcome to server')
+        self.__AUTH = args[0]
         try:
-            #print( args[0].get('messages').get('5215587156@c.us','9171') )
-            self.messagesStore =  args[0].get('messages')
-            #self.messagesStore =  {}
-            logs.logError(self.__Keyword,'Connection success')
+
+            # Valida si existe sessión previa en el webSocket o no #
+            logs.logError('on_welcome','Connection success')
             if self.driver != None and self.driver.is_logged_in():
-                # Is reconnection send all data #
-                self.socketIO.emit('change',_wapi.getGeneralInfo(self.driver))
-                logs.logError(self.__Keyword,'startThreads')
-                self.startThreads( self.messagesStore, self.socketIO )
-                #self.startThreads( {} , self.socketIO )
-            else:
-                # It's the first connection, try to remember session #
-                self.socketIO.emit('change',{"whatsAppJoin":False,"accountDown":False})
-                self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
-                logs.logError(self.__Keyword,'Check if have cache')
-                rember = _wapi.rememberSession(self.driver,self.socketIO)
-                logs.logError(self.__Keyword,'Cache is {}'.format(rember))
-                if rember :     
+                
+                # Se envían los datos de la sessión #
+                general_info = _wapi.getGeneralInfo(self.driver)
+                event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+                self.socketIO.emit( event["event"], event["info"] )
+
+                if( self.driver.is_connected() ) :
+                    logs.logError('on_welcome','inician los hilos')
                     self.startThreads( self.messagesStore, self.socketIO )
-                    #self.startThreads( {}, self.socketIO )
+                
+            else:
+                # Envia que esta desconectado de whatsApp#
+                event = interface_events.send_status(self.__AUTH)
+                self.socketIO.emit( event["event"], event["info"] )
+
+                # Intenta conectar a whatsApp #
+                logs.logError('on_welcome','Revisando si hay sessión')
+                event = interface_events.send_alert(self.__AUTH, "'Revisando si hay sessión")
+                self.socketIO.emit( event["event"], event["info"] )
+                self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
+                rember = _wapi.rememberSession(self.driver,self.socketIO)
+
+                if rember :
+
+                    # Se envían los datos de la sessión #
+                    general_info = _wapi.getGeneralInfo(self.driver)
+                    event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+                    self.socketIO.emit( event["event"], event["info"] )
+
+                    # Inician los hilos #
+                    logs.logError('on_welcome','Session recordada inician los hilos')
+                    self.startThreads( self.messagesStore, self.socketIO )
+
+                else :
+
+                    # No hay sesión es necesarío el login por qr #
+                    logs.logError('on_welcome','Sesión olvidada, necesarío QR')
+                    event = interface_events.send_alert(self.__AUTH, "Sessión olvidada")
+                    self.socketIO.emit( event["event"], event["info"] )
+
         except Exception :
-            logs.logError('Master-Error',traceback.format_exc())
-            # ALERTA #
+            logs.logError('Welcome-Error',traceback.format_exc())
+            # Envia que esta desconectado de whatsApp#
+            event = interface_events.send_status(self.__AUTH)
+            self.socketIO.emit( event["event"], event["info"] )
 
+            # Envia alerta #
+            event = interface_events.send_alert(self.__AUTH, "Error requiere reinicio")
+            self.socketIO.emit( event["event"], event["info"] )
+
+    """ Cacha el evento de desconección y manda el log """
     def on_disconnect(self,*args):
-        logs.logError(self.__Keyword,'Connection end')
+        logs.logError('on_disconnect','Connection end')
 
+    """ Cacha el evento de reconección y emite la auth """
     def on_reconnect(self,*args):
-        logs.logError(self.__Keyword,'Connection reconnect')
-        self.socketIO.emit('Auth',config.token)
+        logs.logError('on_reconnect','Connection reconnect')
+        event = interface_events.auth(config.token)
+        self.socketIO.emit( event["event"], event["info"] )
 
+    """ Cacha la petición de qr 
+        Params args[0] socket_id ID del receptor
+    """
     def on_getQr(self,*args):
+        socket_id = args[0]
         try:
-            logs.logError(self.__Keyword,'on getQr')
+            logs.logError('on_getQr','Solicitando QR')
             if self.driver == None :
                 self.driver = WhatsAPIDriver(profile=config.pathSession, client='remote', command_executor=config.selemiunIP)
-            if self.driver.is_logged_in():
-                logs.logError(self.__Keyword,'session started') 
-                self.socketIO.emit('change',{'whatsAppJoin':True,'accountDown':False})
-                self.socketIO.emit('sendQr', {'socketId':args[0],'error':'The session is started'} )
 
-                # If not detect session #
-                if self.sessionStart == False:
-                    self.startThreads( self.messagesStore , self.socketIO )
+            # Pedimos el qr #
+            name = _wapi.getQrCode(self.driver)
+            logs.logError('on_getQr','Enviando QR')
 
-            else :
-                logs.logError(self.__Keyword,'go to qr')
-                name = _wapi.getQrCode(self.driver)
-                logs.logError(self.__Keyword,'send qr')
-                self.socketIO.emit('sendQr',{'socketId':args[0],'file':str(name)})
-                session = _wapi.waitLogin(self.driver,self.socketIO)
+            # Enviamos el resultado #
+            event = interface_events.send_qr(self.__AUTH,socket_id,name)
+            self.socketIO.emit( event["event"], event["info"] )
 
-                if session :
-                    # Start theads #
-                    logs.logError(self.__Keyword,'startThreads')
-                    self.socketIO.emit('change',_wapi.getGeneralInfo(self.driver))
-                    self.socketIO.emit('receiverLogin',args[0])
-                    self.startThreads( self.messagesStore , self.socketIO )
-                else :
-                    logs.logError(self.__Keyword,'Session down')
+            try:
+                # Iniciamos el proceso de login #
+                logs.logError('on_getQr', 'Esprando login')
+                session = _wapi.waitLogin(self.driver, self.socketIO)
+
+                if session:
+
+                    logs.logError('on_getQr', 'Login exitoso')
+                    event = interface_events.send_login_status(self.__AUTH,socket_id,"Sessión iniciada", 200)
+                    self.socketIO.emit( event["event"], event["info"] )
+
+                    # Iniciamos observable #
+                    logs.logError('on_getQr', 'Iniciando hilos')
+                    self.startThreads( self.messagesStore, self.socketIO )
+                   
+                    # Enviamos los generales de la cuenta #
+                    general_info = _wapi.getGeneralInfo(self.driver)
+                    event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+                    self.socketIO.emit( event["event"], event["info"] )
+
+                    # Enviamos el resultado del login #
+                    event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+                    self.socketIO.emit( event["event"], event["info"] )
+                    
+                else:
+                    logs.logError('on_getQr', 'Se acabo el tiempo')
+                    event = interface_events.send_login_status(self.__AUTH,socket_id,"Se acabo el timpo reintente reiniciando", 500)
+                    self.socketIO.emit( event["event"], event["info"] )
                     # ALERT #
+            except Exception :
+                logs.logError('on_getQr',traceback.format_exc())
+                # Enviamos el Error #
+                event = interface_events.send_login_status(self.__AUTH,socket_id,"Error iniciando sessión revise logs", 500)
+                self.socketIO.emit( event["event"], event["info"] )
 
         except Exception :
-            self.socketIO.emit('sendQr', {'socketId':args[0],'error':traceback.format_exc()} )
-            logs.logError(self.__Keyword,traceback.format_exc())
+            logs.logError('on_getQr',traceback.format_exc())
+            # Enviamos el Error #
+            event = interface_events.send_qr_error(self.__AUTH,socket_id,"Error solicitando QR reinicie la cuenta")
+            self.socketIO.emit( event["event"], event["info"] )
 
-    def on_giveScreen(self,*args):
-        screen = Thread(target=_wapi.getScreen,args=(self.driver,self.socketIO,args[0]))
-        screen.start()
+    """ Cacha la petición de obtener el screen 
+        Parmas args[0] socket_id ID del receptor
+    """
+    def on_getScreen(self,*args):
+        socket_id = args[0]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(_wapi.getScreen, self.driver)
+            result = future.result(timeout=30)
+            if result["code"] == 200:
+                event = interface_events.send_screen(self.__AUTH,socket_id,result["name"])
+                self.socketIO.emit( event["event"], event["info"] )
+            else:
+                event = interface_events.send_screen_error(self.__AUTH,socket_id,result["name"])
+                self.socketIO.emit( event["event"], event["info"] )
+    
+    """ Envía un mensaje de texto al numero ingresado
+        Parmas args[0] number Numero a 10 digitos
+        Parmas args[1] message Mensaje a enviar
+        Parmas args[2] socket_id Id del receptor
+    """
+    def on_test(self,*args):
+        number= args[0] 
+        message= args[1]
+        socket_id= args[2]  
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.send_test, self.driver, number, message)
+            result= future.result(timeout=30)
+            message_result= "Test exitoso" if result["code"] == 200 else result["error"]
+
+            event = interface_events.send_test_result(self.__AUTH,socket_id,message_result)
+            self.socketIO.emit( event["event"], event["info"] )
 
     def on_sendText(self,*args):
         id = args[0][0]
         message = args[0][1]
         send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,id,message))
         send.start()
-
 
     def on_sendMessageGroup(self,*args):
         send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,config.groupId,'I am here'))
@@ -122,27 +216,22 @@ class start():
         delChat = Thread(target=_wapi.deleteChat,args=(self.driver,args[0],))
         delChat.start()
 
+    """ Inicia el observable para recibir los mensajes """
     def startThreads(self,*args):
         try:
-            oldMessges = Thread(target=self.sincGetOldMessages,args=(args[0],args[1]))
-            oldMessges.start()
-
+            logs.logError('startThreads','Pregunatmos si se inicia')
             if self.sessionStart == False:
+                logs.logError('startThreads','Si, si se inicia')
                 self.sessionStart = True
-                logs.logError(self.__Keyword,'Init event loop')
-            
-                loop = Thread(target=_wapi.loopStatus,args=(self.driver,self.socketIO))
-                loop.start()
-
-                self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver))
+                self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver, self.__AUTH))
+            else:
+                logs.logError('startThreads','No, no se inicia')
         except Exception:
-            logs.logError(self.__Keyword,traceback.format_exc())
-            # Alert #
-
+            logs.logError('startThreads',traceback.format_exc())
+            
     def sincGetOldMessages(self,*args):
         chats = _wapi.getOldMessages(self.driver,args[0],args[1])
         self.socketIO.emit('oldMessages',chats)
-
 
     def on_isValid(self,*args):
         id = args[0][0]

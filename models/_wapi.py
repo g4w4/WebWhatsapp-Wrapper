@@ -6,7 +6,7 @@ import traceback
 from uuid import uuid4
 from threading import Thread
 from services import config
-from interfaces import interface_messages
+from interfaces import interface_messages, interface_events
 
 
 __DOCUMENT_TYPE = {
@@ -19,37 +19,34 @@ __DOCUMENT_TYPE = {
 }
 
 
-############################ rememberSession(driver) ############
-# Desc : wait for session                                       #
-# Params : driver obj                                           #       
-# Return :  Boolean                                              #
-# Last Update : 30-05-19                                        #
-# By : g4w4                                                     #
-#################################################################
+"""
+Verifica que exista una sessión guardada para hacer el login
+Params: driver (selenumWarper) Conector de selenium
+Params: socketId (string) Id del websocket que solicito el qr
+Returns: boolean 
+"""
 def rememberSession(driver,socket):
     try:
+        # Validando que exista conección en selenium #
         if driver is None :
             return False
         else :
+            # Esperamos 60 segundos a que cargue # 
             driver.wait_for_login(60)
+
+            # Inicio de sessión exitoso envía parametros #  
             if driver.is_logged_in():
-                socket.emit('change',getGeneralInfo(driver))
-                socket.emit('reboot',"Success")
                 return True
     except Exception :
-        logs.logError('Selenium --> rememberSession',traceback.format_exc())
-        socket.emit('reboot',"Failed")
+        logs.logError('rememberSession',traceback.format_exc())
         return False
-        # Alert #
 
 
-############################ getQrCode(driver) ##################
-# Desc : Get qr code and save session                           #
-# Params : driver obj                                           #       
-# Return :  Boolean or dir of qrCod                             #
-# Last Update : 30-05-19                                        #
-# By : g4w4                                                     #
-#################################################################
+"""
+Envia el codigo QR de la cuenta
+Params: driver (selenumWarper) Conector de selenium
+Returns: bolean o string 
+"""
 def getQrCode(driver):
     try:
         if driver is None :
@@ -70,13 +67,12 @@ def getQrCode(driver):
         return False
 
 
-############################ waitLogin(driver) ##################
-# Desc : wait init session                                      #
-# Params : driver obj                                           #       
-# Return :  Boolean                                             #
-# Last Update : 30-05-19                                        #
-# By : g4w4                                                     #
-#################################################################
+"""
+Recibe el evento para esperar el Login OJO bloquea el eventloop
+Params: driver (selenumWarper) Conector de selenium
+Params: socketId (string) Id del websocket que solicito el qr
+Returns: boolean 
+"""
 def waitLogin(driver,socketId):
     try:
         driver.wait_for_login(120)
@@ -88,27 +84,29 @@ def waitLogin(driver,socketId):
         return False
 
 
-####################### getGeneralInfo(driver) #######################
-# Desc : Get general info of account connected                       #
-# Params : driver obj                                                #       
-# Return :  obj {whatsAppJoin:Bool,bateryLevel:number,numero:number} #                          #
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################
+"""
+Manda los parametros para recordar si existe connección o no con whatsApp
+Params driver(selenumWarper)
+"""
 def getGeneralInfo(driver):
     try:
         if driver is None :
             logs.logError('_wapi --> getGeneralInfo','DIVER NOT FOUND')
-            return False
+            return {
+                "whatsAppJoin" : "false",
+                "numero" : "false"
+            }
         else :
             return {
                 "whatsAppJoin" : driver.is_connected(),
-                "bateryLevel" : driver.get_battery_level(),
                 "numero" : driver.get_phone_number()
             }
     except Exception :
         logs.logError('_wapi --> getGeneralInfo',traceback.format_exc())
-        return False
+        return {
+            "whatsAppJoin" : "false",
+            "numero" : "false"
+        }
         
 
 ####################### getOldMessages(driver) #######################
@@ -229,28 +227,51 @@ def loopStatus(driver,socketIO):
         # Alert #
 
 
-####################### getScreen(driver) ###########################
-# Desc : Send picture of status in account                           #
-# Params : driver obj , socketIO obj                                 #       
-# Return :  emition                                                  #
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################        
-def getScreen(driver,socketIO,id):
+"""
+Retorna el screen del navegador
+Params: driver (selenumWarper) Conector de selenium
+Returns: {code,name} 
+"""      
+def getScreen(driver):
     try:
         if driver != None:
-            logs.logError('_wapi --> getScreen','saving screen')
-            idName = uuid4().hex
+            logs.logError('on_getScreen','sacando screen')
+            
+            # Hacemos el hash del nombre de la imagen
+            idName = "screen"+uuid4().hex
             name = "{}{}".format(config.pathFiles,idName+'.png')
+
+            # verificamos que no exista si es así lo renombramos
             if os.path.exists(name) : os.remove(name)
             driver.screenshot(name)
-            socketIO.emit('sendScreen',{'socketId':id,'file':"{}.png".format(idName)})
+            logs.logError('on_getScreen','mandando screen')
+
+            return {"code":200,"name":idName+".png"}
         else:
-            socketIO.emit('sendScreen', {'socketId':id,'error':'Browser not connected'} )
+            return {"code":500,"name":"No contado a whatsApp"}
     except Exception:
         logs.logError('_wapi --> getScreen',traceback.format_exc())
-        socketIO.emit('sendScreen', {'socketId':id,'error':traceback.format_exc()} )
-        # Alert # 
+        return {"code":500,"name":traceback.format_exc()}
+
+"""
+Envia un mensaje de texto para pruebas y borra ell registro
+Params: driver (selenumWarper) Conector de selenium
+Params: phone (number) Numero a 10 digitos
+Params: message (string) Mensaje a enviar
+Returns: {code,error} 
+""" 
+def send_test(driver,phone,message):
+    try:
+        whats_number = "521{}@c.us".format(phone)
+        logs.logError('Enviando prueba',whats_number)
+        driver.send_message_to_id(whats_number,message)
+        time.sleep(3)
+        driver.delete_chat(str(whats_number))
+        return {"code":200,"error":None}
+    except Exception :
+        logs.logError('_wapi --> sendText',traceback.format_exc())
+        return {"code":500,"error":traceback.format_exc()}
+
 
 
 ####################### sendText(driver,socketIO,id,message) #########
