@@ -221,7 +221,7 @@ def getOldMessages(driver,messages_save,socket):
 def loopStatus(driver,socketIO):
     try:
         while driver != None:
-            time.sleep(60)
+            time.sleep(360)
             logs.logError('_messages --> loopStatus','Send account info')
             socketIO.emit('change',getGeneralInfo(driver))
     except Exception :
