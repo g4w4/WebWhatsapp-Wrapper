@@ -3,42 +3,64 @@ from threading import Thread
 from Utils import logs
 import config
 import traceback
+from interfaces import interface_events
 
 class NewMessageObserver():
     
     socket = None
     driver = None
 
-    def __init__(self,socket,driver): 
+    """ Inicializa el servicio 
+    Params socket(socketIO)
+    Params driver(selenumWarper)
+    Params token(str) Token de auth
+    """
+    def __init__(self,socket,driver, token): 
         self.socket = socket
         self.driver = driver
+        self.token = token
+        self.socket.on('welcome',self.update_token)
 
+    """
+    Recibira si fue actualizado el token
+    Params args[0] token
+    """
+    def update_token(self,*args):
+        print("Recibio ")
+        print( args[0] )
+        self.token = args[0]
+
+
+    """
+    Recibe el objeto del mensaje
+    Params: new_messages (Array<message>)
+    """
     def on_message_received(self, new_messages):   
         for message in new_messages:
-            logs.write_log('NewMessage FROM -->',message._js_obj.get('chat').get('id'))
+            logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
             try:
+
+                # Valida si el mensaje es de un grupo #
                 group = message._js_obj.get('chat').get('id').get('_serialized')
                 if self.driver.is_chat_group(group) :
+
+                    # Si el grupo pertenece al grupo de auth lo manda #
                     if group == config.groupId:
-                        print( "GRUPO" )
-                        print( message._js_obj['author'].get('_serialized') )
+                        # Emite de quien recibio el mensaje # 
                         self.socket.emit('getStatusAccount', message._js_obj['author'].get('_serialized') )
-                    else:
-                        print( "GRUPO" )
-                        me = "{}@c.us".format(self.driver.get_phone_number())
-                        # exitGroup = Thread(target=self.driver.remove_participant_group,args=(group,me))
-                        # exitGroup.start()
                 else :
+
                     if  message._js_obj['type'] == "location":
-                        print( "Es ubicación" )
-                        print(  message._js_obj['lng']  )
-                        print(  message._js_obj['lat']  )
+
+                        # Si es una ubicación #
                         _message = interface_messages.getLocation( message, self.driver)
-                        self.socket.emit('newMessage',_message)
+                        event = interface_events.new_message_ubication(self.token, _message)
+                        self.socket.emit( event["event"], event["info"] )
                     else:
-                        print( "Es Nomarl" )
+
+                        # Si es media o texto #
                         _message = interface_messages.getFormat(message,self.driver)
-                        print(_message)
-                        self.socket.emit('newMessage',_message)
+                        event = interface_events.new_message(self.token, _message)
+                        self.socket.emit( event["event"], event["info"] )
             except Exception :
                 print(traceback.format_exc())
