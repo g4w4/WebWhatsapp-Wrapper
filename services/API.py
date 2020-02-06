@@ -14,6 +14,8 @@ from Utils import logs
 app = Flask(__name__)
 master = master_api.start()
 
+logs.logError('API','Todo listo servicios arriba')
+
 @app.route('/')
 def hello_word():
 	return json.dumps({"code":200,"desc":"Success"})

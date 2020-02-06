@@ -83,7 +83,6 @@ class start():
                 return qr
         except Exception :
             logs.logError('Master-API',traceback.format_exc())
-            logs.sendMailError(_MessageError["QrCode"])
             return _Responses["500"] 
 
     def waitSession(self):
