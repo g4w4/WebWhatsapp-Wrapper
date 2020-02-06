@@ -103,6 +103,7 @@ class start():
             is_valid = self.driver.check_number_status(number_whatsApp)
             if is_valid.status == 200:
                 self.driver.send_message_to_id(number_whatsApp,message)
+                time.sleep(3)
                 self.driver.delete_chat( number_whatsApp )
                 return {"code":200, "desc": "completado"}
             else :
