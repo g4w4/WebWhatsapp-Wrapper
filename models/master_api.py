@@ -44,26 +44,29 @@ class start():
             logs.logError('API',"Session completa")
         except Exception:
             logs.logError('API ---> init',traceback.format_exc())
-            self.sendStatus(500)
+            self.sendStatus(300)
 
 
     """ Actualiza el estatus de la cuenta
         code (int) codigo de estatus 200 - 300 - 500
     """
     def sendStatus(self,code):
-        logs.logError('API',"Enviando status")
+        try:
+            logs.logError('API',"Enviando status")
             
-        payload = { 
-            "status" : code,
-            "id": configAPI.ID
-        }
+            payload = { 
+                "status" : code,
+                "id": configAPI.ID
+            }
 
-        petition = requests.post(configAPI.SENDSTATUS, data=payload)
+            petition = requests.post(configAPI.SENDSTATUS, data=payload)
 
-        print(petition.decode("utf-8"))
+            print(petition)
+        except Exception:
+            logs.logError('API ---> sendStatus',traceback.format_exc())
 
-
-
+    """ Manda el Qr y espera a que se inicie sesión
+    """
     def getQr(self):
         try:
             if self.driver.is_logged_in():
@@ -74,17 +77,19 @@ class start():
                 loop.start()
                 return qr
         except Exception :
-            logs.logError('Master-API',traceback.format_exc())
+            logs.logError('API --> getQr',traceback.format_exc())
             return _Responses["500"] 
 
+
+    """ Espera a que el QR sea leido e incia y salva la sesión
+    """
     def waitSession(self):
         try:
             self.driver.wait_for_login()
-            logs.logError('Master-API',"Session Start")
+            logs.logError('API ---> waitSession',"Session Start")
             self.driver.save_firefox_profile()
         except Exception :
-            logs.sendMailError(_MessageError["Wait"])
-            logs.logError('Master-API',traceback.format_exc())
+            logs.logError('API ---> waitSession',traceback.format_exc())
 
     def getScreen(self):
         try:

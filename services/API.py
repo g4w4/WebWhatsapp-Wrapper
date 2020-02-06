@@ -21,17 +21,17 @@ def hello_word():
 	return json.dumps({"code":200,"desc":"Success"})
 
 
-# @app.route("/getQr",methods=["GET"])
-# def getQr():
-#     try:
-#         qr = master.getQr()
-#         if isinstance(qr,dict):
-#             return Response(json.dumps(qr), mimetype='application/json')
-#         else : 
-#             return send_from_directory(configAPI.pathFiles,qr)
-#     except Exception:
-#         logs.logError('Master-API',traceback.format_exc())
-#         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+@app.route("/getQr",methods=["GET"])
+def getQr():
+    try:
+        qr = master.getQr()
+        if isinstance(qr,dict):
+            return Response(json.dumps(qr), mimetype='application/json')
+        else : 
+            return send_from_directory(configAPI.pathFiles,qr)
+    except Exception:
+        logs.logError('API ---> getQr',traceback.format_exc())
+        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
 # @app.route("/getScreen",methods=["GET"])
 # def getScreen():
