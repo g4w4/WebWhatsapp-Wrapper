@@ -8,6 +8,7 @@ from webwhatsapi.objects.message import Message, MediaMessage
 import configAPI
 from Utils import logs
 from models import _wapi
+import http.client
 
 _Responses = {
     "003" : { "code" : "003" , "desc" : "Desconectado" },
@@ -33,15 +34,43 @@ _MessageError = {
 class start():
     driver = None
 
+    """ Inicia la sesión con selenuim y whatsApp
+    """
     def __init__(self):
         try:
             self.driver = WhatsAPIDriver(profile=configAPI.pathSession, client='remote', command_executor=configAPI.selemiunIP)
-            logs.logError('Master-API',"WhatsApp on")
-            # loop = Thread(target=self.loopSession)
-            # loop.start()
+            logs.logError('API',"Iniciando")
+            self.waitSession()
+            logs.logError('API',"Session completa")
         except Exception:
-            logs.logError('Master-API',traceback.format_exc())
-            logs.sendMailError(_MessageError["Selenium"])
+            logs.logError('API ---> init',traceback.format_exc())
+            self.sendStatus(500)
+
+
+    """ Actualiza el estatus de la cuenta
+        code (int) codigo de estatus 200 - 300 - 500
+    """
+    def sendStatus(self,code):
+        logs.logError('API',"Enviando status")
+        conn = http.client.HTTPConnection(configAPI.HOST)
+
+        payload = "id={}&status={}".format(configAPI.ID,code)
+
+        headers = {
+            'Content-Type': "application/x-www-form-urlencoded,multipart/form-data; boundary=--------------------------291093173689809706449887",
+            'Accept': "*/*",
+            'Host': "desarrollo.ws-voices.com.mx",
+            'Connection': "keep-alive",
+            'cache-control': "no-cache"
+        }
+
+        conn.request("POST", configAPI.SENDSTATUS, payload, headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
+        print(data.decode("utf-8"))
+
 
     def getQr(self):
         try:
