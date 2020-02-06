@@ -88,8 +88,46 @@ class start():
             self.driver.wait_for_login()
             logs.logError('API ---> waitSession',"Session Start")
             self.driver.save_firefox_profile()
+            self.sendStatus(200)
         except Exception :
+            self.sendStatus(300)
             logs.logError('API ---> waitSession',traceback.format_exc())
+
+    """ Valida y envía un mensaje de whatsApp
+        number (int)
+        message (str)
+    """
+    def sendMessage(self,number,message):
+        try:
+            number_whatsApp = "521{}@c.us".format(number)
+            is_valid = self.driver.check_number_status(number_whatsApp)
+            if is_valid.status == 200:
+                self.driver.send_message_to_id(number_whatsApp,message)
+                self.driver.delete_chat( number_whatsApp )
+                return {"code":200, "desc": "completado"}
+            else :
+                return {"code":404, "desc": "Numero sin whatsApp"}
+            
+        except Exception :
+            logs.logError('API --> sendMessage',traceback.format_exc())
+            return {"code":500, "desc": "Sin servicio"}
+
+    """ Valida si existe un número en whatsApp
+        number (int)
+    """
+    def isValid(self,number):
+        try:
+            number_whatsApp = "521{}@c.us".format(number)
+            is_valid = self.driver.check_number_status(number_whatsApp)
+            return {"code":200, "desc": "completado"} if is_valid.status == 200 else {"code":404, "desc": "Numero sin whatsApp"}
+        except Exception :
+            if "TypeError: <NumberStatus -" in traceback.format_exc() :
+                return {"code":404, "desc": "Numero sin whatsApp"}
+            else :
+                logs.logError('API --> isValid',traceback.format_exc())
+                return {"code":500, "desc": "Sin servicio"}
+
+
 
     def getScreen(self):
         try:
@@ -135,36 +173,6 @@ class start():
             logs.sendMailError(_MessageError["ChatList"])
             return _Responses["500"] 
 
-    def sendMessage(self,idChat,message):
-        try:
-            # chat = self.driver.get_chat_from_id(str(idChat))
-            # if chat :
-            print(idChat)
-            print(message)
-            self.driver.send_message_to_id(str(idChat),message)
-            print("fin")
-            return _Responses["202"]
-            # else:
-            #     return _Responses["501"]
-        except Exception :
-            if "raise ChatNotFoundError" in traceback.format_exc() :
-                return _Responses["501"]
-            else :
-                logs.logError('Master-API',traceback.format_exc())
-                logs.sendMailError(_MessageError["SendMessage"])
-                return _Responses["500"] 
-
-    def isValid(self,number):
-        try:
-            numberWhatsApp = "521{}@c.us".format(number)
-            isValid = self.driver.check_number_status(numberWhatsApp)
-            return _Responses["203"] if isValid.status == 200 else _Responses["404"]
-        except Exception :
-            if "TypeError: <NumberStatus -" in traceback.format_exc() :
-                return _Responses["404"] 
-            else :
-                logs.logError('Master-API',traceback.format_exc())
-                return _Responses["500"] 
 
     def getLastSend(self,number,fullNumber):
         try:

@@ -33,6 +33,24 @@ def getQr():
         logs.logError('API ---> getQr',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
+@app.route("/sendMessage",methods=["POST"])
+def sendMessage():
+    try:
+        message = master.sendMessage(request.form["number"],request.form["message"])
+        return Response(json.dumps(message), mimetype='application/json')
+    except Exception:
+        logs.logError('Master-API',traceback.format_exc())
+        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
+@app.route("/isValid",methods=["POST"])
+def isValid():
+    try:
+        valid = master.isValid(request.form["number"])
+        return Response(json.dumps(valid), mimetype='application/json')
+    except Exception:
+        logs.logError('Master-API',traceback.format_exc())
+        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
 # @app.route("/getScreen",methods=["GET"])
 # def getScreen():
 #     try:
