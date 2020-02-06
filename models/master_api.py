@@ -8,7 +8,7 @@ from webwhatsapi.objects.message import Message, MediaMessage
 import configAPI
 from Utils import logs
 from models import _wapi
-import http.client
+import requests
 
 _Responses = {
     "003" : { "code" : "003" , "desc" : "Desconectado" },
@@ -52,24 +52,16 @@ class start():
     """
     def sendStatus(self,code):
         logs.logError('API',"Enviando status")
-        conn = http.client.HTTPConnection(configAPI.HOST)
-
-        payload = "id={}&status={}".format(configAPI.ID,code)
-
-        headers = {
-            'Content-Type': "application/x-www-form-urlencoded,multipart/form-data; boundary=--------------------------291093173689809706449887",
-            'Accept': "*/*",
-            'Host': "desarrollo.ws-voices.com.mx",
-            'Connection': "keep-alive",
-            'cache-control': "no-cache"
+            
+        payload = { 
+            "status" : code,
+            "id": configAPI.ID
         }
 
-        conn.request("POST", configAPI.SENDSTATUS, payload, headers)
+        petition = requests.post(configAPI.SENDSTATUS, data=payload)
 
-        res = conn.getresponse()
-        data = res.read()
+        print(petition.decode("utf-8"))
 
-        print(data.decode("utf-8"))
 
 
     def getQr(self):
