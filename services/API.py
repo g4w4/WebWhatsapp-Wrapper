@@ -21,7 +21,7 @@ def hello_word():
 	return json.dumps({"code":200,"desc":"Success"})
 
 
-@app.route("/api/getQr",methods=["GET"])
+@app.route("/getQr",methods=["GET"])
 def getQr():
     try:
         qr = master.getQr()
@@ -33,7 +33,7 @@ def getQr():
         logs.logError('API ---> getQr',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
-@app.route("/api/sendMessage",methods=["POST"])
+@app.route("/sendMessage",methods=["POST"])
 def sendMessage():
     try:
         message = master.sendMessage(request.form["number"],request.form["message"])
@@ -42,7 +42,7 @@ def sendMessage():
         logs.logError('Master-API',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
-@app.route("/api/isValid",methods=["POST"])
+@app.route("/isValid",methods=["POST"])
 def isValid():
     try:
         valid = master.isValid(request.form["number"])
