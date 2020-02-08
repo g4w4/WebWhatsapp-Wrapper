@@ -38,6 +38,7 @@ class start():
     """
     def __init__(self):
         try:
+            self.sendStatus(100)
             self.driver = WhatsAPIDriver(profile=configAPI.pathSession, client='remote', command_executor=configAPI.selemiunIP)
             logs.logError('API',"Iniciando")
             self.waitSession()
