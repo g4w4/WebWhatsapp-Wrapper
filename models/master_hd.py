@@ -207,7 +207,6 @@ class start():
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future= executor.submit(_wapi.send_text, self.driver,id_chat,message)
             result= future.result(timeout=30)
-            print(result)
             akc= 2 if result["code"] == 200 else 0
             event = interface_events.send_message_status(self.__AUTH,message_id,akc)
             self.socketIO.emit( event["event"], event["info"] )
@@ -235,9 +234,15 @@ class start():
             event = interface_events.send_message_status(self.__AUTH,message_id,akc)
             self.socketIO.emit( event["event"], event["info"] )
 
+    """ Borra el chat del teléfono para liberar memoria
+        Parmas args[0] id_chat Id del chat
+    """
     def on_deleteChat(self,*args):
-        delChat = Thread(target=_wapi.deleteChat,args=(self.driver,args[0],))
-        delChat.start()
+        id_chat = args[0]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.deleteChat,self.driver,id_chat)
+            result= future.result(timeout=30)
+            print(result)
 
     """ Inicia el observable para recibir los mensajes """
     def startThreads(self,*args):

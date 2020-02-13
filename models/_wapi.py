@@ -311,19 +311,16 @@ def send_file(driver,id_chat,caption,message):
         return {"code":500,"error":traceback.format_exc()}
 
 
-######################## deleteChat(driver,id) #######################
-# Desc : Delete all conversation in divece                           #
-# Params : driver obj , id wspID                                     #       
-# Return :  None                                                     #
-# Last Update : 03-06-19                                             #
-# By : g4w4                                                          #
-######################################################################
+""" Borra un chat
+Params: driver (selenumWarper) Conector de selenium
+Params: id_chat (string) Id del chat
+"""
 def deleteChat(driver,id):
     try:
-        logs.logError("_wapi -->","Delete Chat {}".format(id),)
+        logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
         driver.delete_chat(str(id))
     except Exception :
-        logs.logError('_wapi --> sendFile',traceback.format_exc())
+        logs.logError('_wapi --> deleteChat',traceback.format_exc())
 
 
 ####################### getSreenApi(driver) ###########################
