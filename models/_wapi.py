@@ -303,6 +303,7 @@ Returns: {code,error}
 def send_file(driver,id_chat,caption,message):
     try:
         logs.logError('Enviando archivo a',id_chat)
+        print("{}{}".format(config.pathFiles,message))
         driver.send_media("{}{}".format(config.pathFiles,message),id_chat,caption)
         driver.chat_send_seen(id_chat)
         return {"code":200,"error":None}
