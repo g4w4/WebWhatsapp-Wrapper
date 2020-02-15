@@ -254,8 +254,9 @@ class start():
                 self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver, self.__AUTH))
 
                 # Inicia el pool #
-                with concurrent.futures.ThreadPoolExecutor() as executor:
-                    executor.submit(self.poolConnection)
+                loop = Thread(target=self.poolConnection,args=())
+                loop.start()
+
             else:
                 logs.logError('startThreads','No, no se inicia')
         except Exception:
