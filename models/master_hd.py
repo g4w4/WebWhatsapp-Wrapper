@@ -252,11 +252,24 @@ class start():
                 logs.logError('startThreads','Si, si se inicia')
                 self.sessionStart = True
                 self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver, self.__AUTH))
+
+                # Inicia el pool #
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    executor.submit(self.poolConnection)
             else:
                 logs.logError('startThreads','No, no se inicia')
         except Exception:
             logs.logError('startThreads',traceback.format_exc())
-            
+
+    """ Mantiene vivo el socket """
+    def poolConnection(self):
+        while True:
+            time.sleep(60)
+            print("mando info")
+            general_info = _wapi.getGeneralInfo(self.driver)
+            event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+            self.socketIO.emit( event["event"], event["info"] )
+
     def sincGetOldMessages(self,*args):
         chats = _wapi.getOldMessages(self.driver,args[0],args[1])
         self.socketIO.emit('oldMessages',chats)

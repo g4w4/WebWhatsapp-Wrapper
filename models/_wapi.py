@@ -353,7 +353,7 @@ def isValid(driver,socketIO,number):
         #socketIO.emit('validQuery', number)
         print("EMITIO")
 
-        url = "https://ws-voices.com.mx:3001/resultQuery"
+        url = config.URL
 
         payload = number
         headers = { 'Content-Type': "application/x-www-form-urlencoded", }
