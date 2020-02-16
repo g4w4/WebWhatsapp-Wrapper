@@ -1,5 +1,5 @@
 import requests
-from Utils import logs
+from Utils import logs, telegram
 import os, sys, time, json
 import shutil
 import traceback
@@ -102,6 +102,7 @@ def getGeneralInfo(driver):
                 "numero" : driver.get_phone_number()
             }
     except Exception :
+        telegram.telegram("Error getGeneralInfo {}".format(traceback.format_exc()))
         logs.logError('_wapi --> getGeneralInfo',traceback.format_exc())
         return {
             "whatsAppJoin" : "false",
@@ -251,6 +252,7 @@ def getScreen(driver):
             return {"code":500,"name":"No contado a whatsApp"}
     except Exception:
         logs.logError('Error --> Obteniendo Screen',traceback.format_exc())
+        telegram.telegram("Error Obteniendo Screen {}".format(traceback.format_exc()))
         return {"code":500,"name":traceback.format_exc()}
 
 """
@@ -270,6 +272,7 @@ def send_test(driver,phone,message):
         return {"code":200,"error":None}
     except Exception :
         logs.logError('Error --> Enviando test',traceback.format_exc())
+        telegram.telegram("Error Enviando test {}".format(traceback.format_exc()))
         return {"code":500,"error":traceback.format_exc()}
 
 
@@ -289,6 +292,7 @@ def send_text(driver,id_chat,message):
         return {"code":200,"error":None}
     except Exception :
         logs.logError('Errir --> enviando text',traceback.format_exc())
+        telegram.telegram("Error Enviando text {}".format(traceback.format_exc()))
         return {"code":500,"error":traceback.format_exc()}
 
 
@@ -309,6 +313,7 @@ def send_file(driver,id_chat,caption,message):
         return {"code":200,"error":None}
     except Exception :
         logs.logError('Error --> Enviando imagen',traceback.format_exc())
+        telegram.telegram("Error Enviando imagen {}".format(traceback.format_exc()))
         return {"code":500,"error":traceback.format_exc()}
 
 
@@ -321,6 +326,7 @@ def deleteChat(driver,id):
         logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
         driver.delete_chat(str(id))
     except Exception :
+        telegram.telegram("Error deleteChat {}".format(traceback.format_exc()))
         logs.logError('_wapi --> deleteChat',traceback.format_exc())
 
 

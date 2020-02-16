@@ -26,6 +26,7 @@ socketIO.on('sendTest',masterClass.on_test)
 socketIO.on('sendText',masterClass.on_sendText)
 socketIO.on('sendFile',masterClass.on_sendFile)
 socketIO.on('deleteChat',masterClass.on_deleteChat)
+## PENDIENTES ###
 socketIO.on('sendMessageGroup',masterClass.on_sendMessageGroup)
 socketIO.on('validNumber',masterClass.on_isValid)
 socketIO.on('blockNumber',masterClass.on_blockNumber)

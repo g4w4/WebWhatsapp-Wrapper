@@ -47,6 +47,7 @@ class start():
             if self.driver != None and self.driver.is_logged_in():
                 
                 # Se envían los datos de la sessión #
+                telegram.telegram("Reconección exitosa")
                 general_info = _wapi.getGeneralInfo(self.driver)
                 event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
                 self.socketIO.emit( event["event"], event["info"] )
@@ -71,6 +72,7 @@ class start():
                 if rember :
 
                     # Se envían los datos de la sessión #
+                    telegram.telegram("Conecctando a WA")
                     general_info = _wapi.getGeneralInfo(self.driver)
                     event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
                     self.socketIO.emit( event["event"], event["info"] )
@@ -107,6 +109,7 @@ class start():
     """ Cacha el evento de reconección y emite la auth """
     def on_reconnect(self,*args):
         logs.logError('on_reconnect','Connection reconnect')
+        telegram.telegram("Reconecctando a WA")
         event = interface_events.auth(config.token)
         self.socketIO.emit( event["event"], event["info"] )
 
