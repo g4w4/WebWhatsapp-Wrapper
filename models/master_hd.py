@@ -6,7 +6,7 @@ from threading import Thread
 from webwhatsapi import WhatsAPIDriver
 from webwhatsapi.objects.message import Message, MediaMessage
 import config
-from Utils import logs
+from Utils import logs, telegram
 from models import _wapi,observable
 from interfaces import interface_events
 import concurrent.futures
@@ -30,6 +30,7 @@ class start():
     def on_connect(self,*args):
         logs.logError('Socket-Info','Connection whit server')
         event = interface_events.auth(config.token)
+        telegram.telegram("Conectado al server")
         self.socketIO.emit( event["event"], event["info"] )  
 
     """ Realiza la negociación para el inicio de sessión en whatsApp 
@@ -37,6 +38,7 @@ class start():
     """
     def on_welcome(self,*args):
         logs.logError('Socket-Info','welcome to server')
+        telegram.telegram("Inicio de sessión")
         self.__AUTH = args[0]
         try:
 
@@ -51,6 +53,7 @@ class start():
 
                 if( self.driver.is_connected() ) :
                     logs.logError('on_welcome','inician los hilos')
+                    telegram.telegram("Inicio de sessión exitoso -->")
                     self.startThreads( self.messagesStore, self.socketIO )
                 
             else:
@@ -74,16 +77,19 @@ class start():
 
                     # Inician los hilos #
                     logs.logError('on_welcome','Session recordada inician los hilos')
+                    telegram.telegram("Inicio de sessión exitoso")
                     self.startThreads( self.messagesStore, self.socketIO )
 
                 else :
 
                     # No hay sesión es necesarío el login por qr #
                     logs.logError('on_welcome','Sesión olvidada, necesarío QR')
+                    telegram.telegram("Session olvidada necesarío QR")
                     event = interface_events.send_alert(self.__AUTH, "Sessión olvidada")
                     self.socketIO.emit( event["event"], event["info"] )
 
         except Exception :
+            telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
             logs.logError('Welcome-Error',traceback.format_exc())
             # Envia que esta desconectado de whatsApp#
             event = interface_events.send_status(self.__AUTH)
@@ -95,6 +101,7 @@ class start():
 
     """ Cacha el evento de desconección y manda el log """
     def on_disconnect(self,*args):
+        telegram.telegram("Desconectado del server")
         logs.logError('on_disconnect','Connection end')
 
     """ Cacha el evento de reconección y emite la auth """
@@ -264,12 +271,15 @@ class start():
 
     """ Mantiene vivo el socket """
     def poolConnection(self):
-        while True:
-            time.sleep(60)
-            print("mando info")
-            general_info = _wapi.getGeneralInfo(self.driver)
-            event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
-            self.socketIO.emit( event["event"], event["info"] )
+        try:
+            while True:
+                time.sleep(60)
+                print("mando info")
+                general_info = _wapi.getGeneralInfo(self.driver)
+                event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+                self.socketIO.emit( event["event"], event["info"] )
+        except  Exception :
+            telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
 
     def sincGetOldMessages(self,*args):
         chats = _wapi.getOldMessages(self.driver,args[0],args[1])
