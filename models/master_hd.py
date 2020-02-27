@@ -50,7 +50,7 @@ class start():
                     self.startThreads( self.messagesStore, self.socketIO )
                     #self.startThreads( {}, self.socketIO )
         except Exception :
-            logs.logError('Master-Error',traceback.format_exc())
+            logs.logError('Master-Error',traceback.format_exc())   
             # ALERTA #
 
     def on_disconnect(self,*args):
