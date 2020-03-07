@@ -275,12 +275,12 @@ class start():
     """ Mantiene vivo el socket """
     def poolConnection(self):
         try:
-            while True:
-                time.sleep(60)
-                print("mando info")
-                general_info = _wapi.getGeneralInfo(self.driver)
-                event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
-                self.socketIO.emit( event["event"], event["info"] )
+            #while True:
+            time.sleep(60)
+            print("mando info")
+            general_info = _wapi.getGeneralInfo(self.driver)
+            event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+            self.socketIO.emit( event["event"], event["info"] )
         except  Exception :
             telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
 
