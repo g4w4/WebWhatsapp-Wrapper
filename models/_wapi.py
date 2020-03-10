@@ -162,7 +162,8 @@ def getOldMessages(driver,socket,token):
                     telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
                     logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
-            logs.logError('_wapi --> getOldMessages',"Terminarón los chats viejos")
+        
+        logs.logError('_wapi --> getOldMessages',"Terminarón los chats viejos")
     except Exception :
         telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
         logs.logError('_wapi --> getOldMessages',traceback.format_exc())
