@@ -150,7 +150,7 @@ def getOldMessages(driver,socket,token):
                             # Si es media o texto #
                             with concurrent.futures.ThreadPoolExecutor() as executor:
                                 try:
-                                    future= executor.submit(interface_messages.getFormat, message,self.driver)
+                                    future= executor.submit(interface_messages.getFormat, message,driver)
                                     _message= future.result(timeout=10)
                                     event = interface_events.new_message_old(token, _message)
                                     socket.emit( event["event"], event["info"] )
