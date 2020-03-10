@@ -120,6 +120,7 @@ def getOldMessages(driver,socket,token):
     try:
          
         # Obtenemos los chats
+        logs.logError('_wapi --> getOldMessages',"Obteniendo chats viejos")
 
         _allChats = driver.get_chats_whit_messages()
 
@@ -134,19 +135,22 @@ def getOldMessages(driver,socket,token):
 
             # Verificamos el tipo de mensaje
             for message in _messages:
-                try:    
-                    if  message._js_obj['type'] == "location":
-
-                        # Si es una ubicación #
-                        _message = interface_messages.getLocation( message, driver)
-                        event = interface_events.new_message_ubication(token, _message)
-                        socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                try:   
+                    if message._js_obj['sender']['isMe'] :
+                        print("Enviado por el agente no vale")
                     else:
+                        if  message._js_obj['type'] == "location":
 
-                        # Si es media o texto #
-                        _message = interface_messages.getFormat(message,driver)
-                        event = interface_events.new_message(token, _message)
-                        socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                            # Si es una ubicación #
+                            _message = interface_messages.getLocation( message, driver)
+                            event = interface_events.new_message_ubication(token, _message)
+                            socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                        else:
+
+                            # Si es media o texto #
+                            _message = interface_messages.getFormat(message,driver)
+                            event = interface_events.new_message(token, _message)
+                            socket.emit( "OLD{}".format(event["event"]), event["info"] )
                         
                     
                 except Exception :
