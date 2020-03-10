@@ -143,7 +143,7 @@ def getOldMessages(driver,socket,token):
 
                             # Si es una ubicación #
                             _message = interface_messages.getLocation( message, driver)
-                            event = interface_events.new_message_ubication_old(token, _message)
+                            event = interface_events.new_message_ubication(token, _message)
                             socket.emit( event["event"], event["info"] )
                         else:
 
@@ -152,7 +152,7 @@ def getOldMessages(driver,socket,token):
                                 try:
                                     future= executor.submit(interface_messages.getFormat, message,driver)
                                     _message= future.result(timeout=10)
-                                    event = interface_events.new_message_old(token, _message)
+                                    event = interface_events.new_message(token, _message)
                                     socket.emit( event["event"], event["info"] )
                                 except Exception:
                                     telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
