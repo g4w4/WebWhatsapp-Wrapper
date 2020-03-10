@@ -164,6 +164,8 @@ def getOldMessages(driver,socket,token):
 
         
         logs.logError('_wapi --> getOldMessages',"Terminarón los chats viejos")
+        event = interface_events.end_old_messages(token)
+        socket.emit( event["event"], event["info"] )
     except Exception :
         telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
         logs.logError('_wapi --> getOldMessages',traceback.format_exc())

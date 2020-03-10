@@ -237,27 +237,17 @@ def new_message_ubication( token, message):
 
 
 """
-Envia el mensaje que ha recibido
+Envia la notificación que puede enviar mensajes pendientes
 Params: token(str) Token de auth
-        message( chat,sendBy,message,type,caption,,akc,date,id,app ) Mensaje recibido
 """
-def new_message_old( token, message):
+def end_old_messages( token):
     return {
         "event": "event",
         "info": {
-            "event": "newMessageOld",
+            "event": "iamready",
             "info": {
                 "token": token,
                 "message": {
-                    "chat": message["chat"],
-                    "sendBy": message["sendBy"],
-                    "message":message["message"], 
-                    "type": message["type"],
-                    "caption": message["caption"],
-                    "akc": message["akc"],
-                    "date": message["date"],
-                    "id": message["id"],
-                    "app": message["app"],
                     "token_account": config.token
                 }
             }
