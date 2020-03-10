@@ -186,6 +186,8 @@ def getScreen(driver):
             idName = "screen"+uuid4().hex
             name = "{}{}".format(config.pathFilesRoot,idName+'.png')
 
+            logs.logError('on_getScreen','sacando screen {}'.format(name))
+
             # verificamos que no exista si es así lo renombramos
             if os.path.exists(name) : os.remove(name)
             driver.screenshot(name)
