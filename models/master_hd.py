@@ -111,7 +111,7 @@ class start():
         logs.logError('on_reconnect','Connection reconnect')
         telegram.telegram("Reconecctando a WA")
         event = interface_events.auth(config.token)
-        self.socketIO.emit( event["event"], event["info"] )
+        self.socketIO.emit( event["event"], event["info"] ) 
 
     """ Cacha la petición de qr 
         Params args[0] socket_id ID del receptor
