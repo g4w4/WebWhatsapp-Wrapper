@@ -37,7 +37,7 @@ class start():
         Params args[0] token de autentificación
     """
     def on_welcome(self,*args):
-        logs.logError('Socket-Info','welcome to server')
+        logs.logError('Socket-Info','welcome to server {}'.format(args[0]))
         telegram.telegram("Inicio de sessión")
         self.__AUTH = args[0]
         try:
@@ -260,6 +260,10 @@ class start():
             logs.logError('startThreads','Pregunatmos si se inicia')
             if self.sessionStart == False:
                 logs.logError('startThreads','Si, si se inicia')
+
+                # Envia todos los mensajes recibidos
+                _wapi.getOldMessages( self.driver, self.socketIO, self.__AUTH)
+
                 self.sessionStart = True
                 self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver, self.__AUTH))
 

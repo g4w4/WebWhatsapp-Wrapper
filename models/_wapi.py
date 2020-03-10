@@ -110,122 +110,53 @@ def getGeneralInfo(driver):
         }
         
 
-####################### getOldMessages(driver) #######################
-# Desc : Get general info of account connected                       #
-# Params : driver obj                                                #       
-# Return :  { ObjChats ... } #                          
-# Last Update : 27-06-19                                             #
-# By : g4w4                                                          #
-######################################################################
-def getOldMessages(driver,messages_save,socket):
+"""
+Recupera los mensajes que estan en el teléfono en caso de desconección o reconección
+Params driver(selenumWarper)
+Params socket(SocketIO)
+Params token(string)
+"""
+def getOldMessages(driver,socket,token):
     try:
          
-        chats = {}
+        # Obtenemos los chats
 
-        logs.logError('_messages --> getOldMessages','Get all chats')
         _allChats = driver.get_chats_whit_messages()
 
-        print("Esto tengo yo")
-        print( messages_save )
-        
+        # Iteramos los menajes de cada uno
         for chat in _allChats:
-            try:
-                idChat = str(chat.get('id'))
 
-                if messages_save.get(idChat,False) != False:
-                    print("si esta")
-                    x = driver.chat_load_all_earlier_messages(idChat)
-                    _messages = driver.get_all_messages_in_chat(idChat,True)
+            # Mandamos el mensaje
 
-                    #Count messages#
-                    i = 0
-                    for message in _messages:
-                        i= i + 1
+            idChat = str(chat.get('id'))
+            driver.chat_load_all_earlier_messages(idChat)
+            _messages = driver.get_all_messages_in_chat(idChat,True)
+
+            # Verificamos el tipo de mensaje
+            for message in _messages:
+                try:    
+                    if  message._js_obj['type'] == "location":
+
+                        # Si es una ubicación #
+                        _message = interface_messages.getLocation( message, driver)
+                        event = interface_events.new_message_ubication(token, _message)
+                        socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                    else:
+
+                        # Si es media o texto #
+                        _message = interface_messages.getFormat(message,driver)
+                        event = interface_events.new_message(token, _message)
+                        socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                        
                     
-                    print("Mensajes")
-                    print(idChat)
-                    print( i )
-                    print(messages_save.get(idChat,False))
-                    print(idChat)
+                except Exception :
+                    telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
+                    logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
-                    if i != messages_save.get(idChat,False):
-                        print("netro aqui")
-                        b = 0
-                        x = driver.chat_load_all_earlier_messages(idChat)
-                        _messages = driver.get_all_messages_in_chat(idChat,True)
-                        for message in _messages:
-                            b=b+1
-                            print(b)
-                            print( messages_save.get(idChat,False) )
-                            print(b > messages_save.get(idChat,False))
-                            if b > messages_save.get(idChat,False) :
-                                try:    
-                                    if  message._js_obj['type'] == "location":
-                                        _message = interface_messages.getLocation( message, driver)
-                                        print("mando mensaje")
-                                        print(_message)
-                                        if _message != None:
-                                            socket.emit('newMessage',_message)
-                                    else:
-                                        _message = interface_messages.getFormat(message,driver)
-                                        print("mando mensaje")
-                                        print(_message)
-                                        if _message != None:
-                                            socket.emit('newMessage',_message)
-                                except Exception :
-                                    logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
-                else :
-
-                    chats[idChat] = []
-
-                    logs.logError('_messages --> getOldMessages','Get all messages of chat')
-                    x = driver.chat_load_all_earlier_messages(idChat)
-                    _messages = driver.get_all_messages_in_chat(idChat,True)
-                
-                    for message in _messages:
-
-                        try:    
-                            if message.type == "location":
-                                body = interface_messages.getLocation(message,driver)
-                                if body != None :
-                                    chats[idChat].append(body)
-                            else :
-                                body = interface_messages.getFormat(message,driver)
-
-                                if body.get('type','') != 'txt':
-                                    print( body )
-
-                                if body != None :
-                                    chats[idChat].append(body)
-                        except Exception :
-                            logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
-
-            except Exception :
-                logs.logError('for driver.get_chats_whit_messages()--> getOldMessages',traceback.format_exc())
-
-        logs.logError('_messages --> getOldMessages','Termino')
-        return chats
     except Exception :
-        #logs.logError('_messages --> getOldMessages',traceback.format_exc())
-        return False
+        telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
+        logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
-
-####################### loopStatus(driver) ###########################
-# Desc : Send info account to serverSocket                           #
-# Params : driver obj , socketIO obj                                 #       
-# Return :  loop                                                     #
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################
-def loopStatus(driver,socketIO):
-    try:
-        while driver != None:
-            time.sleep(60)
-            logs.logError('_messages --> loopStatus','Send account info')
-            socketIO.emit('change',getGeneralInfo(driver))
-    except Exception :
-        logs.logError('_messages --> loopStatus',traceback.format_exc())
-        # Alert #
 
 
 """
