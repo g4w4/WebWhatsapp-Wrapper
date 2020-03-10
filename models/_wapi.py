@@ -143,14 +143,14 @@ def getOldMessages(driver,socket,token):
 
                             # Si es una ubicación #
                             _message = interface_messages.getLocation( message, driver)
-                            event = interface_events.new_message_ubication(token, _message)
-                            socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                            event = interface_events.new_message_ubication_old(token, _message)
+                            socket.emit( event["event"], event["info"] )
                         else:
 
                             # Si es media o texto #
                             _message = interface_messages.getFormat(message,driver)
-                            event = interface_events.new_message(token, _message)
-                            socket.emit( "OLD{}".format(event["event"]), event["info"] )
+                            event = interface_events.new_message_old(token, _message)
+                            socket.emit( event["event"], event["info"] )
                         
                     
                 except Exception :

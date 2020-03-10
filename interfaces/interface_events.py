@@ -237,6 +237,65 @@ def new_message_ubication( token, message):
 
 
 """
+Envia el mensaje que ha recibido
+Params: token(str) Token de auth
+        message( chat,sendBy,message,type,caption,,akc,date,id,app ) Mensaje recibido
+"""
+def new_message_old( token, message):
+    return {
+        "event": "event",
+        "info": {
+            "event": "newMessageOld",
+            "info": {
+                "token": token,
+                "message": {
+                    "chat": message["chat"],
+                    "sendBy": message["sendBy"],
+                    "message":message["message"], 
+                    "type": message["type"],
+                    "caption": message["caption"],
+                    "akc": message["akc"],
+                    "date": message["date"],
+                    "id": message["id"],
+                    "app": message["app"],
+                    "token_account": config.token
+                }
+            }
+        }
+    }
+
+"""
+Envia el mensaje de ubicación que ha recibido
+Params: token(str) Token de auth
+        message( chat,sendBy,message,type,caption,lng,lat,akc,date,id,app ) Mensaje recibido
+"""
+def new_message_ubication_old( token, message):
+    return {
+        "event": "event",
+        "info": {
+            "event": "newMessageUbicationOld",
+            "info": {
+                "token": token,
+                "message": {
+                    "chat": message["chat"],
+                    "sendBy": message["sendBy"],
+                    "message":message["message"], 
+                    "type": message["type"],
+                    "caption": message["caption"],
+                    "lng": message["lng"],
+                    "lat": message["lat"],
+                    "akc": message["akc"],
+                    "date": message["date"],
+                    "id": message["id"],
+                    "app": message["app"],
+                    "token_account": config.token
+                }
+            }
+        }
+    }
+
+
+"""
 Envia el estatus del envío del mensaje
 Params: token(str) Token de auth
        message_id(int) Id del mensaje
