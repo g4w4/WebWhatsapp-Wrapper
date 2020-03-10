@@ -7,7 +7,7 @@ from uuid import uuid4
 from threading import Thread
 from services import config
 from interfaces import interface_messages, interface_events
-
+import concurrent.futures
 
 __DOCUMENT_TYPE = {
     'document' : 'document',
@@ -148,15 +148,21 @@ def getOldMessages(driver,socket,token):
                         else:
 
                             # Si es media o texto #
-                            _message = interface_messages.getFormat(message,driver)
-                            event = interface_events.new_message_old(token, _message)
-                            socket.emit( event["event"], event["info"] )
-                        
-                    
+                            with concurrent.futures.ThreadPoolExecutor() as executor:
+                                try:
+                                    future= executor.submit(interface_messages.getFormat, message,self.driver)
+                                    _message= future.result(timeout=10)
+                                    event = interface_events.new_message_old(token, _message)
+                                    socket.emit( event["event"], event["info"] )
+                                except Exception:
+                                    telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
+                                    logs.logError('_wapi --> getOldMessages',traceback.format_exc())
+
                 except Exception :
                     telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
                     logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
+             logs.logError('_wapi --> getOldMessages',"Terminarón los chats viejos")
     except Exception :
         telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
         logs.logError('_wapi --> getOldMessages',traceback.format_exc())
