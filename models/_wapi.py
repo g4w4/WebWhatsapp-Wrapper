@@ -56,7 +56,7 @@ def getQrCode(driver):
                 return True
             else:
                 idName = uuid4().hex
-                name = "{}{}".format(config.pathFiles,idName+'.png') 
+                name = "{}{}".format(config.pathFilesRoot,idName+'.png') 
                 if os.path.exists(name) : os.remove(name)
                 driver.get_qr(name)
 
@@ -184,7 +184,7 @@ def getScreen(driver):
             
             # Hacemos el hash del nombre de la imagen
             idName = "screen"+uuid4().hex
-            name = "{}{}".format(config.pathFiles,idName+'.png')
+            name = "{}{}".format(config.pathFilesRoot,idName+'.png')
 
             # verificamos que no exista si es así lo renombramos
             if os.path.exists(name) : os.remove(name)
