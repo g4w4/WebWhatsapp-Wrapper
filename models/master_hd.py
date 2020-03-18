@@ -280,7 +280,7 @@ class start():
     def poolConnection(self):
         try:
             #while True:
-            time.sleep(60)
+            time.sleep(10)
             print("mando info")
             general_info = _wapi.getGeneralInfo(self.driver)
             event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
@@ -290,8 +290,8 @@ class start():
                 time.sleep(10)
                 is_connected = self.driver.is_connected()
                 print( is_connected )
-                if is_connected != 'True':
-                    telegram.telegram("Cuenta desconectada")
+                if is_connected:
+                    telegram.telegram("Cuenta sin RED")
 
         except  Exception :
             telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
