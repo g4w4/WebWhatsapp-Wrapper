@@ -285,6 +285,14 @@ class start():
             general_info = _wapi.getGeneralInfo(self.driver)
             event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
             self.socketIO.emit( event["event"], event["info"] )
+
+            while True:
+                time.sleep(60)
+                is_connected = self.driver.is_connected()
+                print( is_connected )
+                if is_connected != 'true':
+                    telegram.telegram("Cuenta desconectada")
+
         except  Exception :
             telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
 
