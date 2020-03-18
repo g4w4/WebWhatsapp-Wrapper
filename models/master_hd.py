@@ -289,6 +289,7 @@ class start():
             while True:
                 time.sleep(10)
                 is_connected = self.driver.is_connected()
+                type( is_connected )
                 print( is_connected )
                 if is_connected:
                     telegram.telegram("Cuenta sin RED")
