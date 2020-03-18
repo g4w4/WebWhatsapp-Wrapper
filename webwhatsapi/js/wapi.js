@@ -600,7 +600,7 @@ window.WAPI.isConnected = function (done) {
     try {
         let isConnected = document.querySelectorAll('span[data-icon="alert-phone"]').length ? false : true;
         let isConnected_two = document.querySelectorAll('span[data-icon="chat"]').length ? false : true;
-        retuns = isConnected == false && isConnected_two == true ? true : false
+        retuns = isConnected == true && isConnected_two == false ? true : false
         if (done !== undefined) done(retuns);
         return retuns;
     } catch (error) {
