@@ -287,10 +287,10 @@ class start():
             self.socketIO.emit( event["event"], event["info"] )
 
             while True:
-                time.sleep(60)
+                time.sleep(10)
                 is_connected = self.driver.is_connected()
                 print( is_connected )
-                if is_connected != 'true':
+                if is_connected != 'True':
                     telegram.telegram("Cuenta desconectada")
 
         except  Exception :
