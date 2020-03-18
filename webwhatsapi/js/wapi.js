@@ -596,14 +596,16 @@ window.WAPI.isLoggedIn = function (done) {
 
 window.WAPI.isConnected = function (done) {
     // Phone Disconnected icon appears when phone is disconnected from the tnternet
-    let isConnected = false
+    let retuns = false
     try {
-        isConnected = document.querySelectorAll('span[data-icon="alert-phone"]').length ? false : true;
-        if (done !== undefined) done(isConnected);
-        return isConnected;
+        let isConnected = document.querySelectorAll('span[data-icon="alert-phone"]').length ? false : true;
+        let isConnected_two = document.querySelectorAll('span[data-icon="chat"]').length ? false : true;
+        retuns = isConnected == false && isConnected_two == true ? true : false
+        if (done !== undefined) done(retuns);
+        return retuns;
     } catch (error) {
-        if (done !== undefined) done(isConnected);
-        return isConnected;
+        if (done !== undefined) done(retuns);
+        return retuns;
     }
     
 };
