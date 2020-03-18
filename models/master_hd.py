@@ -291,7 +291,7 @@ class start():
                 is_connected = self.driver.is_connected()
                 type( is_connected )
                 print( is_connected )
-                if is_connected:
+                if is_connected == False:
                     telegram.telegram("Cuenta sin RED")
 
         except  Exception :
