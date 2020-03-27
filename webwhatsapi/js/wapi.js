@@ -66,8 +66,13 @@ if (!window.Store) {
                 }
             }
         }
-
+//	try{
+//		webpackJsonp([], { 'parasite': (x, y, z) => getStore(z) }, ['parasite']);
+//	}catch(e){
+//		throw Error(webpackJsonp)
+//	}
         webpackJsonp([], { 'parasite': (x, y, z) => getStore(z) }, ['parasite']);
+
     })();
 }
 
