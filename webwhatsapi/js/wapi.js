@@ -66,6 +66,7 @@ if (!window.Store) {
                 }
             }
         }
+<<<<<<< HEAD
 //	try{
 //		webpackJsonp([], { 'parasite': (x, y, z) => getStore(z) }, ['parasite']);
 //	}catch(e){
@@ -73,6 +74,23 @@ if (!window.Store) {
 //	}
         webpackJsonp([], { 'parasite': (x, y, z) => getStore(z) }, ['parasite']);
 
+=======
+
+        if (typeof webpackJsonp === 'function') {
+            webpackJsonp([], {'parasite': (x, y, z) => getStore(z)}, ['parasite']);
+        } else {
+            webpackJsonp.push([
+                ['parasite'],
+                {
+                    parasite: function (o, e, t) {
+                        getStore(t);
+                    }
+                },
+                [['parasite']]
+            ]);
+        }
+        
+>>>>>>> 9fff2ecf9d8497f96f31d6e78a2f40708a790bbb
     })();
 }
 
