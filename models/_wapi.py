@@ -251,7 +251,11 @@ def send_text_new_tt(driver,id_chat,message):
     try:
         logs.logError('Enviando mensaje a',id_chat)
         restult = driver.send_message_to_id(id_chat,message)
-        print(restult)
+        if result == False:
+            print(result)
+            id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
+            driver.send_message_to_id(id_chat,message)
+            print(id_chat)
         return {"code":200,"error":None}
     except Exception :
         logs.logError('Errir --> enviando text',traceback.format_exc())
