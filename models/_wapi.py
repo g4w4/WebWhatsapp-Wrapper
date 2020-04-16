@@ -233,8 +233,21 @@ Returns: {code,error}
 def send_text(driver,id_chat,message):
     try:
         logs.logError('Enviando mensaje a',id_chat)
-        driver.send_message_to_id(id_chat,message)
+        result = driver.send_message_to_id(id_chat,message)
+        print(result)
+        #print(t[-15:len(t)])
         driver.chat_send_seen(id_chat)
+        return {"code":200,"error":None}
+    except Exception :
+        logs.logError('Errir --> enviando text',traceback.format_exc())
+        telegram.telegram("Error Enviando text {}".format(traceback.format_exc()))
+        return {"code":500,"error":traceback.format_exc()}
+
+def send_text_new_tt(driver,id_chat,message):
+    try:
+        logs.logError('Enviando mensaje a',id_chat)
+        restult = driver.send_message_to_id(id_chat,message)
+        print(restult)
         return {"code":200,"error":None}
     except Exception :
         logs.logError('Errir --> enviando text',traceback.format_exc())

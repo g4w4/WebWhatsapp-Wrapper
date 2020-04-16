@@ -221,6 +221,18 @@ class start():
             event = interface_events.send_message_status(self.__AUTH,message_id,akc)
             self.socketIO.emit( event["event"], event["info"] )
 
+    def on_sendTextNewTicket(self,*args):
+        print(args)
+        message = args[0]
+        id_chat = args[1]
+        message_id = args[2]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.send_text_new_tt, self.driver,id_chat,message)
+            result= future.result(timeout=30)
+            akc= 2 if result["code"] == 200 else 0
+            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+            self.socketIO.emit( event["event"], event["info"] )
+
     def on_sendMessageGroup(self,*args):
         send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,config.groupId,'I am here'))
         send.start()
