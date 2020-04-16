@@ -237,7 +237,7 @@ def send_text(driver,id_chat,message):
         print(result)
         if result == False:
             print(result)
-            id_chat = str(id_chat)[-15:len(str(id_chat))]
+            id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
             driver.send_message_to_id(id_chat,message)
             print(id_chat)
         driver.chat_send_seen(id_chat)
