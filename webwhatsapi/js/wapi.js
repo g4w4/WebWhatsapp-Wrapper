@@ -744,34 +744,39 @@ window.WAPI.sendMessageToID = function (id, message, done) {
             return Store.WapQuery.queryExist(id);
         }
         window.getContact(id).then(contact => {
+            console.log('0')
             if (contact.status === 404) {
-                done(true);
+                console.log('0.1')
+                return done ? done(true) : true
             } else {
                 Store.Chat.find(contact.jid).then(chat => {
+                    console.log('1')
                     chat.sendMessage(message);
-                    return true;
+                    return done ? done(true) : true
                 }).catch(reject => {
-                    if (WAPI.sendMessage(id, message)) {
-                        done(true);
-                        return true;
-                    }else{
-                        done(false);
-                        return false;
+                    try {
+                        if (WAPI.sendMessage(id, message)) {
+                            return done ? done(true) : true
+                        }else{
+                            return done ? done(true) : true
+                        }
+                    } catch (error) {
+                        return done ? done(false) : false
                     }
                 });
             } 
         });
     } catch (e) {
+        console.log('fue 2')
         if (window.Store.Chat.length === 0)
-            return false;
+            return done ? done(false) : false
 
         firstChat = Store.Chat.models[0];
         var originalID = firstChat.id;
         firstChat.id = typeof originalID === "string" ? id : new window.Store.UserConstructor(id, { intentionallyUsePrivateConstructor: true });
 
-        if(firstChat.sendMessage){
-            if (done !== undefined) done(false);
-            return false;
+        if( ! firstChat.sendMessage ){
+            return done ? done(false) : false
         }else if (done !== undefined) {
             firstChat.sendMessage(message).then(function () {
                 firstChat.id = originalID;
