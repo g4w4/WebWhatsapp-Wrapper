@@ -267,7 +267,8 @@ def send_file(driver,id_chat,caption,message):
     try:
         logs.logError('Enviando archivo a',id_chat)
         print("{}{}".format(config.pathFiles,message))
-        driver.send_media("{}{}".format(config.pathFiles,message),id_chat,caption)
+        restult = driver.send_media("{}{}".format(config.pathFiles,message),id_chat,caption)
+        print(restult)
         driver.chat_send_seen(id_chat)
         return {"code":200,"error":None}
     except Exception :
@@ -285,8 +286,14 @@ def deleteChat(driver,id):
         logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
         driver.delete_chat(str(id))
     except Exception :
-        telegram.telegram("Error deleteChat {}".format(traceback.format_exc()))
-        logs.logError('_wapi --> deleteChat',traceback.format_exc())
+        try:
+            logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
+            new_format = str(id)[-15:len(str(id))]
+            print( new_format )
+            driver.delete_chat( new_format )
+        except Exception :
+            telegram.telegram("Error deleteChat {}".format(traceback.format_exc()))
+            logs.logError('_wapi --> deleteChat',traceback.format_exc())
 
 
 ####################### getSreenApi(driver) ###########################
