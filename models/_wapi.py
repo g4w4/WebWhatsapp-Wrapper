@@ -250,7 +250,7 @@ def send_text(driver,id_chat,message):
 def send_text_new_tt(driver,id_chat,message):
     try:
         logs.logError('Enviando mensaje a',id_chat)
-        restult = driver.send_message_to_id(id_chat,message)
+        result = driver.send_message_to_id(id_chat,message)
         if result == False:
             print(result)
             id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
