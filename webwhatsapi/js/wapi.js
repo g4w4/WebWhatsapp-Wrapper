@@ -768,7 +768,11 @@ window.WAPI.sendMessageToID = function (id, message, done) {
         firstChat = Store.Chat.models[0];
         var originalID = firstChat.id;
         firstChat.id = typeof originalID === "string" ? id : new window.Store.UserConstructor(id, { intentionallyUsePrivateConstructor: true });
-        if (done !== undefined) {
+
+        if(firstChat.sendMessage){
+            if (done !== undefined) done(false);
+            return false;
+        }else if (done !== undefined) {
             firstChat.sendMessage(message).then(function () {
                 firstChat.id = originalID;
                 done(true);
@@ -780,8 +784,8 @@ window.WAPI.sendMessageToID = function (id, message, done) {
             return true;
         }
     }
-    // if (done !== undefined) done(false);
-    // return false;
+    //if (done !== undefined) done(false);
+    //return false;
 }
 
 window.WAPI.sendMessage = function (id, message, done) {
