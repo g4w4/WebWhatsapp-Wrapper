@@ -779,8 +779,8 @@ window.WAPI.sendMessageToID = function (id, message, done) {
             return true;
         }
     }
-    if (done !== undefined) done(false);
-    return false;
+    // if (done !== undefined) done(false);
+    // return false;
 }
 
 window.WAPI.sendMessage = function (id, message, done) {
