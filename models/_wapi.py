@@ -235,7 +235,11 @@ def send_text(driver,id_chat,message):
         logs.logError('Enviando mensaje a',id_chat)
         result = driver.send_message_to_id(id_chat,message)
         print(result)
-        #print(t[-15:len(t)])
+        if result == False:
+            print(result)
+            id_chat = str(id_chat)[-15:len(str(id_chat))]
+            driver.send_message_to_id(id_chat,message)
+            print(id_chat)
         driver.chat_send_seen(id_chat)
         return {"code":200,"error":None}
     except Exception :
