@@ -292,7 +292,7 @@ def deleteChat(driver,id):
     except Exception :
         try:
             logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
-            new_format = str(id)[-15:len(str(id))]
+            new_format = '52{}'.format(str(id)[-15:len(str(id))])
             print( new_format )
             driver.delete_chat( new_format )
         except Exception :
