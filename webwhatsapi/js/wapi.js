@@ -759,7 +759,7 @@ window.WAPI.sendMessageToID = function (id, message, done) {
                         return false;
                     }
                 });
-            }
+            } 
         });
     } catch (e) {
         if (window.Store.Chat.length === 0)
