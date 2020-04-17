@@ -758,7 +758,7 @@ window.WAPI.sendMessageToID = function (id, message, done) {
                         if (WAPI.sendMessage(id, message)) {
                             return done ? done(true) : true
                         }else{
-                            return done ? done(true) : true
+                            return done ? done(false) : false
                         }
                     } catch (error) {
                         return done ? done(false) : false
