@@ -270,7 +270,7 @@ def sendText(driver,socketIO,id,message):
             id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
             driver.send_message_to_id(id_chat,message)
         driver.chat_send_seen(id_chat)
-        logs.logError('_wapi --> sendText ---> ',rid)
+        logs.logError('_wapi --> sendText ---> ',id_chat)
         socketIO.emit('newMessage',interface_messages.getFormatText(message,id))
     except Exception :
         logs.logError('_wapi --> sendText',traceback.format_exc())
