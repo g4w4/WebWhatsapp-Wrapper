@@ -263,9 +263,14 @@ def getScreen(driver,socketIO,id):
 def sendText(driver,socketIO,id,message):
     try:
         logs.logError('_wapi --> sendText','send')
-        rid = driver.send_message_to_id(id,message)
+        id_chat = id
+        result = driver.send_message_to_id(id_chat,message)
+        if result == False:
+            print(result)
+            id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
+            driver.send_message_to_id(id_chat,message)
+        driver.chat_send_seen(id_chat)
         logs.logError('_wapi --> sendText ---> ',rid)
-        driver.chat_send_seen(id)
         socketIO.emit('newMessage',interface_messages.getFormatText(message,id))
     except Exception :
         logs.logError('_wapi --> sendText',traceback.format_exc())
@@ -305,10 +310,17 @@ def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
 ######################################################################
 def deleteChat(driver,id):
     try:
-        logs.logError("_wapi -->","Delete Chat {}".format(id),)
+        logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
         driver.delete_chat(str(id))
     except Exception :
-        logs.logError('_wapi --> sendFile',traceback.format_exc())
+        try:
+            logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
+            new_format = '52{}'.format(str(id)[-15:len(str(id))])
+            print( new_format )
+            driver.delete_chat( new_format )
+        except Exception :
+            telegram.telegram("Error deleteChat {}".format(traceback.format_exc()))
+            logs.logError('_wapi --> deleteChat',traceback.format_exc())
 
 
 ####################### getSreenApi(driver) ###########################
