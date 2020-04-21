@@ -88,6 +88,7 @@ def getFormat(message,driver):
     try:
         _id = IdMessage(message).get()
         chat = message._js_obj.get('chat').get('id').get('_serialized')
+        chat = '521{}'.format(str(chat)[-15:len(str(chat))])
         contentMessage = ContentMessage(message).get()   
         return {
             "chat": chat,
@@ -140,6 +141,7 @@ def getFormatFile(message,chatId,typeFile,caption):
 def getLocation(message,diver):
     _id = IdMessage(message).get()
     chat = message._js_obj.get('chat').get('id').get('_serialized')
+    chat = '521{}'.format(str(chat)[-15:len(str(chat))])
     return {
         "chat": chat,
         "sendBy": _id["sendBy"],
