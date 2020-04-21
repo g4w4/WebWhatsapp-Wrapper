@@ -178,8 +178,7 @@ def getOldMessages(driver,messages_save,socket):
                                     logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
                 else :
 
-                    idChat = '521{}'.format(str(idChat)[-15:len(str(idChat))])
-                    chats[idChat] = []
+                    chats[idChat_2] = []
 
                     logs.logError('_messages --> getOldMessages','Get all messages of chat')
                     x = driver.chat_load_all_earlier_messages(idChat)
@@ -191,7 +190,7 @@ def getOldMessages(driver,messages_save,socket):
                             if message.type == "location":
                                 body = interface_messages.getLocation(message,driver)
                                 if body != None :
-                                    chats[idChat].append(body)
+                                    chats[idChat_2].append(body)
                             else :
                                 body = interface_messages.getFormat(message,driver)
 
@@ -199,7 +198,7 @@ def getOldMessages(driver,messages_save,socket):
                                     print( body )
 
                                 if body != None :
-                                    chats[idChat].append(body)
+                                    chats[idChat_2].append(body)
                         except Exception :
                             logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
 
