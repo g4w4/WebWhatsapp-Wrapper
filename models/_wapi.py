@@ -178,6 +178,7 @@ def getOldMessages(driver,messages_save,socket):
                                     logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
                 else :
 
+                    idChat = '521{}'.format(str(idChat)[-15:len(str(idChat))])
                     chats[idChat] = []
 
                     logs.logError('_messages --> getOldMessages','Get all messages of chat')
