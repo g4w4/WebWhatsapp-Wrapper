@@ -132,8 +132,9 @@ def getOldMessages(driver,messages_save,socket):
         for chat in _allChats:
             try:
                 idChat = str(chat.get('id'))
+                idChat_2 = '521{}'.format(str(idChat)[-15:len(str(idChat))])
 
-                if messages_save.get(idChat,False) != False:
+                if messages_save.get(idChat,False) != False or  messages_save.get(idChat_2,False) != False :
                     print("si esta")
                     x = driver.chat_load_all_earlier_messages(idChat)
                     _messages = driver.get_all_messages_in_chat(idChat,True)
