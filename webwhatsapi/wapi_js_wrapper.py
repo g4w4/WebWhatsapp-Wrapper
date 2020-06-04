@@ -161,6 +161,7 @@ class NewMessagesObservable(Thread):
         while True:
             try:
                 new_js_messages = self.wapi_js_wrapper.getBufferedNewMessages()
+                print(new_js_messages)
                 if isinstance(new_js_messages, (collections.Sequence, np.ndarray)) and len(new_js_messages) > 0:
                    
                     new_messages = []
@@ -169,6 +170,7 @@ class NewMessagesObservable(Thread):
  
                     self._inform_all(new_messages)
             except Exception as e:  # noqa F841
+                print(e)
                 pass
  
             time.sleep(2)
