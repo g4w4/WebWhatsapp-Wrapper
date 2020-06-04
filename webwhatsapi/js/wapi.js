@@ -12,10 +12,11 @@ if (!window.Store) {
             let foundCount = 0;
             let neededObjects = [
                 { id: "Store", conditions: (module) => (module.Chat && module.Msg) ? module : null },
-                { id: "MediaCollection", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.processFiles !== undefined) ? module.default : null },
+                { id: "MediaCollection", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.processAttachments) ? module.default : null },
                 { id: "MediaProcess", conditions: (module) => (module.BLOB) ? module : null },
                 { id: "Wap", conditions: (module) => (module.createGroup) ? module : null },
                 { id: "ServiceWorker", conditions: (module) => (module.default && module.default.killServiceWorker) ? module : null },
+                { id: 'Presence', conditions: (value) => (value.default && value.default.Presence) ? value.default : null },
                 { id: "State", conditions: (module) => (module.STATE && module.STREAM) ? module : null },
                 { id: "WapDelete", conditions: (module) => (module.sendConversationDelete && module.sendConversationDelete.length == 2) ? module : null },
                 { id: "Conn", conditions: (module) => (module.default && module.default.ref && module.default.refTTL) ? module.default : null },
@@ -65,11 +66,34 @@ if (!window.Store) {
                     }
                 }
             }
+
+            if (window.Store.Presence) {
+                for (const prop in window.Store.Presence) {
+                    if (prop === "Presence") {
+                        continue;
+                    }
+                    window.Store[prop] = window.Store.Presence[prop] || window.Store[prop];
+                }
+            }
+            
         }
 
-        webpackJsonp([], { 'parasite': (x, y, z) => getStore(z) }, ['parasite']);
+        if (typeof webpackJsonp === 'function') {
+            webpackJsonp([], {'parasite': (x, y, z) => getStore(z)}, ['parasite']);
+        } else {
+            webpackJsonp.push([
+                ['parasite'],
+                {
+                    parasite: function (o, e, t) {
+                        getStore(t);
+                    }
+                },
+                [['parasite']]
+            ]);
+        }
     })();
 }
+
 
 window.WAPI = {
     lastRead: {}
