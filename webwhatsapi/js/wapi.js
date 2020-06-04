@@ -91,6 +91,10 @@ if (!window.Store) {
                 [['parasite']]
             ]);
         }
+<<<<<<< HEAD
+=======
+        
+>>>>>>> da1f011882c8f447b3e330e9657b8600732a0085
     })();
 }
 
@@ -620,10 +624,18 @@ window.WAPI.isLoggedIn = function (done) {
 
 window.WAPI.isConnected = function (done) {
     // Phone Disconnected icon appears when phone is disconnected from the tnternet
-    const isConnected = document.querySelector('*[data-icon="alert-phone"]') !== null ? false : true;
-
-    if (done !== undefined) done(isConnected);
-    return isConnected;
+    let retuns = false
+    try {
+        let isConnected = document.querySelectorAll('span[data-icon="alert-phone"]').length ? false : true;
+        let isConnected_two = document.querySelectorAll('span[data-icon="chat"]').length ? false : true;
+        retuns = isConnected == true && isConnected_two == false ? true : false
+        if (done !== undefined) done(retuns);
+        return retuns;
+    } catch (error) {
+        if (done !== undefined) done(retuns);
+        return retuns;
+    }
+    
 };
 
 window.WAPI.processMessageObj = function (messageObj, includeMe, includeNotifications) {
@@ -747,31 +759,40 @@ window.WAPI.sendMessageToID = function (id, message, done) {
             return Store.WapQuery.queryExist(id);
         }
         window.getContact(id).then(contact => {
+            console.log('0')
             if (contact.status === 404) {
-                done(true);
+                console.log('0.1')
+                return done ? done(true) : true
             } else {
                 Store.Chat.find(contact.jid).then(chat => {
+                    console.log('1')
                     chat.sendMessage(message);
-                    return true;
+                    return done ? done(true) : true
                 }).catch(reject => {
-                    if (WAPI.sendMessage(id, message)) {
-                        done(true);
-                        return true;
-                    }else{
-                        done(false);
-                        return false;
+                    try {
+                        if (WAPI.sendMessage(id, message)) {
+                            return done ? done(true) : true
+                        }else{
+                            return done ? done(true) : true
+                        }
+                    } catch (error) {
+                        return done ? done(false) : false
                     }
                 });
-            }
+            } 
         });
     } catch (e) {
+        console.log('fue 2')
         if (window.Store.Chat.length === 0)
-            return false;
+            return done ? done(false) : false
 
         firstChat = Store.Chat.models[0];
         var originalID = firstChat.id;
         firstChat.id = typeof originalID === "string" ? id : new window.Store.UserConstructor(id, { intentionallyUsePrivateConstructor: true });
-        if (done !== undefined) {
+
+        if( ! firstChat.sendMessage ){
+            return done ? done(false) : false
+        }else if (done !== undefined) {
             firstChat.sendMessage(message).then(function () {
                 firstChat.id = originalID;
                 done(true);
@@ -783,8 +804,8 @@ window.WAPI.sendMessageToID = function (id, message, done) {
             return true;
         }
     }
-    if (done !== undefined) done(false);
-    return false;
+    //if (done !== undefined) done(false);
+    //return false;
 }
 
 window.WAPI.sendMessage = function (id, message, done) {
@@ -1237,18 +1258,18 @@ window.WAPI.getBufferedNewMessages = function (done) {
 /** End new messages observable functions **/
 
 window.WAPI.sendImage = function (imgBase64, chatid, filename, caption, done) {
-//var idUser = new window.Store.UserConstructor(chatid);
-var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
-// create new chat
-return Store.Chat.find(idUser).then((chat) => {
-    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-    var mc = new Store.MediaCollection();
-    mc.processFiles([mediaBlob], chat, 1).then(() => {
-        var media = mc.models[0];
-        media.sendToChat(chat, { caption: caption });
-        if (done !== undefined) done(true);
+    //var idUser = new window.Store.UserConstructor(chatid);
+    var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
+    // create new chat
+    return Store.Chat.find(idUser).then((chat) => {
+        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+        var mc = new Store.MediaCollection(chat);
+        mc.processAttachments([{file: mediaBlob}, 1], chat, 1).then(() => {
+            var media = mc.models[0];
+            media.sendToChat(chat, { caption: caption });
+            if (done !== undefined) done(true);
+        });
     });
-});
 }
 
 window.WAPI.base64ImageToFile = function (b64Data, filename) {

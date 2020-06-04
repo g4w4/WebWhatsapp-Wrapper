@@ -1,5 +1,5 @@
 import requests
-from Utils import logs
+from Utils import logs, telegram
 import os, sys, time, json
 import shutil
 import traceback
@@ -7,7 +7,7 @@ from uuid import uuid4
 from threading import Thread
 from services import config
 from interfaces import interface_messages, interface_events
-
+import concurrent.futures
 
 __DOCUMENT_TYPE = {
     'document' : 'document',
@@ -38,7 +38,7 @@ def rememberSession(driver,socket):
             if driver.is_logged_in():
                 return True
     except Exception :
-        logs.logError('rememberSession',traceback.format_exc())
+        logs.logError('Error --> Recordando sessión',traceback.format_exc())
         return False
 
 
@@ -56,14 +56,14 @@ def getQrCode(driver):
                 return True
             else:
                 idName = uuid4().hex
-                name = "{}{}".format(config.pathFiles,idName+'.png') 
+                name = "{}{}".format(config.pathFilesRoot,idName+'.png') 
                 if os.path.exists(name) : os.remove(name)
                 driver.get_qr(name)
 
                 return "{}.png".format(idName)
             
     except Exception :
-        logs.logError('_wapi --> getQrCode',traceback.format_exc())
+        logs.logError('Error --> Obteniendo Qr',traceback.format_exc())
         return False
 
 
@@ -80,7 +80,7 @@ def waitLogin(driver,socketId):
         driver.save_firefox_profile()
         return True
     except Exception :
-        logs.logError("_wapi --> waitLogin",traceback.format_exc())
+        logs.logError("Error  --> Esperando login",traceback.format_exc())
         return False
 
 
@@ -102,6 +102,7 @@ def getGeneralInfo(driver):
                 "numero" : driver.get_phone_number()
             }
     except Exception :
+        telegram.telegram("Error getGeneralInfo {}".format(traceback.format_exc()))
         logs.logError('_wapi --> getGeneralInfo',traceback.format_exc())
         return {
             "whatsAppJoin" : "false",
@@ -109,129 +110,72 @@ def getGeneralInfo(driver):
         }
         
 
-####################### getOldMessages(driver) #######################
-# Desc : Get general info of account connected                       #
-# Params : driver obj                                                #       
-# Return :  { ObjChats ... } #                          
-# Last Update : 27-06-19                                             #
-# By : g4w4                                                          #
-######################################################################
-def getOldMessages(driver,messages_save,socket):
+"""
+Recupera los mensajes que estan en el teléfono en caso de desconección o reconección
+Params driver(selenumWarper)
+Params socket(SocketIO)
+Params token(string)
+"""
+def getOldMessages(driver,socket,token):
     try:
          
-        chats = {}
+        # Obtenemos los chats
+        logs.logError('_wapi --> getOldMessages',"Obteniendo chats viejos")
 
-        logs.logError('_messages --> getOldMessages','Get all chats')
         _allChats = driver.get_chats_whit_messages()
 
-        print("Esto tengo yo")
-        print( messages_save )
-        
+        # Iteramos los menajes de cada uno
         for chat in _allChats:
-            try:
-                idChat = str(chat.get('id'))
 
-                if messages_save.get(idChat,False) != False:
-                    print("si esta")
-                    x = driver.chat_load_all_earlier_messages(idChat)
-                    _messages = driver.get_all_messages_in_chat(idChat,True)
+            # Mandamos el mensaje
 
-                    #Count messages#
-                    i = 0
-                    for message in _messages:
-                        i= i + 1
-                    
-                    print("Mensajes")
-                    print(idChat)
-                    print( i )
-                    print(messages_save.get(idChat,False))
-                    print(idChat)
+            idChat = str(chat.get('id'))
+            driver.chat_load_all_earlier_messages(idChat)
+            _messages = driver.get_all_messages_in_chat(idChat,True)
 
-                    if i != messages_save.get(idChat,False):
-                        print("netro aqui")
-                        b = 0
-                        x = driver.chat_load_all_earlier_messages(idChat)
-                        _messages = driver.get_all_messages_in_chat(idChat,True)
-                        for message in _messages:
-                            b=b+1
-                            print(b)
-                            print( messages_save.get(idChat,False) )
-                            print(b > messages_save.get(idChat,False))
-                            if b > messages_save.get(idChat,False) :
-                                try:    
-                                    if  message._js_obj['type'] == "location":
-                                        _message = interface_messages.getLocation( message, driver)
-                                        print("mando mensaje")
-                                        print(_message)
-                                        if _message != None:
-                                            socket.emit('newMessage',_message)
-                                    else:
-                                        _message = interface_messages.getFormat(message,driver)
-                                        print("mando mensaje")
-                                        print(_message)
-                                        if _message != None:
-                                            socket.emit('newMessage',_message)
-                                except Exception :
-                                    logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
-                else :
+            # Verificamos el tipo de mensaje
+            for message in _messages:
+                try:   
+                    if message._js_obj['sender']['isMe'] :
+                        print("Enviado por el agente no vale")
+                    else:
+                        if  message._js_obj['type'] == "location":
 
-                    chats[idChat] = []
+                            # Si es una ubicación #
+                            _message = interface_messages.getLocation( message, driver)
+                            event = interface_events.new_message_ubication(token, _message)
+                            socket.emit( event["event"], event["info"] )
+                        else:
 
-                    logs.logError('_messages --> getOldMessages','Get all messages of chat')
-                    x = driver.chat_load_all_earlier_messages(idChat)
-                    _messages = driver.get_all_messages_in_chat(idChat,True)
-                
-                    for message in _messages:
+                            # Si es media o texto #
+                            with concurrent.futures.ThreadPoolExecutor() as executor:
+                                try:
+                                    future= executor.submit(interface_messages.getFormat, message,driver)
+                                    _message= future.result(timeout=10)
+                                    event = interface_events.new_message(token, _message)
+                                    socket.emit( event["event"], event["info"] )
+                                except Exception:
+                                    telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
+                                    logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
-                        try:    
-                            if message.type == "location":
-                                body = interface_messages.getLocation(message,driver)
-                                if body != None :
-                                    chats[idChat].append(body)
-                            else :
-                                body = interface_messages.getFormat(message,driver)
+                except Exception :
+                    telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
+                    logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
-                                if body.get('type','') != 'txt':
-                                    print( body )
-
-                                if body != None :
-                                    chats[idChat].append(body)
-                        except Exception :
-                            logs.logError('for message in _messages --> getOldMessages',traceback.format_exc())
-
-            except Exception :
-                logs.logError('for driver.get_chats_whit_messages()--> getOldMessages',traceback.format_exc())
-
-        logs.logError('_messages --> getOldMessages','Termino')
-        return chats
+        
+        logs.logError('_wapi --> getOldMessages',"Terminarón los chats viejos")
+        event = interface_events.end_old_messages(token)
+        socket.emit( event["event"], event["info"] )
     except Exception :
-        #logs.logError('_messages --> getOldMessages',traceback.format_exc())
-        return False
-
-
-####################### loopStatus(driver) ###########################
-# Desc : Send info account to serverSocket                           #
-# Params : driver obj , socketIO obj                                 #       
-# Return :  loop                                                     #
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################
-def loopStatus(driver,socketIO):
-    try:
-        while driver != None:
-            time.sleep(60)
-            logs.logError('_messages --> loopStatus','Send account info')
-            socketIO.emit('change',getGeneralInfo(driver))
-    except Exception :
-        logs.logError('_messages --> loopStatus',traceback.format_exc())
-        # Alert #
+        telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
+        logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
 
 """
 Retorna el screen del navegador
 Params: driver (selenumWarper) Conector de selenium
 Returns: {code,name} 
-"""      
+"""
 def getScreen(driver):
     try:
         if driver != None:
@@ -239,7 +183,9 @@ def getScreen(driver):
             
             # Hacemos el hash del nombre de la imagen
             idName = "screen"+uuid4().hex
-            name = "{}{}".format(config.pathFiles,idName+'.png')
+            name = "{}{}".format(config.pathFilesRoot,idName+'.png')
+
+            logs.logError('on_getScreen','sacando screen {}'.format(name))
 
             # verificamos que no exista si es así lo renombramos
             if os.path.exists(name) : os.remove(name)
@@ -250,7 +196,8 @@ def getScreen(driver):
         else:
             return {"code":500,"name":"No contado a whatsApp"}
     except Exception:
-        logs.logError('_wapi --> getScreen',traceback.format_exc())
+        logs.logError('Error --> Obteniendo Screen',traceback.format_exc())
+        telegram.telegram("Error Obteniendo Screen {}".format(traceback.format_exc()))
         return {"code":500,"name":traceback.format_exc()}
 
 """
@@ -269,67 +216,91 @@ def send_test(driver,phone,message):
         driver.delete_chat(str(whats_number))
         return {"code":200,"error":None}
     except Exception :
-        logs.logError('_wapi --> sendText',traceback.format_exc())
+        logs.logError('Error --> Enviando test',traceback.format_exc())
+        telegram.telegram("Error Enviando test {}".format(traceback.format_exc()))
         return {"code":500,"error":traceback.format_exc()}
 
 
 
-####################### sendText(driver,socketIO,id,message) #########
-# Desc : Send messages to wsp user                                   #
-# Params : driver obj , socketIO obj , id wspId , message String     #       
-# Return :  emition                                                  #
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################
-def sendText(driver,socketIO,id,message):
+"""
+Envía un mensaje de texto a un cliente
+Params: driver (selenumWarper) Conector de selenium
+Params: id_chat (string) Id del chat
+Params: message (string) Mensaje a enviar
+Returns: {code,error} 
+"""
+def send_text(driver,id_chat,message):
     try:
-        logs.logError('_wapi --> sendText','send')
-        rid = driver.send_message_to_id(id,message)
-        logs.logError('_wapi --> sendText ---> ',rid)
-        driver.chat_send_seen(id)
-        socketIO.emit('newMessage',interface_messages.getFormatText(message,id))
+        logs.logError('Enviando mensaje a',id_chat)
+        result = driver.send_message_to_id(id_chat,message)
+        print(result)
+        if result == False:
+            print(result)
+            id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
+            driver.send_message_to_id(id_chat,message)
+            print(id_chat)
+        driver.chat_send_seen(id_chat)
+        return {"code":200,"error":None}
     except Exception :
-        logs.logError('_wapi --> sendText',traceback.format_exc())
-        socketIO.emit('errorSendTxt',{'chat':id,'message':message,'sendBy':'Agent'})
-        # Alert #
+        logs.logError('Errir --> enviando text',traceback.format_exc())
+        telegram.telegram("Error Enviando text {}".format(traceback.format_exc()))
+        return {"code":500,"error":traceback.format_exc()}
 
-
-###### sendFile(driver,socketIO,id,caption,typeMessage,fileMessage) ##
-# Desc : Send file to wsp user                                       #
-# Params : driver obj , socketIO obj , id wspID , caption string,    #
-# typeMessage predetermined, fileMessage (src) string                #       
-# Return :  emition                                                  #
-# Last Update : 30-05-19                                             #
-# By : g4w4                                                          #
-######################################################################
-def sendFile(driver,socketIO,id,caption,typeMessage,fileMessage):
+def send_text_new_tt(driver,id_chat,message):
     try:
-        logs.logError('_wapi --> Sending File '+typeMessage,'')
-
-        s = driver.send_media("{}{}".format(config.pathFiles,fileMessage),id,caption)
-        driver.chat_send_seen(id)
-        logs.logError('_wapi --> Send File end',s)
-        socketIO.emit('newMessage', interface_messages.getFormatFile(fileMessage,id,typeMessage,caption) )
-        socketIO.emit('newMessage',{'chat':id,'message':fileMessage,'type':typeMessage,'caption':caption,'sendBy':'Agent'})
+        logs.logError('Enviando mensaje a',id_chat)
+        result = driver.send_message_to_id(id_chat,message)
+        if result == False:
+            print(result)
+            id_chat = '52{}'.format(str(id_chat)[-15:len(str(id_chat))])
+            driver.send_message_to_id(id_chat,message)
+            print(id_chat)
+        return {"code":200,"error":None}
     except Exception :
-        logs.logError('_wapi --> sendFile',traceback.format_exc())
-        socketIO.emit('errorSendFile',{'chat':id,'message':caption,'sendBy':'Agent'})
-        # Alert #
+        logs.logError('Errir --> enviando text',traceback.format_exc())
+        telegram.telegram("Error Enviando text {}".format(traceback.format_exc()))
+        return {"code":500,"error":traceback.format_exc()}
 
 
-######################## deleteChat(driver,id) #######################
-# Desc : Delete all conversation in divece                           #
-# Params : driver obj , id wspID                                     #       
-# Return :  None                                                     #
-# Last Update : 03-06-19                                             #
-# By : g4w4                                                          #
-######################################################################
+""" Envia un mensaje con media
+Params: driver (selenumWarper) Conector de selenium
+Params: id_chat (string) Id del chat
+Params: caption (string) Id del chat
+Params: message (string) Mensaje a enviar
+Returns: {code,error} 
+
+"""
+def send_file(driver,id_chat,caption,message):
+    try:
+        logs.logError('Enviando archivo a',id_chat)
+        print("{}{}".format(config.pathFiles,message))
+        restult = driver.send_media("{}{}".format(config.pathFiles,message),id_chat,caption)
+        print(restult) 
+        driver.chat_send_seen(id_chat)
+        return {"code":200,"error":None}
+    except Exception :
+        logs.logError('Error --> Enviando imagen',traceback.format_exc())
+        telegram.telegram("Error Enviando imagen {}".format(traceback.format_exc()))
+        return {"code":500,"error":traceback.format_exc()}
+
+
+""" Borra un chat
+Params: driver (selenumWarper) Conector de selenium
+Params: id_chat (string) Id del chat
+"""
 def deleteChat(driver,id):
     try:
-        logs.logError("_wapi -->","Delete Chat {}".format(id),)
+        logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
         driver.delete_chat(str(id))
     except Exception :
-        logs.logError('_wapi --> sendFile',traceback.format_exc())
+        try:
+            logs.logError("_wapi --> deleteChat","Delete Chat {}".format(id))
+            new_format = '52{}'.format(str(id)[-15:len(str(id))])
+            print( new_format )
+            driver.delete_chat( new_format )
+        except Exception :
+            telegram.telegram("Error deleteChat {}".format(traceback.format_exc()))
+            logs.logError('_wapi --> deleteChat',traceback.format_exc())
 
 
 ####################### getSreenApi(driver) ###########################
@@ -362,7 +333,7 @@ def isValid(driver,socketIO,number):
         #socketIO.emit('validQuery', number)
         print("EMITIO")
 
-        url = "https://ws-voices.com.mx:3001/resultQuery"
+        url = config.URL
 
         payload = number
         headers = { 'Content-Type': "application/x-www-form-urlencoded", }

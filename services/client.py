@@ -12,7 +12,7 @@ from Utils import logs
 from models import master_hd
 
 
-socketIO = SocketIO('192.168.0.13',3005, LoggingNamespace)
+socketIO = SocketIO(config.ip,3005, LoggingNamespace)
 masterClass = master_hd.start(socketIO)
 
 ##### SOCKET LISSENER #####
@@ -24,8 +24,10 @@ socketIO.on('getQr',masterClass.on_getQr)
 socketIO.on('getScreen',masterClass.on_getScreen)
 socketIO.on('sendTest',masterClass.on_test)
 socketIO.on('sendText',masterClass.on_sendText)
+socketIO.on('sendTextNewTicket',masterClass.on_sendTextNewTicket)
 socketIO.on('sendFile',masterClass.on_sendFile)
 socketIO.on('deleteChat',masterClass.on_deleteChat)
+## PENDIENTES ###
 socketIO.on('sendMessageGroup',masterClass.on_sendMessageGroup)
 socketIO.on('validNumber',masterClass.on_isValid)
 socketIO.on('blockNumber',masterClass.on_blockNumber)

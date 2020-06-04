@@ -14,12 +14,14 @@ from Utils import logs
 app = Flask(__name__)
 master = master_api.start()
 
+logs.logError('API','Todo listo servicios arriba')
+
 @app.route('/')
 def hello_word():
 	return json.dumps({"code":200,"desc":"Success"})
 
 
-@app.route("/getQr",methods=["GET"])
+@app.route("/api/getQr",methods=["GET"])
 def getQr():
     try:
         qr = master.getQr()
@@ -28,40 +30,19 @@ def getQr():
         else : 
             return send_from_directory(configAPI.pathFiles,qr)
     except Exception:
-        logs.logError('Master-API',traceback.format_exc())
+        logs.logError('API ---> getQr',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
-@app.route("/getScreen",methods=["GET"])
-def getScreen():
-    try:
-        screen = master.getScreen()
-        if isinstance(screen,dict) :
-            return Response(json.dumps(screen), mimetype='application/json')
-        else : 
-            return send_from_directory(configAPI.pathFiles,"{}.png".format(screen))
-    except Exception:
-        logs.logError('Master-API',traceback.format_exc())
-        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
-
-@app.route("/getChatList",methods=["POST"])
-def getChatList():
-    try:
-        chatList = master.getChatList()
-        return Response(json.dumps(chatList), mimetype='application/json')
-    except Exception:
-        logs.logError('Master-API',traceback.format_exc())
-        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
-
-@app.route("/sendMessage",methods=["POST"])
+@app.route("/api/sendMessage",methods=["POST"])
 def sendMessage():
     try:
-        message = master.sendMessage(request.form["idChat"],request.form["message"])
+        message = master.sendMessage(request.form["number"],request.form["message"])
         return Response(json.dumps(message), mimetype='application/json')
     except Exception:
         logs.logError('Master-API',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
-@app.route("/isValid",methods=["POST"])
+@app.route("/api/isValid",methods=["POST"])
 def isValid():
     try:
         valid = master.isValid(request.form["number"])
@@ -70,14 +51,53 @@ def isValid():
         logs.logError('Master-API',traceback.format_exc())
         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
 
-@app.route("/isValidV2",methods=["POST"])
-def isValidV2():
-    try:
-        valid = master.getLastSend(request.form["number"], request.form["fullnumber"])
-        return Response(json.dumps(valid), mimetype='application/json')
-    except Exception:
-        logs.logError('Master-API',traceback.format_exc())
-        return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+# @app.route("/getScreen",methods=["GET"])
+# def getScreen():
+#     try:
+#         screen = master.getScreen()
+#         if isinstance(screen,dict) :
+#             return Response(json.dumps(screen), mimetype='application/json')
+#         else : 
+#             return send_from_directory(configAPI.pathFiles,"{}.png".format(screen))
+#     except Exception:
+#         logs.logError('Master-API',traceback.format_exc())
+#         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
+# @app.route("/getChatList",methods=["POST"])
+# def getChatList():
+#     try:
+#         chatList = master.getChatList()
+#         return Response(json.dumps(chatList), mimetype='application/json')
+#     except Exception:
+#         logs.logError('Master-API',traceback.format_exc())
+#         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
+# @app.route("/sendMessage",methods=["POST"])
+# def sendMessage():
+#     try:
+#         message = master.sendMessage(request.form["idChat"],request.form["message"])
+#         return Response(json.dumps(message), mimetype='application/json')
+#     except Exception:
+#         logs.logError('Master-API',traceback.format_exc())
+#         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
+# @app.route("/isValid",methods=["POST"])
+# def isValid():
+#     try:
+#         valid = master.isValid(request.form["number"])
+#         return Response(json.dumps(valid), mimetype='application/json')
+#     except Exception:
+#         logs.logError('Master-API',traceback.format_exc())
+#         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
+
+# @app.route("/isValidV2",methods=["POST"])
+# def isValidV2():
+#     try:
+#         valid = master.getLastSend(request.form["number"], request.form["fullnumber"])
+#         return Response(json.dumps(valid), mimetype='application/json')
+#     except Exception:
+#         logs.logError('Master-API',traceback.format_exc())
+#         return Response(json.dumps(master_api._Responses["500"]), mimetype='application/json')
     
     
 

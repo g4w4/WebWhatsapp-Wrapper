@@ -8,6 +8,7 @@ from webwhatsapi.objects.message import Message, MediaMessage
 import configAPI
 from Utils import logs
 from models import _wapi
+import requests
 
 _Responses = {
     "003" : { "code" : "003" , "desc" : "Desconectado" },
@@ -33,16 +34,40 @@ _MessageError = {
 class start():
     driver = None
 
+    """ Inicia la sesión con selenuim y whatsApp
+    """
     def __init__(self):
         try:
+            self.sendStatus(100)
             self.driver = WhatsAPIDriver(profile=configAPI.pathSession, client='remote', command_executor=configAPI.selemiunIP)
-            logs.logError('Master-API',"WhatsApp on")
-            # loop = Thread(target=self.loopSession)
-            # loop.start()
+            logs.logError('API',"Iniciando")
+            self.waitSession()
+            logs.logError('API',"Session completa")
         except Exception:
-            logs.logError('Master-API',traceback.format_exc())
-            logs.sendMailError(_MessageError["Selenium"])
+            logs.logError('API ---> init',traceback.format_exc())
+            self.sendStatus(300)
 
+
+    """ Actualiza el estatus de la cuenta
+        code (int) codigo de estatus 200 - 300 - 500
+    """
+    def sendStatus(self,code):
+        try:
+            logs.logError('API',"Enviando status")
+            
+            payload = { 
+                "status" : code,
+                "id": configAPI.ID
+            }
+
+            petition = requests.post(configAPI.SENDSTATUS, data=payload)
+
+            print(petition)
+        except Exception:
+            logs.logError('API ---> sendStatus',traceback.format_exc())
+
+    """ Manda el Qr y espera a que se inicie sesión
+    """
     def getQr(self):
         try:
             if self.driver.is_logged_in():
@@ -53,18 +78,58 @@ class start():
                 loop.start()
                 return qr
         except Exception :
-            logs.logError('Master-API',traceback.format_exc())
-            logs.sendMailError(_MessageError["QrCode"])
+            logs.logError('API --> getQr',traceback.format_exc())
             return _Responses["500"] 
 
+
+    """ Espera a que el QR sea leido e incia y salva la sesión
+    """
     def waitSession(self):
         try:
             self.driver.wait_for_login()
-            logs.logError('Master-API',"Session Start")
+            logs.logError('API ---> waitSession',"Session Start")
             self.driver.save_firefox_profile()
+            self.sendStatus(200)
         except Exception :
-            logs.sendMailError(_MessageError["Wait"])
-            logs.logError('Master-API',traceback.format_exc())
+            self.sendStatus(300)
+            logs.logError('API ---> waitSession',traceback.format_exc())
+
+    """ Valida y envía un mensaje de whatsApp
+        number (int)
+        message (str)
+    """
+    def sendMessage(self,number,message):
+        try:
+            number_whatsApp = "521{}@c.us".format(number)
+            is_valid = self.driver.check_number_status(number_whatsApp)
+            if is_valid.status == 200:
+                self.driver.send_message_to_id(number_whatsApp,message)
+                time.sleep(3)
+                self.driver.delete_chat( number_whatsApp )
+                return {"code":200, "desc": "completado"}
+            else :
+                return {"code":404, "desc": "Numero sin whatsApp"}
+            
+        except Exception :
+            logs.logError('API --> sendMessage',traceback.format_exc())
+            return {"code":500, "desc": "Sin servicio"}
+
+    """ Valida si existe un número en whatsApp
+        number (int)
+    """
+    def isValid(self,number):
+        try:
+            number_whatsApp = "521{}@c.us".format(number)
+            is_valid = self.driver.check_number_status(number_whatsApp)
+            return {"code":200, "desc": "completado"} if is_valid.status == 200 else {"code":404, "desc": "Numero sin whatsApp"}
+        except Exception :
+            if "TypeError: <NumberStatus -" in traceback.format_exc() :
+                return {"code":404, "desc": "Numero sin whatsApp"}
+            else :
+                logs.logError('API --> isValid',traceback.format_exc())
+                return {"code":500, "desc": "Sin servicio"}
+
+
 
     def getScreen(self):
         try:
@@ -110,36 +175,6 @@ class start():
             logs.sendMailError(_MessageError["ChatList"])
             return _Responses["500"] 
 
-    def sendMessage(self,idChat,message):
-        try:
-            # chat = self.driver.get_chat_from_id(str(idChat))
-            # if chat :
-            print(idChat)
-            print(message)
-            self.driver.send_message_to_id(str(idChat),message)
-            print("fin")
-            return _Responses["202"]
-            # else:
-            #     return _Responses["501"]
-        except Exception :
-            if "raise ChatNotFoundError" in traceback.format_exc() :
-                return _Responses["501"]
-            else :
-                logs.logError('Master-API',traceback.format_exc())
-                logs.sendMailError(_MessageError["SendMessage"])
-                return _Responses["500"] 
-
-    def isValid(self,number):
-        try:
-            numberWhatsApp = "521{}@c.us".format(number)
-            isValid = self.driver.check_number_status(numberWhatsApp)
-            return _Responses["203"] if isValid.status == 200 else _Responses["404"]
-        except Exception :
-            if "TypeError: <NumberStatus -" in traceback.format_exc() :
-                return _Responses["404"] 
-            else :
-                logs.logError('Master-API',traceback.format_exc())
-                return _Responses["500"] 
 
     def getLastSend(self,number,fullNumber):
         try:

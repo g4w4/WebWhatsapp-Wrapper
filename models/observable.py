@@ -1,6 +1,6 @@
 from interfaces import interface_messages
 from threading import Thread
-from Utils import logs
+from Utils import logs, telegram
 import config
 import traceback
 from interfaces import interface_events
@@ -63,4 +63,5 @@ class NewMessageObserver():
                         event = interface_events.new_message(self.token, _message)
                         self.socket.emit( event["event"], event["info"] )
             except Exception :
+                telegram.telegram("Error observable {}".format(traceback.format_exc()))
                 print(traceback.format_exc())

@@ -235,3 +235,70 @@ def new_message_ubication( token, message):
         }
     }
 
+"""
+Envia la notificación que puede enviar mensajes pendientes
+Params: token(str) Token de auth
+"""
+def end_old_messages( token):
+    return {
+        "event": "event",
+        "info": {
+            "event": "iamready",
+            "info": {
+                "token": token,
+                "message": {
+                    "token_account": config.token
+                }
+            }
+        }
+    }
+
+"""
+Envia el mensaje de ubicación que ha recibido
+Params: token(str) Token de auth
+        message( chat,sendBy,message,type,caption,lng,lat,akc,date,id,app ) Mensaje recibido
+"""
+def new_message_ubication_old( token, message):
+    return {
+        "event": "event",
+        "info": {
+            "event": "newMessageUbicationOld",
+            "info": {
+                "token": token,
+                "message": {
+                    "chat": message["chat"],
+                    "sendBy": message["sendBy"],
+                    "message":message["message"], 
+                    "type": message["type"],
+                    "caption": message["caption"],
+                    "lng": message["lng"],
+                    "lat": message["lat"],
+                    "akc": message["akc"],
+                    "date": message["date"],
+                    "id": message["id"],
+                    "app": message["app"],
+                    "token_account": config.token
+                }
+            }
+        }
+    }
+
+
+"""
+Envia el estatus del envío del mensaje
+Params: token(str) Token de auth
+       message_id(int) Id del mensaje
+       akc(int) Status del mensaje 0 = fallido 2 = enviado
+"""
+def send_message_status( token, message_id, akc):
+    return {
+        "event": "event",
+        "info": {
+            "event": "messageTextStatus",
+            "info": {
+                "token": token,
+                "message_id": message_id,
+                "akc": akc
+            }
+        }
+    }

@@ -6,7 +6,7 @@ from threading import Thread
 from webwhatsapi import WhatsAPIDriver
 from webwhatsapi.objects.message import Message, MediaMessage
 import config
-from Utils import logs
+from Utils import logs, telegram
 from models import _wapi,observable
 from interfaces import interface_events
 import concurrent.futures
@@ -30,13 +30,15 @@ class start():
     def on_connect(self,*args):
         logs.logError('Socket-Info','Connection whit server')
         event = interface_events.auth(config.token)
+        telegram.telegram("Conectado al server")
         self.socketIO.emit( event["event"], event["info"] )  
 
     """ Realiza la negociación para el inicio de sessión en whatsApp 
         Params args[0] token de autentificación
     """
     def on_welcome(self,*args):
-        logs.logError('Socket-Info','welcome to server')
+        logs.logError('Socket-Info','welcome to server {}'.format(args[0]))
+        telegram.telegram("Inicio de sessión")
         self.__AUTH = args[0]
         try:
 
@@ -45,12 +47,14 @@ class start():
             if self.driver != None and self.driver.is_logged_in():
                 
                 # Se envían los datos de la sessión #
+                telegram.telegram("Reconección exitosa")
                 general_info = _wapi.getGeneralInfo(self.driver)
                 event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
                 self.socketIO.emit( event["event"], event["info"] )
 
                 if( self.driver.is_connected() ) :
                     logs.logError('on_welcome','inician los hilos')
+                    telegram.telegram("Inicio de sessión exitoso -->")
                     self.startThreads( self.messagesStore, self.socketIO )
                 
             else:
@@ -68,22 +72,26 @@ class start():
                 if rember :
 
                     # Se envían los datos de la sessión #
+                    telegram.telegram("Conecctando a WA")
                     general_info = _wapi.getGeneralInfo(self.driver)
                     event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
                     self.socketIO.emit( event["event"], event["info"] )
 
                     # Inician los hilos #
                     logs.logError('on_welcome','Session recordada inician los hilos')
+                    telegram.telegram("Inicio de sessión exitoso")
                     self.startThreads( self.messagesStore, self.socketIO )
 
                 else :
 
                     # No hay sesión es necesarío el login por qr #
                     logs.logError('on_welcome','Sesión olvidada, necesarío QR')
+                    telegram.telegram("Session olvidada necesarío QR")
                     event = interface_events.send_alert(self.__AUTH, "Sessión olvidada")
                     self.socketIO.emit( event["event"], event["info"] )
 
         except Exception :
+            telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
             logs.logError('Welcome-Error',traceback.format_exc())
             # Envia que esta desconectado de whatsApp#
             event = interface_events.send_status(self.__AUTH)
@@ -95,13 +103,15 @@ class start():
 
     """ Cacha el evento de desconección y manda el log """
     def on_disconnect(self,*args):
+        telegram.telegram("Desconectado del server")
         logs.logError('on_disconnect','Connection end')
 
     """ Cacha el evento de reconección y emite la auth """
     def on_reconnect(self,*args):
         logs.logError('on_reconnect','Connection reconnect')
+        telegram.telegram("Reconecctando a WA")
         event = interface_events.auth(config.token)
-        self.socketIO.emit( event["event"], event["info"] )
+        self.socketIO.emit( event["event"], event["info"] ) 
 
     """ Cacha la petición de qr 
         Params args[0] socket_id ID del receptor
@@ -194,27 +204,67 @@ class start():
             event = interface_events.send_test_result(self.__AUTH,socket_id,message_result)
             self.socketIO.emit( event["event"], event["info"] )
 
+    """ Envía un mensaje de texto a un cliente
+        Parmas args[0] message Mensaje a enviar
+        Parmas args[1] id_chat Id del chat
+        Parmas args[2] message_id Id del mensaje
+    """
     def on_sendText(self,*args):
-        id = args[0][0]
-        message = args[0][1]
-        send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,id,message))
-        send.start()
+        print(args)
+        message = args[0]
+        id_chat = args[1]
+        message_id = args[2]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.send_text, self.driver,id_chat,message)
+            result= future.result(timeout=30)
+            akc= 2 if result["code"] == 200 else 0
+            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+            self.socketIO.emit( event["event"], event["info"] )
+
+    def on_sendTextNewTicket(self,*args):
+        print(args)
+        message = args[0]
+        id_chat = args[1]
+        message_id = args[2]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.send_text_new_tt, self.driver,id_chat,message)
+            result= future.result(timeout=30)
+            akc= 2 if result["code"] == 200 else 0
+            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+            self.socketIO.emit( event["event"], event["info"] )
 
     def on_sendMessageGroup(self,*args):
         send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,config.groupId,'I am here'))
         send.start()
 
+    """ Envia un mensaje con archivo
+        Parmas args[0] message Mensaje a enviar
+        Parmas args[1] caption Mensaje a enviar
+        Parmas args[2] id_chat Id del chat
+        Parmas args[3] message_id Id del mensaje
+    """
     def on_sendFile(self,*args):
-        id = args[0][0]
-        caption = args[0][1]
-        typeMessage = args[0][2]
-        fileMessage = args[0][3]
-        send = Thread(target=_wapi.sendFile,args=(self.driver,self.socketIO,id,caption,typeMessage,fileMessage))
-        send.start()
+        message = args[0]
+        caption = args[1]
+        id_chat = args[2]
+        message_id = args[3]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.send_file,self.driver,id_chat,caption,message)
+            result= future.result(timeout=30)
+            print(result)
+            akc= 2 if result["code"] == 200 else 0
+            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+            self.socketIO.emit( event["event"], event["info"] )
 
+    """ Borra el chat del teléfono para liberar memoria
+        Parmas args[0] id_chat Id del chat
+    """
     def on_deleteChat(self,*args):
-        delChat = Thread(target=_wapi.deleteChat,args=(self.driver,args[0],))
-        delChat.start()
+        id_chat = args[0]
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future= executor.submit(_wapi.deleteChat,self.driver,id_chat)
+            result= future.result(timeout=30)
+            print(result)
 
     """ Inicia el observable para recibir los mensajes """
     def startThreads(self,*args):
@@ -222,13 +272,40 @@ class start():
             logs.logError('startThreads','Pregunatmos si se inicia')
             if self.sessionStart == False:
                 logs.logError('startThreads','Si, si se inicia')
+
+                # Envia todos los mensajes recibidos
+                _wapi.getOldMessages( self.driver, self.socketIO, self.__AUTH)
+
                 self.sessionStart = True
                 self.driver.subscribe_new_messages(observable.NewMessageObserver(self.socketIO,self.driver, self.__AUTH))
+
+                # Inicia el pool #
+                loop = Thread(target=self.poolConnection,args=())
+                loop.start()
+
             else:
                 logs.logError('startThreads','No, no se inicia')
         except Exception:
             logs.logError('startThreads',traceback.format_exc())
-            
+
+    """ Mantiene vivo el socket """
+    def poolConnection(self):
+        try:
+            #while True:
+            time.sleep(60)
+            general_info = _wapi.getGeneralInfo(self.driver)
+            event = interface_events.send_status(self.__AUTH, general_info["whatsAppJoin"], general_info["numero"] )
+            self.socketIO.emit( event["event"], event["info"] )
+
+            while True:
+                time.sleep(60)
+                is_connected = self.driver.is_connected()
+                if is_connected == False:
+                    telegram.telegram("Cuenta sin RED")
+
+        except  Exception :
+            telegram.telegram("Welcome-Error {} ".format(traceback.format_exc()))
+
     def sincGetOldMessages(self,*args):
         chats = _wapi.getOldMessages(self.driver,args[0],args[1])
         self.socketIO.emit('oldMessages',chats)
