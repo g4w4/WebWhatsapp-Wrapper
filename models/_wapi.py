@@ -171,12 +171,11 @@ def getOldMessages(driver,socket,token):
         logs.logError('_wapi --> getOldMessages',traceback.format_exc())
 
 
-
 """
 Retorna el screen del navegador
 Params: driver (selenumWarper) Conector de selenium
 Returns: {code,name} 
-"""      
+"""
 def getScreen(driver):
     try:
         if driver != None:
