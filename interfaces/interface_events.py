@@ -235,7 +235,6 @@ def new_message_ubication( token, message):
         }
     }
 
-
 """
 Envia la notificación que puede enviar mensajes pendientes
 Params: token(str) Token de auth
@@ -303,4 +302,3 @@ def send_message_status( token, message_id, akc):
             }
         }
     }
-
