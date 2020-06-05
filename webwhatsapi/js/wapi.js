@@ -56,7 +56,7 @@ if (!window.Store) {
                         // neededObjects.splice(neededObjects.indexOf(neededStore), 1);
                         // neededObjects.forEach((needObj) => {
                         //     if (needObj.foundedModule) {
-                        //         window.Store[needObj.id] = needObj.foundedModule;
+                        //             window.Store[needObj.id] = needObj.foundedModule;
                         //     }
                         // });
                         window.Store.sendMessage = function (e) {
