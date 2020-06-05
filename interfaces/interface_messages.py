@@ -58,7 +58,7 @@ class ContentMessage():
 
         if self.message.type not in self.__DOCUMENT_TYPE :
             # Media no soportada #
-            self.content.["content"] = self.message.content if self.message.content else 'Contenido no soportado'
+            self.content.["content"] = 'No soportado'
 
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # Guara el contenido del archivo #
