@@ -53,16 +53,16 @@ if (!window.Store) {
 
                         let neededStore = neededObjects.find((needObj) => needObj.id === "Store");
                         window.Store = neededStore.foundedModule ? neededStore.foundedModule : {};
-                        neededObjects.splice(neededObjects.indexOf(neededStore), 1);
-                        neededObjects.forEach((needObj) => {
-                            if (needObj.foundedModule) {
-                                window.Store[needObj.id] = needObj.foundedModule;
-                            }
-                        });
+                        // neededObjects.splice(neededObjects.indexOf(neededStore), 1);
+                        // neededObjects.forEach((needObj) => {
+                        //     if (needObj.foundedModule) {
+                        //         window.Store[needObj.id] = needObj.foundedModule;
+                        //     }
+                        // });
                         window.Store.sendMessage = function (e) {
                             return window.Store.SendTextMsgToChat(this, ...arguments);
                         };
-                        return window.Store;
+                          return window.Store;
                     }
                 }
             }
