@@ -36,7 +36,7 @@ class NewMessageObserver():
     Params: new_messages (Array<message>)
     """
     def on_message_received(self, new_messages):
-        logs.write_log('Muevo mensaje de --> es llamado ')
+        logs.write_log('Muevo mensaje de --> es llamado ','ops')
         for message in new_messages:
             logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
             try:
