@@ -260,11 +260,12 @@ class start():
         Parmas args[0] id_chat Id del chat
     """
     def on_deleteChat(self,*args):
-        id_chat = args[0]
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future= executor.submit(_wapi.deleteChat,self.driver,id_chat)
-            result= future.result(timeout=30)
-            print(result)
+        return
+        # id_chat = args[0]
+        # with concurrent.futures.ThreadPoolExecutor() as executor:
+        #     future= executor.submit(_wapi.deleteChat,self.driver,id_chat)
+        #     result= future.result(timeout=30)
+        #    print(result)
 
     """ Inicia el observable para recibir los mensajes """
     def startThreads(self,*args):
