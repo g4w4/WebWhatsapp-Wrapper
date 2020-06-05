@@ -1452,17 +1452,24 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
 * @param {*} done - function - Callback function
 */
 window.WAPI.getPhoneNumber = function (done) {
-    if (window.Store.Conn.__x_me.user) {
-        if (done !== undefined) {
-            done(Store.Conn.__x_me.user);
+    try {
+        if (window.Store.Status._index && Object.keys(window.Store.Status._index)[0]) {
+            if (done !== undefined) {
+                done(window.Store.Status._index[Object.keys(window.Store.Status._index)[0]].__x_id.user);
+            }
+            return window.Store.Status._index[Object.keys(window.Store.Status._index)[0]].__x_id.user;
         }
-        return Store.Conn.__x_me.user;
+        output = window.Store.Status._index[Object.keys(window.Store.Status._index)[0]].__x_id.user;
+        if (done !== undefined) {
+            done(output);
+        }
+        return output;
+    } catch (error) {
+        if (done !== undefined) {
+            done('');
+        }
+        return ''
     }
-    output = window.Store.Conn.__x_me.user;
-    if (done !== undefined) {
-        done(output);
-    }
-    return output;
 };
 
 /**
