@@ -11,12 +11,12 @@ if (!window.Store) {
         function getStore(modules) {
             let foundCount = 0;
             let neededObjects = [
-                { id: "Store", conditions: (module) => (module.Chat && module.Msg) ? module : null },
+                { id: "Store", conditions: (module) => (module.default && module.default.Chat && module.default.Msg) ? module.default : null},
                 { id: "MediaCollection", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.processAttachments) ? module.default : null },
                 { id: "MediaProcess", conditions: (module) => (module.BLOB) ? module : null },
                 { id: "Wap", conditions: (module) => (module.createGroup) ? module : null },
                 { id: "ServiceWorker", conditions: (module) => (module.default && module.default.killServiceWorker) ? module : null },
-                { id: 'Presence', conditions: (value) => (value.default && value.default.Presence) ? value.default : null },
+                //{ id: 'Presence', conditions: (value) => (value.default && value.default.Presence) ? value.default : null },
                 { id: "State", conditions: (module) => (module.STATE && module.STREAM) ? module : null },
                 { id: "WapDelete", conditions: (module) => (module.sendConversationDelete && module.sendConversationDelete.length == 2) ? module : null },
                 { id: "Conn", conditions: (module) => (module.default && module.default.ref && module.default.refTTL) ? module.default : null },
@@ -55,14 +55,15 @@ if (!window.Store) {
                         window.Store = neededStore.foundedModule ? neededStore.foundedModule : {};
                         neededObjects.splice(neededObjects.indexOf(neededStore), 1);
                         neededObjects.forEach((needObj) => {
+                            console.log(window.Store[needObj.id] ? true : false, needObj.id)
                             if (needObj.foundedModule) {
-                                window.Store[needObj.id] = needObj.foundedModule;
+                                    window.Store[needObj.id] = needObj.foundedModule;
                             }
                         });
                         window.Store.sendMessage = function (e) {
                             return window.Store.SendTextMsgToChat(this, ...arguments);
                         };
-                        return window.Store;
+                          return window.Store;
                     }
                 }
             }
@@ -93,6 +94,7 @@ if (!window.Store) {
         }
     })();
 }
+
 
 window.WAPI = {
     lastRead: {}
@@ -619,10 +621,18 @@ window.WAPI.isLoggedIn = function (done) {
 
 window.WAPI.isConnected = function (done) {
     // Phone Disconnected icon appears when phone is disconnected from the tnternet
-    const isConnected = document.querySelector('*[data-icon="alert-phone"]') !== null ? false : true;
-
-    if (done !== undefined) done(isConnected);
-    return isConnected;
+    let retuns = false
+    try {
+        let isConnected = document.querySelectorAll('span[data-icon="alert-phone"]').length ? false : true;
+        let isConnected_two = document.querySelectorAll('span[data-icon="chat"]').length ? false : true;
+        retuns = isConnected == true && isConnected_two == false ? true : false
+        if (done !== undefined) done(retuns);
+        return retuns;
+    } catch (error) {
+        if (done !== undefined) done(retuns);
+        return retuns;
+    }
+    
 };
 
 window.WAPI.processMessageObj = function (messageObj, includeMe, includeNotifications) {
@@ -1245,18 +1255,18 @@ window.WAPI.getBufferedNewMessages = function (done) {
 /** End new messages observable functions **/
 
 window.WAPI.sendImage = function (imgBase64, chatid, filename, caption, done) {
-//var idUser = new window.Store.UserConstructor(chatid);
-var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
-// create new chat
-return Store.Chat.find(idUser).then((chat) => {
-    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-    var mc = new Store.MediaCollection(chat);
-    mc.processAttachments([{file: mediaBlob}, 1], chat, 1).then(() => {
-        var media = mc.models[0];
-        media.sendToChat(chat, { caption: caption });
-        if (done !== undefined) done(true);
+    //var idUser = new window.Store.UserConstructor(chatid);
+    var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
+    // create new chat
+    return Store.Chat.find(idUser).then((chat) => {
+        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+        var mc = new Store.MediaCollection(chat);
+        mc.processAttachments([{file: mediaBlob}, 1], chat, 1).then(() => {
+            var media = mc.models[0];
+            media.sendToChat(chat, { caption: caption });
+            if (done !== undefined) done(true);
+        });
     });
-});
 }
 
 window.WAPI.base64ImageToFile = function (b64Data, filename) {
@@ -1444,19 +1454,22 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
 */
 window.WAPI.getPhoneNumber = function (done) {
     try {
-        if (window.Store.Conn.__x_me.user) {
+        if (window.Store.Status._index && Object.keys(window.Store.Status._index)[0]) {
             if (done !== undefined) {
-                done(Store.Conn.__x_me.user);
+                done(window.Store.Status._index[Object.keys(window.Store.Status._index)[0]].__x_id.user);
             }
-            return Store.Conn.__x_me.user;
+            return window.Store.Status._index[Object.keys(window.Store.Status._index)[0]].__x_id.user;
         }
-        output = window.Store.Conn.__x_me.user;
+        output = window.Store.Status._index[Object.keys(window.Store.Status._index)[0]].__x_id.user;
         if (done !== undefined) {
             done(output);
         }
         return output;
     } catch (error) {
-        return '';
+        if (done !== undefined) {
+            done('');
+        }
+        return ''
     }
 };
 
