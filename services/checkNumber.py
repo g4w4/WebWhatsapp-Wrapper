@@ -27,7 +27,7 @@ driver.wait_for_login()
 
 isValid = driver.check_number_status(fullNumber)
 if isValid.status == 200 :
-    objReturn = driver.get_info_contact(fullNumber)
+    objReturn = None
     print( "Result: "+objReturn )
     # pic = driver.get_profile_pic_from_id(fullNumber)
     # if pic != False:

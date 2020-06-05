@@ -185,7 +185,7 @@ class start():
             if isValid.status == 200 :
                 print("ES valido si creemos el chat")
                 print("Login listo ahora retornemos la info")
-                objReturn = self.driver.get_info_contact(fullNumber)
+                objReturn = None
                 print( objReturn )
                 return objReturn
             else:

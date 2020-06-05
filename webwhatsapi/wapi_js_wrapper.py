@@ -161,7 +161,7 @@ class NewMessagesObservable(Thread):
         while True:
             try:
                 new_js_messages = self.wapi_js_wrapper.getBufferedNewMessages()
-                print('okay',new_js_messages)
+                print('okay')
                 if isinstance(new_js_messages, (collections.Sequence, np.ndarray)) and len(new_js_messages) > 0:
                     print("Paso filtro")
                     new_messages = []
