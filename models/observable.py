@@ -37,19 +37,20 @@ class NewMessageObserver():
     """
     def on_message_received(self, new_messages):
         logs.write_log('Muevo mensaje de --> es llamado ','ops')
+        autor = 'Client'
         for message in new_messages:
             logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
             try:
                 group = message._js_obj.get('chat').get('id').get('_serialized')
                 if self.driver.is_chat_group(group) :
-                    print(message._js_obj)
-                    print(message._js_obj.get("author"))
+                    autor = message._js_obj.get("author").get("_serialized")
 
                 if  message._js_obj['type'] == "location":
 
                     # Si es una ubicación #
                     _message = interface_messages.getLocation( message, self.driver)
                     event = interface_events.new_message_ubication(self.token, _message)
+                    event["info"]["info"]["message"]["autor"] = autor
                     self.socket.emit( event["event"], event["info"] )
 
                 else:
@@ -57,6 +58,7 @@ class NewMessageObserver():
                     # Si es media o texto #
                     _message = interface_messages.getFormat(message,self.driver)
                     event = interface_events.new_message(self.token, _message)
+                    event["info"]["info"]["message"]["autor"] = autor
                     self.socket.emit( event["event"], event["info"] )
 
             #     # Valida si el mensaje es de un grupo #
