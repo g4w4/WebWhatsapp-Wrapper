@@ -46,13 +46,26 @@ class NewMessageObserver():
                     # Si es una ubicación #
                     _message = interface_messages.getLocation( message, self.driver)
                     event = interface_events.new_message_ubication(self.token, _message)
-                    self.socket.emit( event["event"], event["info"] )
+
+                    if self.driver.is_chat_group(group) :
+                        print(message)
+                        print(message.get("from",""))
+                        event["info"][""]
+                    else:
+                        self.socket.emit( event["event"], event["info"] )
+
+
                 else:
 
                     # Si es media o texto #
                     _message = interface_messages.getFormat(message,self.driver)
                     event = interface_events.new_message(self.token, _message)
-                    self.socket.emit( event["event"], event["info"] )
+                    if self.driver.is_chat_group(group) :
+                        print(message)
+                        print(message.get("from",""))
+                        event["info"][""]
+                    else:
+                        self.socket.emit( event["event"], event["info"] )
 
             #     # Valida si el mensaje es de un grupo #
             #     group = message._js_obj.get('chat').get('id').get('_serialized')
