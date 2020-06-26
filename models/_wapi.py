@@ -142,8 +142,6 @@ def getOldMessages(driver,socket,token):
                         group = message._js_obj.get('chat').get('id').get('_serialized')
                         if driver.is_chat_group(group) :
                             autor = message._js_obj.get("author").get("_serialized")
-                            print("ES grupo")
-                            print(autor)
 
 
                         if  message._js_obj['type'] == "location":
@@ -151,6 +149,7 @@ def getOldMessages(driver,socket,token):
                             # Si es una ubicación #
                             _message = interface_messages.getLocation( message, driver)
                             event = interface_events.new_message_ubication(token, _message)
+                            event["info"]["info"]["message"]["autor"] = autor
                             socket.emit( event["event"], event["info"] )
                         else:
 
@@ -160,6 +159,7 @@ def getOldMessages(driver,socket,token):
                                     future= executor.submit(interface_messages.getFormat, message,driver)
                                     _message= future.result(timeout=10)
                                     event = interface_events.new_message(token, _message)
+                                    event["info"]["info"]["message"]["autor"] = autor
                                     socket.emit( event["event"], event["info"] )
                                 except Exception:
                                     telegram.telegram("Error getOldMessages {}".format(traceback.format_exc()))
