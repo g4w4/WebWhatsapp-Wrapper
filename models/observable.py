@@ -76,6 +76,6 @@ class NewMessageObserver():
             #             _message = interface_messages.getFormat(message,self.driver)
             #             event = interface_events.new_message(self.token, _message)
             #             self.socket.emit( event["event"], event["info"] )
-            # except Exception :
+            except Exception :
                 telegram.telegram("Error observable {}".format(traceback.format_exc()))
                 print(traceback.format_exc())
