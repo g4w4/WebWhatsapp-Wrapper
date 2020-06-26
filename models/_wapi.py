@@ -140,7 +140,7 @@ def getOldMessages(driver,socket,token):
                         print("Enviado por el agente no vale")
                     else:
                         group = message._js_obj.get('chat').get('id').get('_serialized')
-                        if self.driver.is_chat_group(group) :
+                        if driver.is_chat_group(group) :
                             autor = message._js_obj.get("author").get("_serialized")
                             print("ES grupo")
                             print(autor)
