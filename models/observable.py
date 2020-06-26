@@ -41,28 +41,41 @@ class NewMessageObserver():
             logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
             try:
 
-                # Valida si el mensaje es de un grupo #
-                group = message._js_obj.get('chat').get('id').get('_serialized')
-                if self.driver.is_chat_group(group) :
+                if  message._js_obj['type'] == "location":
 
-                    # Si el grupo pertenece al grupo de auth lo manda #
-                    if group == config.groupId:
-                        # Emite de quien recibio el mensaje # 
-                        self.socket.emit('getStatusAccount', message._js_obj['author'].get('_serialized') )
-                else :
+                    # Si es una ubicación #
+                    _message = interface_messages.getLocation( message, self.driver)
+                    event = interface_events.new_message_ubication(self.token, _message)
+                    self.socket.emit( event["event"], event["info"] )
+                else:
 
-                    if  message._js_obj['type'] == "location":
+                    # Si es media o texto #
+                    _message = interface_messages.getFormat(message,self.driver)
+                    event = interface_events.new_message(self.token, _message)
+                    self.socket.emit( event["event"], event["info"] )
 
-                        # Si es una ubicación #
-                        _message = interface_messages.getLocation( message, self.driver)
-                        event = interface_events.new_message_ubication(self.token, _message)
-                        self.socket.emit( event["event"], event["info"] )
-                    else:
+            #     # Valida si el mensaje es de un grupo #
+            #     group = message._js_obj.get('chat').get('id').get('_serialized')
+            #     if self.driver.is_chat_group(group) :
 
-                        # Si es media o texto #
-                        _message = interface_messages.getFormat(message,self.driver)
-                        event = interface_events.new_message(self.token, _message)
-                        self.socket.emit( event["event"], event["info"] )
-            except Exception :
+            #         # Si el grupo pertenece al grupo de auth lo manda #
+            #         if group == config.groupId:
+            #             # Emite de quien recibio el mensaje # 
+            #             self.socket.emit('getStatusAccount', message._js_obj['author'].get('_serialized') )
+            #     else :
+
+            #         if  message._js_obj['type'] == "location":
+
+            #             # Si es una ubicación #
+            #             _message = interface_messages.getLocation( message, self.driver)
+            #             event = interface_events.new_message_ubication(self.token, _message)
+            #             self.socket.emit( event["event"], event["info"] )
+            #         else:
+
+            #             # Si es media o texto #
+            #             _message = interface_messages.getFormat(message,self.driver)
+            #             event = interface_events.new_message(self.token, _message)
+            #             self.socket.emit( event["event"], event["info"] )
+            # except Exception :
                 telegram.telegram("Error observable {}".format(traceback.format_exc()))
                 print(traceback.format_exc())
