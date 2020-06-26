@@ -136,6 +136,7 @@ def getOldMessages(driver,socket,token):
             # Verificamos el tipo de mensaje
             for message in _messages:
                 try:   
+                    autor = ''
                     if message._js_obj['sender']['isMe'] :
                         print("Enviado por el agente no vale")
                     else:
