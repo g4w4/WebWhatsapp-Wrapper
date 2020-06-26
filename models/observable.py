@@ -40,6 +40,7 @@ class NewMessageObserver():
         for message in new_messages:
             logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
             try:
+                group = message._js_obj.get('chat').get('id').get('_serialized')
                 if self.driver.is_chat_group(group) :
                     print(message._js_obj)
                     print(message._js_obj.get("author"))
