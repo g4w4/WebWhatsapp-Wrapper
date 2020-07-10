@@ -193,16 +193,19 @@ class start():
         Parmas args[2] socket_id Id del receptor
     """
     def on_test(self,*args):
-        number= args[0] 
-        message= args[1]
-        socket_id= args[2]  
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future= executor.submit(_wapi.send_test, self.driver, number, message)
-            result= future.result(timeout=120)
-            message_result= "Test exitoso" if result["code"] == 200 else result["error"]
+        try:
+            number= args[0] 
+            message= args[1]
+            socket_id= args[2]  
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future= executor.submit(_wapi.send_test, self.driver, number, message)
+                result= future.result(timeout=120)
+                message_result= "Test exitoso" if result["code"] == 200 else result["error"]
 
-            event = interface_events.send_test_result(self.__AUTH,socket_id,message_result)
-            self.socketIO.emit( event["event"], event["info"] )
+                event = interface_events.send_test_result(self.__AUTH,socket_id,message_result)
+                self.socketIO.emit( event["event"], event["info"] )
+        except Exception :
+            telegram.telegram("Error NO ENVIA {} ".format(traceback.format_exc()))
 
     """ Envía un mensaje de texto a un cliente
         Parmas args[0] message Mensaje a enviar
@@ -210,28 +213,34 @@ class start():
         Parmas args[2] message_id Id del mensaje
     """
     def on_sendText(self,*args):
-        print(args)
-        message = args[0]
-        id_chat = args[1]
-        message_id = args[2]
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future= executor.submit(_wapi.send_text, self.driver,id_chat,message)
-            result= future.result(timeout=120)
-            akc= 2 if result["code"] == 200 else 0
-            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
-            self.socketIO.emit( event["event"], event["info"] )
+        try:
+            print(args)
+            message = args[0]
+            id_chat = args[1]
+            message_id = args[2]
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future= executor.submit(_wapi.send_text, self.driver,id_chat,message)
+                result= future.result(timeout=1)
+                akc= 2 if result["code"] == 200 else 0
+                event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+                self.socketIO.emit( event["event"], event["info"] )
+        except Exception :
+            telegram.telegram("Error NO ENVIA {} ".format(traceback.format_exc()))
 
     def on_sendTextNewTicket(self,*args):
-        print(args)
-        message = args[0]
-        id_chat = args[1]
-        message_id = args[2]
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future= executor.submit(_wapi.send_text_new_tt, self.driver,id_chat,message)
-            result= future.result(timeout=120)
-            akc= 2 if result["code"] == 200 else 0
-            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
-            self.socketIO.emit( event["event"], event["info"] )
+        try:
+            print(args)
+            message = args[0]
+            id_chat = args[1]
+            message_id = args[2]
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future= executor.submit(_wapi.send_text_new_tt, self.driver,id_chat,message)
+                result= future.result(timeout=120)
+                akc= 2 if result["code"] == 200 else 0
+                event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+                self.socketIO.emit( event["event"], event["info"] )
+        except Exception :
+            telegram.telegram("Error NO ENVIA {} ".format(traceback.format_exc()))
 
     def on_sendMessageGroup(self,*args):
         send = Thread(target=_wapi.sendText,args=(self.driver,self.socketIO,config.groupId,'I am here'))
@@ -244,17 +253,20 @@ class start():
         Parmas args[3] message_id Id del mensaje
     """
     def on_sendFile(self,*args):
-        message = args[0]
-        caption = args[1]
-        id_chat = args[2]
-        message_id = args[3]
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future= executor.submit(_wapi.send_file,self.driver,id_chat,caption,message)
-            result= future.result(timeout=120)
-            print(result)
-            akc= 2 if result["code"] == 200 else 0
-            event = interface_events.send_message_status(self.__AUTH,message_id,akc)
-            self.socketIO.emit( event["event"], event["info"] )
+        try:
+            message = args[0]
+            caption = args[1]
+            id_chat = args[2]
+            message_id = args[3]
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future= executor.submit(_wapi.send_file,self.driver,id_chat,caption,message)
+                result= future.result(timeout=120)
+                print(result)
+                akc= 2 if result["code"] == 200 else 0
+                event = interface_events.send_message_status(self.__AUTH,message_id,akc)
+                self.socketIO.emit( event["event"], event["info"] )
+        except Exception :
+            telegram.telegram("Error NO ENVIA {} ".format(traceback.format_exc()))
 
     """ Borra el chat del teléfono para liberar memoria
         Parmas args[0] id_chat Id del chat
