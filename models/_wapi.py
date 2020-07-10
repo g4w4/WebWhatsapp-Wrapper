@@ -231,7 +231,6 @@ Returns: {code,error}
 """
 def send_text(driver,id_chat,message):
     try:
-        time.sleep(3)
         logs.logError('Enviando mensaje a',id_chat)
         result = driver.send_message_to_id(id_chat,message)
         print(result)

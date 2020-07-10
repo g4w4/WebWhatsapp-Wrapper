@@ -220,7 +220,7 @@ class start():
             message_id = args[2]
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future= executor.submit(_wapi.send_text, self.driver,id_chat,message)
-                result= future.result(timeout=1)
+                result= future.result(timeout=120)
                 akc= 2 if result["code"] == 200 else 0
                 event = interface_events.send_message_status(self.__AUTH,message_id,akc)
                 self.socketIO.emit( event["event"], event["info"] )
