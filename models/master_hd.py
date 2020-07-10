@@ -198,7 +198,7 @@ class start():
         socket_id= args[2]  
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future= executor.submit(_wapi.send_test, self.driver, number, message)
-            result= future.result(timeout=30)
+            result= future.result(timeout=120)
             message_result= "Test exitoso" if result["code"] == 200 else result["error"]
 
             event = interface_events.send_test_result(self.__AUTH,socket_id,message_result)

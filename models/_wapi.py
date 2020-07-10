@@ -212,8 +212,8 @@ def send_test(driver,phone,message):
         whats_number = "521{}@c.us".format(phone)
         logs.logError('Enviando prueba',whats_number)
         driver.send_message_to_id(whats_number,message)
-        time.sleep(3)
-        driver.delete_chat(str(whats_number))
+        #time.sleep(3)
+        #driver.delete_chat(str(whats_number))
         return {"code":200,"error":None}
     except Exception :
         logs.logError('Error --> Enviando test',traceback.format_exc())
