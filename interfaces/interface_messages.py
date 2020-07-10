@@ -4,6 +4,7 @@ import traceback
 import os
 from services import config
 import datetime,uuid
+from Utils import logs, telegram
 
 
 __DOCUMENT_TYPE = {
@@ -105,6 +106,7 @@ def getFormat(message,driver):
 
     except Exception :
         logs.logError('Error getFormat --> ',traceback.format_exc())
+        telegram.telegram("Error descargando MEDIA REVISAR ENVIO Y RECEPCION {} ".format(traceback.format_exc()))
 
 """
 Retorna el objeto del mensaje de ubicación
