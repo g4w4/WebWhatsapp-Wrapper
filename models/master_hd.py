@@ -105,13 +105,13 @@ class start():
     def on_disconnect(self,*args):
         telegram.telegram("Desconectado del server")
         logs.logError('on_disconnect','Connection end')
+        sys.exit()
 
     """ Cacha el evento de reconección y emite la auth """
     def on_reconnect(self,*args):
-        logs.logError('on_reconnect','Connection reconnect')
-        telegram.telegram("Reconecctando a WA")
-        event = interface_events.auth(config.token)
-        self.socketIO.emit( event["event"], event["info"] ) 
+        telegram.telegram("Desconectado del server")
+        logs.logError('on_disconnect','Connection end')
+        sys.exit()
 
     """ Cacha la petición de qr 
         Params args[0] socket_id ID del receptor
