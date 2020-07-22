@@ -112,6 +112,9 @@ class start():
         telegram.telegram("Desconectado del server")
         logs.logError('on_disconnect','Connection end')
         os.exit(0)
+        event = interface_events.auth(config.token)
+        telegram.telegram("Conectado al server")
+        self.socketIO.emit( event["event"], event["info"] )  
 
     """ Cacha la petición de qr 
         Params args[0] socket_id ID del receptor
