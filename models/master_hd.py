@@ -104,13 +104,14 @@ class start():
     """ Cacha el evento de desconección y manda el log """
     def on_disconnect(self,*args):
         telegram.telegram("Desconectado del server")
-        self.client.disconnect()
+        self.socketIO.disconnect()
         logs.logError('on_disconnect','Connection end')
         os.exit(0)
 
     """ Cacha el evento de reconección y emite la auth """
     def on_reconnect(self,*args):
         telegram.telegram("Desconectado del server x2")
+        self.socketIO.disconnect()
         logs.logError('on_disconnect','Connection end')
         os.exit(0)
 
