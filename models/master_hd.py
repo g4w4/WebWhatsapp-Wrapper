@@ -104,19 +104,17 @@ class start():
     """ Cacha el evento de desconección y manda el log """
     def on_disconnect(self,*args):
         telegram.telegram("Desconectado del server")
+        self.client.disconnect()
         logs.logError('on_disconnect','Connection end')
         os.exit(0)
 
     """ Cacha el evento de reconección y emite la auth """
     def on_reconnect(self,*args):
-        telegram.telegram("Desconectado del server")
+        telegram.telegram("Desconectado del server x2")
         logs.logError('on_disconnect','Connection end')
         os.exit(0)
-        event = interface_events.auth(config.token)
-        telegram.telegram("Conectado al server")
-        self.socketIO.emit( event["event"], event["info"] )  
 
-    """ Cacha la petición de qr 
+    """ Cacha la petición de qr
         Params args[0] socket_id ID del receptor
     """
     def on_getQr(self,*args):
@@ -175,7 +173,7 @@ class start():
             event = interface_events.send_qr_error(self.__AUTH,socket_id,"Error solicitando QR reinicie la cuenta")
             self.socketIO.emit( event["event"], event["info"] )
 
-    """ Cacha la petición de obtener el screen 
+    """ Cacha la petición de obtener el screen
         Parmas args[0] socket_id ID del receptor
     """
     def on_getScreen(self,*args):
