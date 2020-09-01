@@ -4,6 +4,7 @@ from Utils import logs, telegram
 import config
 import traceback
 from interfaces import interface_events
+import json
 
 class NewMessageObserver():
     
@@ -56,12 +57,16 @@ class NewMessageObserver():
                         # Si es una ubicación #
                         _message = interface_messages.getLocation( message, self.driver)
                         event = interface_events.new_message_ubication(self.token, _message)
+
+                        logs.write_log('Esto se emite -->', json.dumps( event["event"] ), json.dumps( event["info"] ) )
                         self.socket.emit( event["event"], event["info"] )
                     else:
 
                         # Si es media o texto #
                         _message = interface_messages.getFormat(message,self.driver)
                         event = interface_events.new_message(self.token, _message)
+
+                        logs.write_log('Esto se emite -->', json.dumps( event["event"] ), json.dumps( event["info"] ) )
                         self.socket.emit( event["event"], event["info"] )
             except Exception :
                 telegram.telegram("Error observable {}".format(traceback.format_exc()))
