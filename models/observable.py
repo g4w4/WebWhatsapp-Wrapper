@@ -40,6 +40,7 @@ class NewMessageObserver():
         logs.write_log('Muevo mensaje de --> es llamado ','ops')
         for message in new_messages:
             logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
+            logs.write_log('Muevo mensaje de -->',message._js_obj.get('type'))
             try:
 
                 # Valida si el mensaje es de un grupo #
