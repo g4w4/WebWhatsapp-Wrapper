@@ -136,7 +136,7 @@ def getOldMessages(driver,messages_save,socket):
 
                 if messages_save.get(idChat,False) != False or  messages_save.get(idChat_2,False) != False :
                     print("si esta")
-                    x = driver.chat_load_all_earlier_messages(idChat)
+                    #x = driver.chat_load_all_earlier_messages(idChat)
                     _messages = driver.get_all_messages_in_chat(idChat,True)
 
                     #Count messages#
