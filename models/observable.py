@@ -4,6 +4,7 @@ from Utils import logs, telegram
 import config
 import traceback
 from interfaces import interface_events
+import json
 
 class NewMessageObserver():
     
@@ -40,6 +41,7 @@ class NewMessageObserver():
         autor = 'Client'
         for message in new_messages:
             logs.write_log('Muevo mensaje de -->',message._js_obj.get('chat').get('id'))
+            logs.write_log('Muevo mensaje de -->',message._js_obj.get('type'))
             try:
                 group = message._js_obj.get('chat').get('id').get('_serialized')
                 if self.driver.is_chat_group(group) :
@@ -83,6 +85,7 @@ class NewMessageObserver():
             #             _message = interface_messages.getFormat(message,self.driver)
             #             event = interface_events.new_message(self.token, _message)
             #             self.socket.emit( event["event"], event["info"] )
+
             except Exception :
                 telegram.telegram("Error observable {}".format(traceback.format_exc()))
                 print(traceback.format_exc())

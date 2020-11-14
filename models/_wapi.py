@@ -130,8 +130,9 @@ def getOldMessages(driver,socket,token):
             # Mandamos el mensaje
 
             idChat = str(chat.get('id'))
-            driver.chat_load_all_earlier_messages(idChat)
+            #driver.chat_load_all_earlier_messages(idChat)
             _messages = driver.get_all_messages_in_chat(idChat,True)
+            print(_messages)
 
             # Verificamos el tipo de mensaje
             for message in _messages:
