@@ -161,12 +161,13 @@ class NewMessagesObservable(Thread):
             try:
                 new_js_messages = self.wapi_js_wrapper.getBufferedNewMessages()
                 if isinstance(new_js_messages, (collections.Sequence, np.ndarray)) and len(new_js_messages) > 0:
-                   
+                    print("Paso filtro", new_js_messages )
                     new_messages = []
                     for js_message in new_js_messages:
                         new_messages.append(factory_message(js_message, self.wapi_driver))
  
                     self._inform_all(new_messages)
+                print("Paso filtro", new_js_messages )     
             except Exception as e:  # noqa F841
                 pass
  

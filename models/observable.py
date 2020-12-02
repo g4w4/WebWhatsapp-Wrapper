@@ -13,7 +13,8 @@ class NewMessageObserver():
         self.socket = socket
         self.driver = driver
 
-    def on_message_received(self, new_messages):   
+    def on_message_received(self, new_messages):
+        logs.write_log('NewMessage 2 FROM -->',new_messages)
         for message in new_messages:
             logs.write_log('NewMessage FROM -->',message._js_obj.get('chat').get('id'))
             try:
