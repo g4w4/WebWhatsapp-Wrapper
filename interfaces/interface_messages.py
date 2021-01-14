@@ -64,6 +64,7 @@ class ContentMessage():
         elif self.message.type != "chat" and self.message.type in self.__DOCUMENT_TYPE :
             # Guara el contenido del archivo #
             print( self.message )
+            dir( self.message )
             self.content["content"] = str( self.message.save_media(config.pathFiles,True) ).replace(config.pathFiles,"")
             newName =  uuid.uuid1().hex + self.content["content"]
             os.rename(config.pathFiles+self.content["content"],config.pathFiles+newName)

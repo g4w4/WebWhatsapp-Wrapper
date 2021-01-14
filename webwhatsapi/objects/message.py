@@ -94,6 +94,7 @@ class MediaMessage(Message):
         print(self.media_key)
         print(self._js_obj.get('filehash'))
         print(self.type)
+        print("AAAAAAAAA")
         self.client_url = self._js_obj.get('clientUrl')
 
         extension = mimetypes.guess_extension(self.mime)
