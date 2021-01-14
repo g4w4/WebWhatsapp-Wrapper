@@ -91,6 +91,9 @@ class MediaMessage(Message):
             self.caption = self._js_obj["caption"] or ""
 
         self.media_key = self._js_obj.get('mediaKey')
+        print(self.media_key)
+        print(self._js_obj.get('filehash'))
+        print(self.type)
         self.client_url = self._js_obj.get('clientUrl')
 
         extension = mimetypes.guess_extension(self.mime)
