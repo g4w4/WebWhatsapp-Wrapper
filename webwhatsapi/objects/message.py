@@ -32,7 +32,7 @@ def factory_message(js_obj, driver):
     print( dir(js_obj) )
     print( js_obj )
 
-    if js_obj["isMedia"]:
+    if js_obj["isMedia"] or js_obj["type"] == 'document':
         return MediaMessage(js_obj, driver)
 
     if js_obj["isNotification"]:
