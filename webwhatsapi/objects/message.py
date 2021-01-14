@@ -27,6 +27,11 @@ def factory_message(js_obj, driver):
     if "lat" in js_obj and "lng" in js_obj and js_obj["lat"] and js_obj["lng"]:
         return GeoMessage(js_obj, driver)
 
+    print("BBBBBBBB")
+    print(js_obj["isMedia"])
+    print( dir(js_obj) )
+    print( js_obj )
+
     if js_obj["isMedia"]:
         return MediaMessage(js_obj, driver)
 
