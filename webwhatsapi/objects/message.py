@@ -27,11 +27,6 @@ def factory_message(js_obj, driver):
     if "lat" in js_obj and "lng" in js_obj and js_obj["lat"] and js_obj["lng"]:
         return GeoMessage(js_obj, driver)
 
-    print("BBBBBBBB")
-    print(js_obj["isMedia"])
-    print( dir(js_obj) )
-    print( js_obj )
-
     if js_obj["isMedia"] or js_obj["type"] == 'document':
         return MediaMessage(js_obj, driver)
 
@@ -96,10 +91,6 @@ class MediaMessage(Message):
             self.caption = self._js_obj["caption"] or ""
 
         self.media_key = self._js_obj.get('mediaKey')
-        print(self.media_key)
-        print(self._js_obj.get('filehash'))
-        print(self.type)
-        print("AAAAAAAAA")
         self.client_url = self._js_obj.get('clientUrl')
 
         extension = mimetypes.guess_extension(self.mime)
